@@ -241,6 +241,22 @@
                     <span>Python</span>
                   </a>
                 
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/SPRINGBOOT/">
+                    
+                    <span>SpringBoot</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/LEARNING/">
+                    
+                    <span>迹路一下</span>
+                  </a>
+                
               </div>
             </li>
           
@@ -396,15 +412,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/c31a9553cda1/" target="_blank">
-          Ⅲ.Re：Scrapy架构概述
+        <a href="/b2f48fd84c6c/" target="_blank">
+          Ⅸ.Re：Scrapy中间件
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/c31a9553cda1/" target="_blank">
+      <a class="index-excerpt index-excerpt__noimg" href="/b2f48fd84c6c/" target="_blank">
         <div>
-          架构图 执行流程 ENGINE从SPIDERS中（start_urls或start_requests方法）获取种子链接 # scrapy/crawler.py#CrawlerRunner  def crawl(self, crawler_or_spidercls, *args, **kwargs):      if isinstance(crawler_or_spidercls, Spider):
+          MiddlewareManager Scrapy 中 SpiderMiddlewareManager、DownloaderMiddlewareManager、ExtensionManager和ItemPipelineManager继承了相同的基类MiddlewareManager SpiderMiddlewareManager：可以理解成Scrapy针对Spider处理机制的钩子框架，可以自定义处
         </div>
       </a>
 
@@ -466,15 +482,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/fd2edbb72b97/" target="_blank">
-          Ⅱ.Re：Scrapy启动与调试
+        <a href="/27decef6ec3e/" target="_blank">
+          Ⅷ.Re：Scrapy 之 Item Pipelines
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/fd2edbb72b97/" target="_blank">
+      <a class="index-excerpt index-excerpt__noimg" href="/27decef6ec3e/" target="_blank">
         <div>
-          启动命令启动# 运行爬虫程序，不需要项目 # scrapy runspider spider_demo.py scrapy runspider &lt;spider_file.py>  # 在项目中运行爬虫程序 # scrapy crawl spider_demo scrapy crawl &lt;spider>  脚本启动CrawlerProcess 方式import scrapy from s
+          Item Pipeline 它负责将抓取到的数据可进行校验准确性、检测重复数据、持久化数据到数据库中。  源码解析scrapy&#x2F;core&#x2F;engine.py#ExecutionEngine  open_spider(self, spider: Spider, start_requests: Iterable &#x3D; (), close_if_idle: bool &#x3
         </div>
       </a>
 
@@ -536,15 +552,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/40dd86514b92/" target="_blank">
-          Ⅰ.Re：Scrapy自定义模板
+        <a href="/d58e7a860216/" target="_blank">
+          Ⅶ.Re：Scrapy 之 Downloader
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/40dd86514b92/" target="_blank">
+      <a class="index-excerpt index-excerpt__noimg" href="/d58e7a860216/" target="_blank">
         <div>
-          创建默认模板# Scrapy 版本 2.6.2   # 创建项目 # scrapy startproject [配置参数（可选）] &lt;项目名称（字母开头，只运行数字字母下划线）> [项目输出路径（可选）] scrapy startproject scarpy_demo "d:\爬虫 - 项目"  # 创建爬虫 cd d:\爬虫 - 项目 # scrapy genspider [配置参数（可选
+          Downloader Downloader 负责获取网页数据并交递响应给 Engine ，换言之，实际上是交给 Spiders  源码解析scrapy&#x2F;core&#x2F;engine.py#ExecutionEngine  _download(self, request: Request, spider: Spider) -&gt; Deferred# open_spider(self
         </div>
       </a>
 
@@ -606,15 +622,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/248cd7372062/" target="_blank">
-          pip search 报错
+        <a href="/ba134d557b8d/" target="_blank">
+          Ⅵ.Re：Scrapy 之 Scheduler
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/248cd7372062/" target="_blank">
+      <a class="index-excerpt index-excerpt__noimg" href="/ba134d557b8d/" target="_blank">
         <div>
-          报错信息ERROR: XMLRPC request failed [code: -32500] RuntimeError: PyPI no longer supports 'pip search' (or XML-RPC search). Please use https://pypi.org/search (via a browser) instead. See https://warehous
+          Scheduler Scheduler 组件会接收来自 Engine 的请求，它负责将请求存储到 持久化或非持久化的数据结构中。 它还可以获取这些请求，并在 Engine 要求下载下一个请求时，将其返回给 Engine。  默认 Schedulerfrom_crawler@classmethod def from_crawler(cls: Type[SchedulerTV], crawler) -
         </div>
       </a>
 
@@ -638,12 +654,12 @@
     
       <span class="category-chain">
         
-  <a href="/categories/LIBRARY/" class="category-chain-item">迹路文库</a>
+  <a href="/categories/PYP/" class="category-chain-item">爬亿爬</a>
   
   
     <span>></span>
     
-  <a href="/categories/LIBRARY/PYTHON/" class="category-chain-item">Python</a>
+  <a href="/categories/PYP/FRAMEWORK/" class="category-chain-item">框架</a>
   
   
 
@@ -660,7 +676,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/PYTHON/">#Python</a>
+              <a href="/tags/SCRAPY/">#Scrapy</a>
+            
+              <a href="/tags/%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6/">#爬虫框架</a>
             
           </div>
         
@@ -674,15 +692,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/30114bcb7401/" target="_blank">
-          YOLOv8
+        <a href="/8a9571d79baf/" target="_blank">
+          Ⅴ.Re：Scrapy 之 Engine
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/30114bcb7401/" target="_blank">
+      <a class="index-excerpt index-excerpt__noimg" href="/8a9571d79baf/" target="_blank">
         <div>
-          简介 GitHub：https://github.com/ultralytics/ultralytics Notebook：https://github.com/ultralytics/ultralytics/blob/main/examples/tutorial.ipynb 文档：https://docs.ultralytics.com/  安装PIP安装# 推荐 pip install ult
+          ExecutionEngine 这个 Engine 负责的是系统中所有组件之间的数据流转与交互。 ExecutionEngine是Engine的实例，它会初始化Schedule、Slot、Downloader（Downloader Middlewares）、Scraper(Spider Middlewares、itempipline)、Stats等，并对其进行管理、控制。  源码解析scrapy&
         </div>
       </a>
 
@@ -706,12 +724,12 @@
     
       <span class="category-chain">
         
-  <a href="/categories/CHOBITS/" class="category-chain-item">Chobits</a>
+  <a href="/categories/PYP/" class="category-chain-item">爬亿爬</a>
   
   
     <span>></span>
     
-  <a href="/categories/CHOBITS/OCR/" class="category-chain-item">OCR</a>
+  <a href="/categories/PYP/FRAMEWORK/" class="category-chain-item">框架</a>
   
   
 
@@ -728,11 +746,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/YOLOV8/">#YOLOv8</a>
+              <a href="/tags/SCRAPY/">#Scrapy</a>
             
-              <a href="/tags/OCR/">#OCR</a>
-            
-              <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81/">#验证码</a>
+              <a href="/tags/%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6/">#爬虫框架</a>
             
           </div>
         
@@ -746,15 +762,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/b61b33d893ac/" target="_blank">
-          ddddocr使用与模型训练
+        <a href="/9a7df02c40f9/" target="_blank">
+          Ⅳ.Re：Scrapy 之 Spider
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/b61b33d893ac/" target="_blank">
+      <a class="index-excerpt index-excerpt__noimg" href="/9a7df02c40f9/" target="_blank">
         <div>
-          基本使用方法 ddddocr（带带弟弟OCR）：是一个很好用的ocr识别库 ddddocr GitHub：https://github.com/sml2h3/ddddocr dddd_trainer 是 ddddocr 的训练工具 dddd_trainer GitHub：https://github.com/sml2h3/dddd_trainer  测试样例 实现代码import ddddocr
+          Spiders Spiders 是定义如何抓取某个网站（或一组网站）的类。 包括如何进行抓取（即跟随链接）以及如何从其页面中提取结构化数据（即抓取项目）。 换句话说，Spiders 是你定义业务逻辑的地方，用于抓取和解析特定网站（或在某些情况下，一组网站）的页面。  name 必要，自定义爬虫名称，爬虫的唯一标识  allowed_domains 可选，规定爬虫爬行范围。实现代码scrapy.sp
         </div>
       </a>
 
@@ -778,12 +794,12 @@
     
       <span class="category-chain">
         
-  <a href="/categories/CHOBITS/" class="category-chain-item">Chobits</a>
+  <a href="/categories/PYP/" class="category-chain-item">爬亿爬</a>
   
   
     <span>></span>
     
-  <a href="/categories/CHOBITS/OCR/" class="category-chain-item">OCR</a>
+  <a href="/categories/PYP/FRAMEWORK/" class="category-chain-item">框架</a>
   
   
 
@@ -800,11 +816,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/OCR/">#OCR</a>
+              <a href="/tags/SCRAPY/">#Scrapy</a>
             
-              <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81/">#验证码</a>
-            
-              <a href="/tags/DDDDOCR/">#ddddocr</a>
+              <a href="/tags/%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6/">#爬虫框架</a>
             
           </div>
         
@@ -816,7 +830,7 @@
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#board">6</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/#board">8</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
