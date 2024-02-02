@@ -1,0 +1,1302 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="元气码农少女酱">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="有穷自动机在计算机科学理论中，采用 计算模型的理想计算机 来建立数学理论，其中 有穷自动机 就是其中之一，除此之外还有，图灵机、递归函数、λ演算、马尔科夫算法等。  有穷自动机（Finite Automata，也叫有穷状态自动机，finite-state machine）。  理解有穷自动机例如：自动售卖机就是一种有穷自动机。假设自动售卖机只接收面额为5元的纸币。当你塞入一张5元购买3元的饮料时，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式 - 匹配原理及ReDoS攻击">
+<meta property="og:url" content="https://元气码农少女酱.我爱你/cbf0d06a2c4f/">
+<meta property="og:site_name" content="⎛⎝迹路科栈⎠⎞">
+<meta property="og:description" content="有穷自动机在计算机科学理论中，采用 计算模型的理想计算机 来建立数学理论，其中 有穷自动机 就是其中之一，除此之外还有，图灵机、递归函数、λ演算、马尔科夫算法等。  有穷自动机（Finite Automata，也叫有穷状态自动机，finite-state machine）。  理解有穷自动机例如：自动售卖机就是一种有穷自动机。假设自动售卖机只接收面额为5元的纸币。当你塞入一张5元购买3元的饮料时，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/image-20220604103630069.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/image-20220604104043444.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/image-20220604104125458.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190515094607338-1562574937.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190510181344797-310601861.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190510181325625-1549130236.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190529093739932-1624745765.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190529092412661-1752197506.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190510181220818-919398471.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190529093246575-1927274303.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190514125536085-1719134270.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190603091119962-624667570.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190603092008678-1772470386.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190514134716378-878728047.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190609104718909-1173649437.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190609111124649-420399014.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190609111556836-868290685.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190609104814110-597674008.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190603092325853-1237030309.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190514141157163-233983710.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190603093327179-693580891.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190603165304314-332612214.png">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/1670490-20190514141610728-560229388.png">
+<meta property="article:published_time" content="2023-05-02T03:11:11.000Z">
+<meta property="article:modified_time" content="2024-01-30T13:20:33.325Z">
+<meta property="article:author" content="元气码农少女酱">
+<meta property="article:tag" content="正则表达式">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/cbf0d06a2c4f/image-20220604103630069.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>正则表达式 - 匹配原理及ReDoS攻击 - ⎛⎝迹路科栈⎠⎞</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"c48bd071d08fdfa52afe48f0d2e0a43e","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?c48bd071d08fdfa52afe48f0d2e0a43e";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+    <link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css" media="print" onload="this.media='all'">
+    <style>
+      html, body, .markdown-body, p {
+        font-family: 'LXGW WenKai Screen';
+      }
+    </style>
+    
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>⎛⎝迹路科栈⎠⎞</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-bug"></i>
+                <span>爬亿爬</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/CAPTURE/">
+                    
+                    <span>📶抓包</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/EXTRACTOR/">
+                    
+                    <span>🧪抽取</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/STORE/">
+                    
+                    <span>💾存储</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/OPS/">
+                    
+                    <span>🔧运维</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/FRAMEWORK/">
+                    
+                    <span>⭐框架</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/WEB-RE/">
+                    
+                    <span>📑Web逆向</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/MOBILE-RE/">
+                    
+                    <span>📲安卓逆向</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>迹路文库</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/NOTE/">
+                    
+                    <span>📔速查笔记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/LEETCODE/">
+                    
+                    <span>Leetcode</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/VUE/">
+                    
+                    <span>Vue</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/PYTHON/">
+                    
+                    <span>Python</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/SPRINGBOOT/">
+                    
+                    <span>SpringBoot</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/LEARNING/">
+                    
+                    <span>迹路一下</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/ZHONGYI/">
+                    
+                    <span>🌿中医</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                
+                <span>Chobits</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/CHOBITS/OCR/">
+                    
+                    <span>OCR</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/CHOBITS/STABLE-DIFFUSION/">
+                    
+                    <span>Stable Diffusion</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>目录</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>联系我</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="正则表达式 - 匹配原理及ReDoS攻击"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-02 11:11" pubdate>
+          星期二, 五月 2日 2023, 11:11 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          6.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          53 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">正则表达式 - 匹配原理及ReDoS攻击</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="有穷自动机"><a href="#有穷自动机" class="headerlink" title="有穷自动机"></a>有穷自动机</h2><p>在计算机科学理论中，采用 <strong>计算模型</strong>的理想计算机 来建立数学理论，其中 <strong>有穷自动机</strong> 就是其中之一，除此之外还有，图灵机、递归函数、λ演算、马尔科夫算法等。</p>
+<blockquote>
+<p><strong>有穷自动机</strong>（Finite Automata，也叫<strong>有穷状态自动机</strong>，finite-state machine）。</p>
+</blockquote>
+<h3 id="理解有穷自动机"><a href="#理解有穷自动机" class="headerlink" title="理解有穷自动机"></a>理解有穷自动机</h3><p>例如：自动售卖机就是一种有穷自动机。假设自动售卖机只接收面额为5元的纸币。当你塞入一张5元购买3元的饮料时，机器会给你饮料及找回的2元零钱。</p>
+<p><strong>有穷自动机必须满足4个条件</strong>：</p>
+<ol>
+<li>具有有限多个状态。（根据找零余额的不同，可能有的状态为6个：5元、4元、3元、2元、1元、0元）</li>
+<li>有一套状态转移函数。（比如余额还有3元，你买了一瓶2元的饮料，则转移到状态“1元”，如果你选择买4元的饮料，则报告“余额不足”，状态并不变化）</li>
+<li>有一个开始状态。（余额5元）</li>
+<li>有一个或多个最终状态。（余额0元）</li>
+</ol>
+<p><strong>自动售货机并不关心买了什么商品，也不关心选择商品的顺序，无论做什么，它总处在这6个状态之一，只需要根据 <em>状态转移函数</em> 在其中转移即可。</strong></p>
+<h3 id="典型应用"><a href="#典型应用" class="headerlink" title="典型应用"></a>典型应用</h3><ul>
+<li><p>Regular Expression 正则表达式</p>
+</li>
+<li><p>Lexical Analyzing 词法分析</p>
+</li>
+<li><p>Pattern Matching 模式匹配</p>
+<ul>
+<li><p>精确匹配，前缀匹配</p>
+</li>
+<li><p>多模式匹配（AC自动机）</p>
+</li>
+</ul>
+</li>
+<li><p>Dictionary Compressing 词表压缩</p>
+<ul>
+<li>自动机最小化，字典序计算</li>
+</ul>
+</li>
+</ul>
+<p><a href="#%E9%99%84%E5%BD%95">更深原理，详见文末附录</a></p>
+<h2 id="正则引擎的分类"><a href="#正则引擎的分类" class="headerlink" title="正则引擎的分类"></a>正则引擎的分类</h2><blockquote>
+<p>正则表达式所使用的理论模型就是有穷自动机。</p>
+<p>正则引擎（Regex Engine）主要分为两大类：<code>DFA</code>（Deterministic Finite Automaton，确定有穷自动机）和 <code>NFA</code>（Nondeterministic Finite Automaton，非确定有穷自动机）</p>
+<p>NFA 有 <strong>传统型NFA</strong>（Traditional NFA）和 <strong>POSIX NFA</strong>两种。两者的主要区别在于，如果多选分支中的多个分支都能匹配，传统型的NFA优先选择左侧的分支，而POSIX NFA一定要选择最长的分支。如匹配字符串 <code>Tomcat</code> ，若正则为 <code>(Tom|Tomcat)</code> ，传统型NFA结果为 <code>Tom</code> ，POSIX NFA结果为 <code>Tomcat</code> ；若正则为 <code>(Tomcat|Tom)</code> ，传统型NFA结果为 <code>Tomcat</code> ，POSIX NFA结果为 <code>Tomcat</code>。</p>
+</blockquote>
+<h3 id="常用程序所使用的正则引擎"><a href="#常用程序所使用的正则引擎" class="headerlink" title="常用程序所使用的正则引擎"></a>常用程序所使用的正则引擎</h3><table>
+<thead>
+<tr>
+<th>引擎类型</th>
+<th>程序</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DFA</td>
+<td>awk(大多数版本)、egrep(大多数版本)、MySQL</td>
+</tr>
+<tr>
+<td>传统型NFA</td>
+<td>grep(大多数版本)、Perl、.NET、Java、JavaScript、PHP、Python、Ruby、vi</td>
+</tr>
+</tbody></table>
+<h3 id="判断-传统型NFA-还是-POSIX-NFA"><a href="#判断-传统型NFA-还是-POSIX-NFA" class="headerlink" title="判断 传统型NFA 还是 POSIX NFA"></a>判断 传统型NFA 还是 POSIX NFA</h3><blockquote>
+<p>匹配字符串 <code>Tomcat</code> ，若正则为 <code>(Tom|Tomcat)</code> ，传统型NFA结果为 <code>Tom</code> ，POSIX NFA结果为 <code>Tomcat</code> ；若正则为 <code>(Tomcat|Tom)</code> ，传统型NFA结果为 <code>Tomcat</code> ，POSIX NFA结果为 <code>Tomcat</code>。</p>
+</blockquote>
+<h3 id="判断-DFA-还是-POSIX-NFA"><a href="#判断-DFA-还是-POSIX-NFA" class="headerlink" title="判断 DFA 还是 POSIX NFA"></a>判断 DFA 还是 POSIX NFA</h3><blockquote>
+<p><strong>DFA不支持捕获型括号（capturing parentheses）和 回溯（backreferences）。</strong></p>
+<p><strong>不过，也存在同时使用两种引擎的混合系统，如果没用使用捕获型括号，就会使用DFA。</strong></p>
+<p>用正则 <code>^(a+)+$</code> ，测试文本 <code>aaaaaaaaaaaaaaaaaaaaax</code>：</p>
+<ul>
+<li>如果执行时间很短，为DFA</li>
+<li>如果执行时间很长，为NFA（再用上一项判断方法，进一步判断是传统型NFA 还是 POSIX NFA）</li>
+<li>如果堆栈溢出（stack overflow）或超时退出，为NFA。</li>
+</ul>
+</blockquote>
+<h3 id="DFA-和-NFA-比较"><a href="#DFA-和-NFA-比较" class="headerlink" title="DFA 和 NFA 比较"></a>DFA 和 NFA 比较</h3><blockquote>
+<ul>
+<li>文本主导的DFA引擎 比 表达式主导的NFA引擎 要快。因为DFA引擎是 <strong>确定型的</strong>（deterministic），目标文本中的每个字符仅检查一遍。</li>
+<li>DFA不需要回溯，即不需要保存状态。</li>
+<li>在构建复杂的正则（多选分支）时，DFA需要更多的时间和内存。因为开始尝试匹配的时候，它已经内建了一张路线图（map），字符串中每个字符都会按照这张路线图来匹配。</li>
+</ul>
+</blockquote>
+<h2 id="正则的匹配过程"><a href="#正则的匹配过程" class="headerlink" title="正则的匹配过程"></a>正则的匹配过程</h2><h3 id="DFA引擎"><a href="#DFA引擎" class="headerlink" title="DFA引擎"></a>DFA引擎</h3><blockquote>
+<p>用正则 <code>a(d|b)c</code> 匹配文本 <code>abc</code> 的匹配过程</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>字符串</th>
+<th>正则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1.编译正则，准备开始匹配</td>
+<td>abc</td>
+<td>a(d|b)c</td>
+</tr>
+<tr>
+<td>2.匹配 <code>a</code>，匹配成功</td>
+<td><span style='color:red'>a</span>bc</td>
+<td><span style='color:red'>a</span>(d|b)c</td>
+</tr>
+<tr>
+<td>3.下一个字符，<code>b</code> 匹配成功</td>
+<td>a<span style='color:red'>b</span>c</td>
+<td>a(<span style='color:red'>d</span>|<span style='color:red'>b</span>)c</td>
+</tr>
+<tr>
+<td>4.下一个字符，<code>c</code> 匹配成功</td>
+<td>ab<span style='color:red'>c</span></td>
+<td>a(d|b)<span style='color:red'>c</span></td>
+</tr>
+<tr>
+<td>5.匹配结束，结果为 <code>abc</code></td>
+<td><span style='color:red'>abc</span></td>
+<td><span style='color:red'>a</span>(d|<span style='color:red'>b</span>)<span style='color:red'>c</span></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>DFA引擎的一些特点：</p>
+<ol>
+<li><strong>文本主导</strong>：按照文本的顺序执行，这也就能说明为什么DFA引擎是确定型(deterministic)了，稳定！</li>
+<li><strong>记录当前有效的所有可能</strong>：我们看到当执行到 <code>(d|b)</code> 时，同时比较表达式中的 <code>d</code> 和 <code>b</code>，所以会需要更多的内存。</li>
+<li><strong>每个字符只检查一次</strong>：这提高了执行效率，而且速度与正则表达式无关。</li>
+<li><strong>不能使用反向引用等功能</strong>：因为每个字符只检查一次，文本零宽度（位置）只记录当前比较值，所以不能使用反向引用、环视等一些功能！</li>
+</ol>
+</blockquote>
+<h3 id="NFA引擎"><a href="#NFA引擎" class="headerlink" title="NFA引擎"></a>NFA引擎</h3><blockquote>
+<p> 用正则 <code>a(d|b)c</code> 匹配文本 <code>abc</code> 的匹配过程</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>字符串</th>
+<th>正则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1.编译正则，准备开始匹配</td>
+<td>abc</td>
+<td>a(d|b)c</td>
+</tr>
+<tr>
+<td>2.匹配 <code>a</code>，匹配成功</td>
+<td><span style='color:red'>a</span>bc</td>
+<td><span style='color:red'>a</span>(d|b)c</td>
+</tr>
+<tr>
+<td>3.从正则分支中，选择左边的匹配</td>
+<td><span style='color:red'>a</span>bc</td>
+<td>a(<span style='color:red'>d</span>|b)c</td>
+</tr>
+<tr>
+<td>4.记录当前位置（备用状态，saved state）</td>
+<td>a<span style='color:red'>_</span>bc</td>
+<td>a(<span style='color:red'>d</span>|b)c</td>
+</tr>
+<tr>
+<td>5. <code>d</code> 匹配不成功</td>
+<td>a_<span style='color:red'>b</span>_c</td>
+<td>a(<span style='color:red'>d</span>|b)c</td>
+</tr>
+<tr>
+<td>6.换另外一个分支匹配，位置回退</td>
+<td>a<span style='color:red'>_</span>bc</td>
+<td>a(d|<span style='color:red'>b</span>)c</td>
+</tr>
+<tr>
+<td>7.重新传动，<code>b</code> 匹配成功</td>
+<td>a_<span style='color:red'>b</span>_c</td>
+<td>a(d|<span style='color:red'>b</span>)c</td>
+</tr>
+<tr>
+<td>8.下一个字符，<code>c</code> 匹配成功</td>
+<td>ab<span style='color:red'>c</span></td>
+<td>a(d|b)<span style='color:red'>c</span></td>
+</tr>
+<tr>
+<td>9.匹配结束，结果为 <code>abc</code></td>
+<td><span style='color:red'>abc</span></td>
+<td><span style='color:red'>a</span>(d|<span style='color:red'>b</span>)<span style='color:red'>c</span></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>NFA引擎的一些特点：</p>
+<ol>
+<li><strong>文表达式主导</strong>：按照表达式的一部分执行，如果不匹配换其他部分继续匹配，直到表达式匹配完成。</li>
+<li><strong>会记录某个位置</strong>：我们看到当执行到 <code>(d|b)</code> 时，NFA引擎会记录字符的位置（零宽度），然后选择其中一个先匹配。</li>
+<li><strong>单个字符可能检查多次</strong>：我们看到当执行到 <code>(d|b)</code> 时，比较<code>d</code>后发现不匹配，于是NFA引擎换表达式的另一个分支 <code>b</code>，同时文本位置<strong>回退</strong>，重新匹配字符’b’。这也是NFA引擎是非确定型的原因，同时带来另一个问题效率可能没有DFA引擎高。</li>
+<li><strong>可实现反向引用等功能</strong>：因为具有<strong>回退</strong>这一步，所以可以很容易的实现反向引用、环视等一些功能！</li>
+</ol>
+</blockquote>
+<p>注意：<a href="#%E5%B8%B8%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%89%80%E4%BD%BF%E7%94%A8%E7%9A%84%E6%AD%A3%E5%88%99%E5%BC%95%E6%93%8E">**绝大多数编程语言都选择 NFA (非确定型有穷自动机) 作为引擎 **</a></p>
+<h2 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h2><p>当正则匹配不成功之后，文本的位置发生回退，选择另外一个分支匹配的这个回退操作，叫做 <strong>回溯</strong> 。</p>
+<p><strong>回溯的原理</strong> 类似走迷宫。当遇到死胡同的时候需要返回原来的位置后，再进入新的道路。</p>
+<p><img src="/cbf0d06a2c4f/image-20220604103630069.png" srcset="/img/loading.gif" lazyload alt="image-20220604103630069"></p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><blockquote>
+<ol>
+<li>正则 <code>&quot;.*&quot;</code> 针对 <code>&quot;quoted string&quot;</code> 的匹配过程</li>
+</ol>
+</blockquote>
+<p><img src="/cbf0d06a2c4f/image-20220604104043444.png" srcset="/img/loading.gif" lazyload alt="image-20220604104043444"></p>
+<blockquote>
+<ol start="2">
+<li>正则 <code>&quot;.*&quot;</code> 针对 <code>&quot;quoted&quot; string</code> 的匹配过程</li>
+</ol>
+</blockquote>
+<p><img src="/cbf0d06a2c4f/image-20220604104125458.png" srcset="/img/loading.gif" lazyload alt="image-20220604104125458"></p>
+<p>例子1中，<code>.*</code> 匹配了 <code>quoted string&quot;</code> 后，因为要保证正则中最后一个<code>&quot;</code> 的匹配，不得不回溯一次；</p>
+<p>例子2中的回溯成本要大于例子1，避免这类问题，最好的办法是 <strong>准确的表达意图</strong>。</p>
+<p>优化例子2（可以访问 <a target="_blank" rel="noopener" href="https://regex101.com/">regex101</a> 进行debug观察执行过程）：</p>
+<ul>
+<li>规定双引号字符串中不能出现双引号字符，<code>&quot;[^&quot;]*&quot;</code></li>
+<li>换用忽略量词，<code>&quot;.*?&quot;</code></li>
+<li>除非确实必要，尽量不使用 <code>.*</code></li>
+<li>绝对避免出现 <code>(……*)*</code> 结构的正则。这个时候的回溯会呈指数级增长！!</li>
+</ul>
+<blockquote>
+<p>在实际应用中，除了注意自己写的正则，还需要防范来自外界的恶意程序，它们会造成大量回溯，讲CPU资源消耗殆尽。</p>
+<p>这种攻击叫做，<strong>正则表达式拒绝服务攻击</strong>（Regular Expression Denial of Service）</p>
+</blockquote>
+<h2 id="ReDoS攻击"><a href="#ReDoS攻击" class="headerlink" title="ReDoS攻击"></a>ReDoS攻击</h2><h3 id="计算（回溯）"><a href="#计算（回溯）" class="headerlink" title="计算（回溯）"></a>计算（回溯）</h3><p>计算机在处理正则表达式的时候可以说是非常愚蠢，虽然看上去它们有很强的计算能力。当你需要用 <code>x*y</code> 表达式对字符串 <code>xxxxxxxxxxxxxx</code> 进行匹配时，任何人都可以迅速告诉你无匹配结果，因为这个字符串不包含字符y。但是计算机的正则表达式引擎并不知道！它将执行以下操作</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-text" data-language="text"><code class="language-text">xxxxxxxxxxxxxx # 不匹配
+xxxxxxxxxxxxxx # 回溯
+xxxxxxxxxxxxx  # 不匹配
+xxxxxxxxxxxxx  # 回溯
+xxxxxxxxxxxx   # 不匹配
+xxxxxxxxxxxx   # 回溯
+xxxxxxxxxxx    # 不匹配
+xxxxxxxxxxx    # 回溯
+
+>>很多很多步骤 
+
+xx             # 不匹配
+x              # 回溯
+x              # 不匹配
+               # 无匹配结果
+
+你不会以为结束了吧？这只是第一步！
+
+现在，正则表达式引擎将从第二个x开始匹配，然后是第三个，然后是第四个，依此类推到第14个x。
+
+最终总步骤数为256。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<p>它总共需要256步才能得出无匹配结果这一结论。计算机在这方面真的很蠢。</p>
+<p>同样，如果你使用非贪婪匹配，<code>x*?y</code> 表达式会从一个字母开始匹配，直到尝试过所有的可能，这和贪婪匹配一样愚蠢。</p>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>正如之前所见，使用正则表达式进行匹配搜索可能需要计算执行大量计算步骤，但一般来说这并不是问题，因为计算机速度很快，并且可以在眨眼间完成数千个步骤。</p>
+<p>但是，计算机也是有极限的，我们能否造出一个字符串让计算机长时间的超负荷运转？</p>
+<h4 id="重复运算符嵌套"><a href="#重复运算符嵌套" class="headerlink" title="重复运算符嵌套"></a>重复运算符嵌套</h4><p>如果你看到一个重复运算符嵌套于另一个重复运算符，就可能存在问题。</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-text" data-language="text"><code class="language-text">表达式：  xxxxxxxxxx 17945(x+)*y
+Motive: 会匹配任意数量的x加上一个y
+匹配字符串: xxxxxxxxxx(10 chars)
+计算步骤数: 17945<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<p>此时计算步骤数并不算多，但是，这个增长趋势是很惊人的。</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-text" data-language="text"><code class="language-text">字符串                  X的个数                步数
+z                      0                      3 
+xz                     1                      6 
+xxz                    2                      19 
+xxxz                   3                      49 
+xxxxz                  4                      122 
+xxxxxz                 5                      292 
+xxxxxxz                6                      687 
+xxxxxxxz               7                      1585 
+xxxxxxxxz              8                      3604 
+xxxxxxxxxz             9                      8086 
+xxxxxxxxxxz            10                     17945 
+xxxxxxxxxxxz           11                     39451 
+xxxxxxxxxxxxz          12                     86046 
+xxxxxxxxxxxxxz         13                     186400 
+xxxxxxxxxxxxxxz        14                     401443 
+xxxxxxxxxxxxxxxz       15                     860197
+xxxxxxxxxxxxxxxxz      16                     1835048 
+xxxxxxxxxxxxxxxxxz     17                     3899434 
+xxxxxxxxxxxxxxxxxxz    18                     8257581 
+xxxxxxxxxxxxxxxxxxxz   19                     17432623 
+xxxxxxxxxxxxxxxxxxxxz  20                     36700210 
+xxxxxxxxxxxxxxxxxxxxxz 21                     77070388<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<p>如上所见，计算步骤数随着输入字符串中X的数量呈指数增长。</p>
+<p>我不是很擅长数学，但如果输入40个x，貌似需要的计算步骤数是：</p>
+<p>计算步骤数 &#x3D; 98516241848729725</p>
+<p>如果计算机可以在1秒内完成100万个计算步骤，则需要3123年才能完成所有计算。</p>
+<p>以上我们所展示的情况看起来很是糟糕，但是还存在其他糟糕的情况。</p>
+<h4 id="多个重复运算符1"><a href="#多个重复运算符1" class="headerlink" title="多个重复运算符1"></a>多个重复运算符1</h4><p>如果两个重复运算符相邻，那么也有可能很脆弱。</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-text" data-language="text"><code class="language-text">表达式：  .*\d+\.jpg
+Motive: 会匹配任意字符加上数字加上.jpg
+匹配字符串: 1111111111111111111111111 (25 chars)
+计算步骤数: 9187<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<p>它没有前一个那么严重，但如果程序没有控制输入的长度，它也足够致命。</p>
+<h4 id="多个重复运算符2"><a href="#多个重复运算符2" class="headerlink" title="多个重复运算符2"></a>多个重复运算符2</h4><p>如果两个重复运算符较为相近，也有可能受到攻击。</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-text" data-language="text"><code class="language-text">表达式：  .*\d+.*a
+Motive: 会匹配任意字符串加上数字加上任意字符串加上a字符
+匹配字符串: 1111111111111111111111111 (25 chars)
+计算步骤数: 77600<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<h4 id="多个重复运算符3"><a href="#多个重复运算符3" class="headerlink" title="多个重复运算符3"></a>多个重复运算符3</h4><p><code>|</code>符号加上<code>[]</code>符号再配上<code>+</code>也可能受到攻击。</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-text" data-language="text"><code class="language-text">表达式：  (\d+|[1A])+z
+Motive: 会匹配任意数字或任意（1或A）字符串加上字符z
+匹配字符串: 111111111 (10 chars)
+计算步骤数: 46342<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+
+<h3 id="ReDoS检测"><a href="#ReDoS检测" class="headerlink" title="ReDoS检测"></a>ReDoS检测</h3><ul>
+<li>RegexStaticAnalysis工具，项目地址：<a target="_blank" rel="noopener" href="https://github.com/NicolaasWeideman/RegexStaticAnalysis">https://github.com/NicolaasWeideman/RegexStaticAnalysis</a></li>
+<li>RegexFuzzer（微软），SDL Regex Fuzzer <a target="_blank" rel="noopener" href="https://download.cnet.com/SDL-Regex-Fuzzer/3000-2383_4-75321803.html">https://download.cnet.com/SDL-Regex-Fuzzer/3000-2383_4-75321803.html</a></li>
+<li>正则表达式在线测试网站，网址：<a target="_blank" rel="noopener" href="https://regex101.com/">https://regex101.com/</a></li>
+</ul>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="有穷自动机-1"><a href="#有穷自动机-1" class="headerlink" title="有穷自动机"></a>有穷自动机</h3><h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>有穷自动机有一组状态及其控制，响应外部的“输入”，“控制”从状态移动到状态。各类有穷自动机之间的关键区别之一，在于控制究竟是“确定的”还是“非确定的”，前者意味着在任何时候自动机不能处在一种以上的状态中，后者意味着自动机能同时储在几种状态中。</p>
+<h4 id="确定型有穷自动机（DFA）"><a href="#确定型有穷自动机（DFA）" class="headerlink" title="确定型有穷自动机（DFA）"></a>确定型有穷自动机（DFA）</h4><p><img src="/cbf0d06a2c4f/1670490-20190515094607338-1562574937.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<p>通常同一个五元组来讨论DFA:</p>
+<p>　　　　　　A&#x3D;(Q,Σ,δ,q0,F)</p>
+<p>其中A表示DFA的名称，Q是状态集合，Σ是输入符号的集合，δ是转移函数，q0是初始状态，F是接收状态的集合。</p>
+<p>例：</p>
+<p> <img src="/cbf0d06a2c4f/1670490-20190510181344797-310601861.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<p> 其中同心圆表示的是终止状态</p>
+<p>确定的有限自动机的转换表表示法：</p>
+<p> <img src="/cbf0d06a2c4f/1670490-20190510181325625-1549130236.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<p> 其中“→”符号标记的是起始状态，“*”标记的是终止状态。</p>
+<h4 id="DFA的扩展转移函数"><a href="#DFA的扩展转移函数" class="headerlink" title="DFA的扩展转移函数"></a>DFA的扩展转移函数</h4><p><img src="/cbf0d06a2c4f/1670490-20190529093739932-1624745765.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<h4 id="DFA接受的语言"><a href="#DFA接受的语言" class="headerlink" title="DFA接受的语言"></a>DFA接受的语言</h4><p><img src="/cbf0d06a2c4f/1670490-20190529092412661-1752197506.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<p><em>需要注意的是</em>，有限状态自动机每种状态下接受的输入应该考虑到每一种可能的符号，即使实际的语言并不会在某种状态下产生某个符号，也应该设计一个死锁来接受该种符号。</p>
+<p>下例中，状态D就是一种死锁状态：</p>
+<p> <img src="/cbf0d06a2c4f/1670490-20190510181220818-919398471.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<p><strong>设计能接受某种语言的自动机时，第一步应该考虑的直接从起始状态进入终止状态的情况，然后依次考虑每种状态能进入终止状态的情况。</strong></p>
+<p><strong>不确定的有限状态自动机（NFA）</strong></p>
+<p><img src="/cbf0d06a2c4f/1670490-20190529093246575-1927274303.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<p>这里的2Q表示Q的幂集</p>
+<p> 例如：</p>
+<p><img src="/cbf0d06a2c4f/1670490-20190514125536085-1719134270.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<p>也就是说，不确定有限状态自动机中的一个状态接收同一个输入可能会跳转到不同的状态，并且支持跳转空状态。</p>
+<p><strong>NFA的扩展转移函数</strong></p>
+<p><img src="/cbf0d06a2c4f/1670490-20190603091119962-624667570.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<p>可以发现，DFA的扩展转移函数和NFA的扩展转移函数的区别在于：DFA的扩展转移函数的右边是一个确定的状态，而NFA的扩展转移函数的右边是一个状态的集合，而这个集合种可以有多个状态也可以是一个空集。</p>
+<h4 id="NFA接受的语言"><a href="#NFA接受的语言" class="headerlink" title="NFA接受的语言"></a>NFA接受的语言</h4><p><img src="/cbf0d06a2c4f/1670490-20190603092008678-1772470386.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<p>例如：</p>
+<p><img src="/cbf0d06a2c4f/1670490-20190514134716378-878728047.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<h4 id="通过子集构造将NFA转化成DFA"><a href="#通过子集构造将NFA转化成DFA" class="headerlink" title="通过子集构造将NFA转化成DFA"></a>通过子集构造将NFA转化成DFA</h4><p>当将NFA转化成DFA的时候，DFA的状态转移函数的右边是一个集合，不过这依然是一个确定的状态，它是这样的一个状态：由NFA的状态集合而构成的一个确定的状态。换句话说，DFA的状态集合是NFA的状态集合的子集的集合。 </p>
+<p>下图是一个NFA的状态迁移图：</p>
+<p><img src="/cbf0d06a2c4f/1670490-20190609104718909-1173649437.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<p><strong>子集构造</strong>：</p>
+<p><img src="/cbf0d06a2c4f/1670490-20190609111124649-420399014.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<p>然后根据上述的子集构造方法构造NFA的完整子集构造。因为NFA有3种状态{q0, q1, q2}，所以完整的子集构造产生一个带有23&#x3D;8种状态的DFA，对应于这三种状态的所有子集合。下图是这8中状态的状态转移表。</p>
+<p><img src="/cbf0d06a2c4f/1670490-20190609111556836-868290685.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<p>显然，对于上面这8种状态，从状态{q0}开始，只能到达{q0}、{q0, q1}、和{q0, q2}。其余5种状态都是从初始状态不可达的，也都可以不出现在表中。</p>
+<p>进行了子集构造后，去除多余的状态即可得到这样的一个DFA，它与上面的NFA等价：</p>
+<p><img src="/cbf0d06a2c4f/1670490-20190609104814110-597674008.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<h4 id="带空迁移的有限自动机（ε-NFA）"><a href="#带空迁移的有限自动机（ε-NFA）" class="headerlink" title="带空迁移的有限自动机（ε-NFA）"></a>带空迁移的有限自动机（ε-NFA）</h4><p><img src="/cbf0d06a2c4f/1670490-20190603092325853-1237030309.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<p>例如：</p>
+<p><img src="/cbf0d06a2c4f/1670490-20190514141157163-233983710.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<p>也就是说，带空迁移的有限状态自动机支持输入空符号进行状态迁移。</p>
+<h4 id="ε闭包"><a href="#ε闭包" class="headerlink" title="ε闭包"></a>ε闭包</h4><p>非形式化的定义：顺着所有从状态q出发带ε标记的转移来求状态q的ε的闭包。但当顺着ε到达其他状态后，再从这些状态发出ε转移，依此类推，最终求出顺着箭弧都带ε标记的任何路径从q可达的任何每个状态。</p>
+<p>而其形式化的定义如下：</p>
+<p><img src="/cbf0d06a2c4f/1670490-20190603093327179-693580891.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<h4 id="ε-NFA的扩展转移"><a href="#ε-NFA的扩展转移" class="headerlink" title="ε-NFA的扩展转移"></a>ε-NFA的扩展转移</h4><p><strong><img src="/cbf0d06a2c4f/1670490-20190603165304314-332612214.png" srcset="/img/loading.gif" lazyload alt="图"></strong></p>
+<h4 id="ε-NFA接受的语言"><a href="#ε-NFA接受的语言" class="headerlink" title="ε-NFA接受的语言"></a>ε-NFA接受的语言</h4><p>与NFA一样，如果一个语言产生的句子中存在一条能从起始状态到达终止状态的路径，则称这种语言是ε-NFA接受的语言，记为：</p>
+<p>​                    <img src="/cbf0d06a2c4f/1670490-20190514141610728-560229388.png" srcset="/img/loading.gif" lazyload alt="图"></p>
+<p>显然，ε-NFA和NFA是等价的。对于一个ε-NFA，依次讨论每种状态下接收非空符号的状态迁移情况，可以构造出一个NFA。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/PYP/" class="category-chain-item">爬亿爬</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/PYP/EXTRACTOR/" class="category-chain-item">抽取</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">#正则表达式</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>正则表达式 - 匹配原理及ReDoS攻击</div>
+      <div>https://元气码农少女酱.我爱你/cbf0d06a2c4f/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>元气码农少女酱</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月2日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/434b0b17dd4f/" title="XPath选择器">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">XPath选择器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/67a5fa31d20a/" title="正则表达式 - 必知必会">
+                        <span class="hidden-mobile">正则表达式 - 必知必会</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+  <script async src="js/snow.js" crossorigin="anonymous"></script>
+  <script async src="js/love.js" crossorigin="anonymous"></script>
+  <div class="text-center" style="font-size:12px">
+    © 2022  By  <a href="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl">⎛⎝迹路科栈⎠⎞</a> <a href="https://beian.miit.gov.cn/" target="_blank">津ICP备20003416号-1</a>
+  </div>
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300,"hOffset":-10,"vOffset":-10},"mobile":{"show":true},"log":false});</script></body>
+</html>

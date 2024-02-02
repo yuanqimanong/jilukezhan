@@ -1,0 +1,1274 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="元气码农少女酱">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="简介 NoSQL(NoSQL &#x3D; Not Only SQL )，意即”不仅仅是SQL” MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。 在高负载的情况下，添加更多的节点，可以保证服务器性能。 MongoDB 旨在为WEB应用提供可扩展的高性能数据存储解决方案。 MongoDB 将数据存储为一个文档，数据结构由键值(key&#x3D;&gt;value)对">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB">
+<meta property="og:url" content="https://元气码农少女酱.我爱你/7ebbaebed260/">
+<meta property="og:site_name" content="⎛⎝迹路科栈⎠⎞">
+<meta property="og:description" content="简介 NoSQL(NoSQL &#x3D; Not Only SQL )，意即”不仅仅是SQL” MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。 在高负载的情况下，添加更多的节点，可以保证服务器性能。 MongoDB 旨在为WEB应用提供可扩展的高性能数据存储解决方案。 MongoDB 将数据存储为一个文档，数据结构由键值(key&#x3D;&gt;value)对">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-02T03:11:11.000Z">
+<meta property="article:modified_time" content="2024-01-30T13:20:33.348Z">
+<meta property="article:author" content="元气码农少女酱">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="MongoDB">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>MongoDB - ⎛⎝迹路科栈⎠⎞</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"c48bd071d08fdfa52afe48f0d2e0a43e","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?c48bd071d08fdfa52afe48f0d2e0a43e";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+    <link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css" media="print" onload="this.media='all'">
+    <style>
+      html, body, .markdown-body, p {
+        font-family: 'LXGW WenKai Screen';
+      }
+    </style>
+    
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>⎛⎝迹路科栈⎠⎞</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-bug"></i>
+                <span>爬亿爬</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/CAPTURE/">
+                    
+                    <span>📶抓包</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/EXTRACTOR/">
+                    
+                    <span>🧪抽取</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/STORE/">
+                    
+                    <span>💾存储</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/OPS/">
+                    
+                    <span>🔧运维</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/FRAMEWORK/">
+                    
+                    <span>⭐框架</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/WEB-RE/">
+                    
+                    <span>📑Web逆向</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/MOBILE-RE/">
+                    
+                    <span>📲安卓逆向</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>迹路文库</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/NOTE/">
+                    
+                    <span>📔速查笔记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/LEETCODE/">
+                    
+                    <span>Leetcode</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/VUE/">
+                    
+                    <span>Vue</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/PYTHON/">
+                    
+                    <span>Python</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/SPRINGBOOT/">
+                    
+                    <span>SpringBoot</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/LEARNING/">
+                    
+                    <span>迹路一下</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/ZHONGYI/">
+                    
+                    <span>🌿中医</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                
+                <span>Chobits</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/CHOBITS/OCR/">
+                    
+                    <span>OCR</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/CHOBITS/STABLE-DIFFUSION/">
+                    
+                    <span>Stable Diffusion</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>目录</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>联系我</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="MongoDB"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-02 11:11" pubdate>
+          星期二, 五月 2日 2023, 11:11 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          4.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          35 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">MongoDB</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><blockquote>
+<p>NoSQL(NoSQL &#x3D; Not Only SQL )，意即”不仅仅是SQL”</p>
+<p>MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。</p>
+<p>在高负载的情况下，添加更多的节点，可以保证服务器性能。</p>
+<p>MongoDB 旨在为WEB应用提供可扩展的高性能数据存储解决方案。</p>
+<p>MongoDB 将数据存储为一个文档，数据结构由键值(key&#x3D;&gt;value)对组成。MongoDB 文档类似于 JSON 对象。字段值可以包含其他文档，数组及文档数组。</p>
+</blockquote>
+<h2 id="相关网站"><a href="#相关网站" class="headerlink" title="相关网站"></a>相关网站</h2><blockquote>
+<p>官网手册 👉 <a target="_blank" rel="noopener" href="https://www.mongodb.com/docs/manual/tutorial/getting-started/">https://www.mongodb.com/docs/manual/tutorial/getting-started/</a></p>
+<p>中文手册 👉 <a target="_blank" rel="noopener" href="https://mongodb.net.cn/manual/">https://mongodb.net.cn/manual/</a></p>
+<p>菜鸟教程 👉 <a target="_blank" rel="noopener" href="https://www.runoob.com/mongodb/mongodb-databases-documents-collections.html">https://www.runoob.com/mongodb/mongodb-databases-documents-collections.html</a></p>
+</blockquote>
+<h2 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a>Docker安装</h2><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 拉取镜像</span>
+<span class="token function">docker</span> pull mongo
+
+<span class="token comment"># 创建容器</span>
+<span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token parameter variable">-p</span> <span class="token number">27017</span>:27017 <span class="token parameter variable">-v</span> mongo_configdb:/data/configdb <span class="token parameter variable">-v</span> mongo_db:/data/db <span class="token parameter variable">--name</span> mongo-test mongo <span class="token parameter variable">--auth</span>
+
+<span class="token comment"># 进入容器</span>
+<span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> mongo-test mongo admin
+
+<span class="token comment"># 创建管理员账号</span>
+db.createUser<span class="token punctuation">(</span><span class="token punctuation">&#123;</span> user: <span class="token string">'username'</span>, pwd: <span class="token string">'password'</span>, roles: <span class="token punctuation">[</span> <span class="token punctuation">&#123;</span> role: <span class="token string">"userAdminAnyDatabase"</span>, db: <span class="token string">"admin"</span> <span class="token punctuation">&#125;</span> <span class="token punctuation">]</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment"># 创建root账号</span>
+db.createUser<span class="token punctuation">(</span><span class="token punctuation">&#123;</span>user: <span class="token string">'root'</span>, pwd: <span class="token string">'root'</span>, roles: <span class="token punctuation">[</span><span class="token string">'root'</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+
+<h2 id="MongoDB-概念解析"><a href="#MongoDB-概念解析" class="headerlink" title="MongoDB 概念解析"></a>MongoDB 概念解析</h2><table>
+<thead>
+<tr>
+<th align="left">SQL术语&#x2F;概念</th>
+<th align="left">MongoDB术语&#x2F;概念</th>
+<th align="left">解释&#x2F;说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">database</td>
+<td align="left">database</td>
+<td align="left">数据库</td>
+</tr>
+<tr>
+<td align="left">table</td>
+<td align="left">collection</td>
+<td align="left">数据库表&#x2F;集合</td>
+</tr>
+<tr>
+<td align="left">row</td>
+<td align="left">document</td>
+<td align="left">数据记录行&#x2F;文档</td>
+</tr>
+<tr>
+<td align="left">column</td>
+<td align="left">field</td>
+<td align="left">数据字段&#x2F;域</td>
+</tr>
+<tr>
+<td align="left">index</td>
+<td align="left">index</td>
+<td align="left">索引</td>
+</tr>
+<tr>
+<td align="left">table joins</td>
+<td align="left">嵌套文档</td>
+<td align="left">表连接，MongoDB不支持，使用嵌入式的文档来代替关联查询</td>
+</tr>
+<tr>
+<td align="left">primary key</td>
+<td align="left">primary key</td>
+<td align="left">主键，MongoDB自动将<code>_id</code>字段设置为主键</td>
+</tr>
+</tbody></table>
+<h2 id="设计规范"><a href="#设计规范" class="headerlink" title="设计规范"></a>设计规范</h2><ol>
+<li>数据库设计规范<ol>
+<li>数据库名约定小写</li>
+<li>不能包含除 <code>_</code> 以外的特殊字符</li>
+<li>长度最大为64个字符</li>
+</ol>
+</li>
+<li>集合设计规范<ol>
+<li>集合名称约定小写</li>
+<li>不能包含除 <code>_</code> 以外的特殊字符，禁止以 <code>system.</code> 开头</li>
+<li>长度最大为64个字符，包含前缀 <code>database.</code> 的内容</li>
+<li>同一个业务尽可能使用相同前缀，尽可能表达用途，【业务标识】_【表标识】</li>
+</ol>
+</li>
+<li>文档设计规范<ol>
+<li>KEY 不能以$开头，不能包含.(点号)</li>
+<li><code>_ID</code> 推荐默认值，自定义主键会减慢插入速度</li>
+<li>推荐使用短字段名，为了提高查询效率，应尽量在统一了大小写之后再插入到数据库中</li>
+<li>禁止在同一个集合字段中存储多个数据类型的数据</li>
+<li>禁止日期类型选择为string，不同的日期格式的文档，不支持等值查询，不支持范围查询</li>
+<li>建议尽量不要存储大型对象，MongoDB能够支持最大16 MB的文档大小</li>
+</ol>
+</li>
+<li>索引设计规范<ol>
+<li>索引命名：IDX_【索引字段名】</li>
+<li>长度不超128个字符</li>
+<li>遵循“最左原则”</li>
+</ol>
+</li>
+</ol>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><ul>
+<li><p>基本指令</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 显示数据库</span>
+show dbs
+show databases
+
+<span class="token comment"># 进入指定数据库</span>
+use 数据库名称
+
+<span class="token comment"># 查看当前所在数据库</span>
+db
+
+<span class="token comment"># 显示数据库中所有集合</span>
+show collections<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>CRUD操作</p>
+<ul>
+<li><p>增</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 增一条</span>
+db.student_info.insertOne<span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    name: <span class="token string">'zhangsan'</span>,
+    age: <span class="token number">9</span>,
+    gender: <span class="token string">'male'</span>,
+    hobby: <span class="token punctuation">[</span><span class="token string">'sing'</span>, <span class="token string">'jump'</span>, <span class="token string">'rap'</span>, <span class="token string">'basketball'</span><span class="token punctuation">]</span>,
+    exam_score: <span class="token punctuation">[</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token string">'yu'</span><span class="token builtin class-name">:</span> <span class="token number">5</span>
+        <span class="token punctuation">&#125;</span>,
+        <span class="token punctuation">&#123;</span>
+            <span class="token string">'shu'</span><span class="token builtin class-name">:</span> <span class="token number">2</span>
+        <span class="token punctuation">&#125;</span>,
+        <span class="token punctuation">&#123;</span>
+            <span class="token string">'wai'</span><span class="token builtin class-name">:</span> <span class="token number">3</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 增多条</span>
+db.student_info.insertMany<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">&#123;</span>
+    name: <span class="token string">'lisi'</span>,
+    age: <span class="token number">13</span>,
+    gender: <span class="token string">'famale'</span>,
+    hobby: <span class="token punctuation">[</span><span class="token string">'basketball'</span>, <span class="token string">'football'</span><span class="token punctuation">]</span>,
+    exam_score: <span class="token punctuation">[</span><span class="token punctuation">&#123;</span>
+        <span class="token string">'yu'</span><span class="token builtin class-name">:</span> <span class="token number">90</span>
+    <span class="token punctuation">&#125;</span>, <span class="token punctuation">&#123;</span>
+        <span class="token string">'shu'</span><span class="token builtin class-name">:</span> <span class="token number">96</span>
+    <span class="token punctuation">&#125;</span>, <span class="token punctuation">&#123;</span>
+        <span class="token string">'wai'</span><span class="token builtin class-name">:</span> <span class="token number">89</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">]</span>,
+    is_famale: <span class="token boolean">true</span>
+<span class="token punctuation">&#125;</span>, <span class="token punctuation">&#123;</span>
+    name: <span class="token string">'wangwu'</span>,
+    age: <span class="token number">7</span>,
+    gender: <span class="token string">'male'</span>,
+    hobby: <span class="token punctuation">[</span><span class="token string">'sleep'</span>, <span class="token string">'eat'</span><span class="token punctuation">]</span>,
+    exam_score: <span class="token punctuation">[</span><span class="token punctuation">&#123;</span>
+        <span class="token string">'yu'</span><span class="token builtin class-name">:</span> <span class="token number">55</span>
+    <span class="token punctuation">&#125;</span>, <span class="token punctuation">&#123;</span>
+        <span class="token string">'shu'</span><span class="token builtin class-name">:</span> <span class="token number">20</span>
+    <span class="token punctuation">&#125;</span>, <span class="token punctuation">&#123;</span>
+        <span class="token string">'wai'</span><span class="token builtin class-name">:</span> <span class="token number">93</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span>, <span class="token punctuation">&#123;</span>
+    name: <span class="token string">'zhaoliu'</span>,
+    age: <span class="token number">16</span>,
+    gender: <span class="token string">'male'</span>,
+    hobby: <span class="token punctuation">[</span><span class="token string">'study'</span>, <span class="token string">'play'</span><span class="token punctuation">]</span>,
+    exam_score: <span class="token punctuation">[</span><span class="token punctuation">&#123;</span>
+        <span class="token string">'yu'</span><span class="token builtin class-name">:</span> <span class="token number">100</span>
+    <span class="token punctuation">&#125;</span>, <span class="token punctuation">&#123;</span>
+        <span class="token string">'shu'</span><span class="token builtin class-name">:</span> <span class="token number">100</span>
+    <span class="token punctuation">&#125;</span>, <span class="token punctuation">&#123;</span>
+        <span class="token string">'wai'</span><span class="token builtin class-name">:</span> <span class="token number">100</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 不推荐直接使用 insert()</span>
+
+<span class="token comment"># 插入的其他方法</span>
+db.collection.updateOne<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 与upsert: true选项一起使用时。</span>
+db.collection.updateMany<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 与upsert: true选项一起使用时。</span>
+db.collection.findAndModify<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 与upsert: true选项一起使用时。</span>
+db.collection.findOneAndUpdate<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment"># 与 upsert: true选项一起使用时。</span>
+db.collection.findOneAndReplace<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment"># 与 upsert: true选项一起使用时。</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>查</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查询表中所有的数据</span>
+db.student_info.find<span class="token punctuation">(</span><span class="token punctuation">)</span>
+db.getCollection<span class="token punctuation">(</span><span class="token string">"student_info"</span><span class="token punctuation">)</span>.find<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 查第一条</span>
+db.student_info.findOne<span class="token punctuation">(</span><span class="token punctuation">)</span>
+db.student_info.find<span class="token punctuation">(</span><span class="token punctuation">)</span>.limit<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 查总数</span>
+db.student_info.find<span class="token punctuation">(</span><span class="token punctuation">)</span>.count<span class="token punctuation">(</span><span class="token punctuation">)</span>
+db.student_info.find<span class="token punctuation">(</span><span class="token punctuation">)</span>.length<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+
+<span class="token comment"># 查询 age=13 的数据</span>
+db.student_info.find<span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    age: <span class="token number">13</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 查询 age=13 的数据 只返回 name、gender 字段</span>
+db.student_info.find<span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    age: <span class="token number">13</span>
+<span class="token punctuation">&#125;</span>, <span class="token punctuation">&#123;</span>
+    _id: <span class="token number">0</span>,
+    name: <span class="token number">1</span>,
+    gender: <span class="token number">1</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 查询 10&lt;age≤16 的数据</span>
+db.student_info.find<span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    <span class="token variable">$and</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">&#123;</span>
+            age: <span class="token punctuation">&#123;</span>
+                <span class="token variable">$gt</span><span class="token builtin class-name">:</span> <span class="token number">10</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>,
+        <span class="token punctuation">&#123;</span>
+            age: <span class="token punctuation">&#123;</span>
+                <span class="token variable">$lte</span><span class="token builtin class-name">:</span> <span class="token number">16</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+db.student_info.find<span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    age: <span class="token punctuation">&#123;</span>
+        <span class="token variable">$gt</span><span class="token builtin class-name">:</span> <span class="token number">10</span>,
+        <span class="token variable">$lte</span><span class="token builtin class-name">:</span> <span class="token number">16</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 常用的比较运算符:</span>
+<span class="token comment"># $gt: 大于   $lt: 小于</span>
+<span class="token comment"># $gte: 大于等于   $lte:小于等于</span>
+<span class="token comment"># $ne: 不等于</span>
+
+<span class="token comment"># 查询后，排序 （升序 1，降序 -1）</span>
+db.student_info.find<span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    age: <span class="token punctuation">&#123;</span>
+        <span class="token variable">$gt</span><span class="token builtin class-name">:</span> <span class="token number">0</span>,
+        <span class="token variable">$lte</span><span class="token builtin class-name">:</span> <span class="token number">20</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>.sort<span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    age:  - <span class="token number">1</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment"># limit()方法来读取指定数量的数据，skip()方法来跳过指定数量的数据</span>
+db.student_info.find<span class="token punctuation">(</span><span class="token punctuation">)</span>.limit<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>.skip<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 是否存在 is_famale 字段</span>
+db.student_info.find<span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    is_famale: <span class="token punctuation">&#123;</span>
+        <span class="token variable">$exists</span><span class="token builtin class-name">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 正则匹配</span>
+db.student_info.find<span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    name: <span class="token punctuation">&#123;</span>
+        <span class="token variable">$regex</span><span class="token builtin class-name">:</span> /^zhang. * /
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>改</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># name = zhangsan 的数据，zhangsan 改成 kuangtuzhangsan</span>
+db.student_info.updateOne<span class="token punctuation">(</span>
+    <span class="token punctuation">&#123;</span>
+        name: <span class="token string">'zhangsan'</span>
+    <span class="token punctuation">&#125;</span>,
+    <span class="token punctuation">&#123;</span>
+        <span class="token variable">$set</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span>
+            name: <span class="token string">'kuangtuzhangsan'</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment"># gender = male 新增字段  new_field = '新增字段'</span>
+db.student_info.updateMany<span class="token punctuation">(</span>
+    <span class="token punctuation">&#123;</span>
+        gender: <span class="token string">'male'</span>
+    <span class="token punctuation">&#125;</span>,
+    <span class="token punctuation">&#123;</span>
+        <span class="token variable">$set</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span>
+            new_field: <span class="token string">'新增字段'</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment"># 用更新语句删除 new_field 字段</span>
+db.student_info.updateMany<span class="token punctuation">(</span>
+    <span class="token punctuation">&#123;</span>
+        gender: <span class="token string">'male'</span>
+    <span class="token punctuation">&#125;</span>,
+    <span class="token punctuation">&#123;</span>
+        <span class="token variable">$unset</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span>
+            new_field: <span class="token boolean">true</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>删</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 删除一条 name = "kuangtuzhangsan"</span>
+db.student_info.deleteOne<span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    name: <span class="token string">"kuangtuzhangsan"</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 删除多条 10&lt;age≤16 的数据</span>
+db.student_info.deleteMany<span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    age: <span class="token punctuation">&#123;</span>
+        <span class="token variable">$gt</span><span class="token builtin class-name">:</span> <span class="token number">10</span>,
+        <span class="token variable">$lte</span><span class="token builtin class-name">:</span> <span class="token number">16</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 删除全部数据</span>
+db.student_info.deleteMany<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 删除集合</span>
+db.student_info.drop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 删除数据库</span>
+db.dropDatabase<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure></li>
+</ul>
+</li>
+</ul>
+<h2 id="Java-操作"><a href="#Java-操作" class="headerlink" title="Java 操作"></a>Java 操作</h2><figure><div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">SpringBoot</span> <span class="token class-name">MongoTemplate</span>
+https<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>www<span class="token punctuation">.</span>mongodb<span class="token punctuation">.</span>com<span class="token operator">/</span>java<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></figure>
+
+
+
+<h2 id="Python-操作"><a href="#Python-操作" class="headerlink" title="Python 操作"></a>Python 操作</h2><figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">motor
+pymongo<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/PYP/" class="category-chain-item">爬亿爬</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/PYP/STORE/" class="category-chain-item">存储</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">#数据库</a>
+      
+        <a href="/tags/MONGODB/">#MongoDB</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>MongoDB</div>
+      <div>https://元气码农少女酱.我爱你/7ebbaebed260/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>元气码农少女酱</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月2日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/c0c979fb059e/" title="通用抽取库">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">通用抽取库</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/e9a6abc21627/" title="Redis">
+                        <span class="hidden-mobile">Redis</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+  <script async src="js/snow.js" crossorigin="anonymous"></script>
+  <script async src="js/love.js" crossorigin="anonymous"></script>
+  <div class="text-center" style="font-size:12px">
+    © 2022  By  <a href="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl">⎛⎝迹路科栈⎠⎞</a> <a href="https://beian.miit.gov.cn/" target="_blank">津ICP备20003416号-1</a>
+  </div>
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300,"hOffset":-10,"vOffset":-10},"mobile":{"show":true},"log":false});</script></body>
+</html>

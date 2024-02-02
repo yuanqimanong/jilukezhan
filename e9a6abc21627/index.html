@@ -1,0 +1,1398 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="元气码农少女酱">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="简介 Redis 是一个开源（BSD许可）的，内存中的数据结构存储系统，它可以用作数据库、缓存和消息中间件。 它支持多种类型的数据结构，如 字符串（strings）， 散列（hashes）， 列表（lists）， 集合（sets）， 有序集合（sorted sets） 与范围查询， bitmaps， hyperloglogs 和 地理空间（geospatial） 索引半径查询。 Redis 内置了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis">
+<meta property="og:url" content="https://元气码农少女酱.我爱你/e9a6abc21627/">
+<meta property="og:site_name" content="⎛⎝迹路科栈⎠⎞">
+<meta property="og:description" content="简介 Redis 是一个开源（BSD许可）的，内存中的数据结构存储系统，它可以用作数据库、缓存和消息中间件。 它支持多种类型的数据结构，如 字符串（strings）， 散列（hashes）， 列表（lists）， 集合（sets）， 有序集合（sorted sets） 与范围查询， bitmaps， hyperloglogs 和 地理空间（geospatial） 索引半径查询。 Redis 内置了">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-02T03:11:11.000Z">
+<meta property="article:modified_time" content="2024-01-30T13:20:33.348Z">
+<meta property="article:author" content="元气码农少女酱">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Redis - ⎛⎝迹路科栈⎠⎞</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"c48bd071d08fdfa52afe48f0d2e0a43e","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?c48bd071d08fdfa52afe48f0d2e0a43e";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+    <link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css" media="print" onload="this.media='all'">
+    <style>
+      html, body, .markdown-body, p {
+        font-family: 'LXGW WenKai Screen';
+      }
+    </style>
+    
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>⎛⎝迹路科栈⎠⎞</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-bug"></i>
+                <span>爬亿爬</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/CAPTURE/">
+                    
+                    <span>📶抓包</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/EXTRACTOR/">
+                    
+                    <span>🧪抽取</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/STORE/">
+                    
+                    <span>💾存储</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/OPS/">
+                    
+                    <span>🔧运维</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/FRAMEWORK/">
+                    
+                    <span>⭐框架</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/WEB-RE/">
+                    
+                    <span>📑Web逆向</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/MOBILE-RE/">
+                    
+                    <span>📲安卓逆向</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>迹路文库</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/NOTE/">
+                    
+                    <span>📔速查笔记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/LEETCODE/">
+                    
+                    <span>Leetcode</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/VUE/">
+                    
+                    <span>Vue</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/PYTHON/">
+                    
+                    <span>Python</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/SPRINGBOOT/">
+                    
+                    <span>SpringBoot</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/LEARNING/">
+                    
+                    <span>迹路一下</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/ZHONGYI/">
+                    
+                    <span>🌿中医</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                
+                <span>Chobits</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/CHOBITS/OCR/">
+                    
+                    <span>OCR</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/CHOBITS/STABLE-DIFFUSION/">
+                    
+                    <span>Stable Diffusion</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>目录</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>联系我</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Redis"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-02 11:11" pubdate>
+          星期二, 五月 2日 2023, 11:11 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          59 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Redis</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><blockquote>
+<p>Redis 是一个开源（BSD许可）的，内存中的数据结构存储系统，它可以用作数据库、缓存和消息中间件。 它支持多种类型的数据结构，如 字符串（strings）， 散列（hashes）， 列表（lists）， 集合（sets）， 有序集合（sorted sets） 与范围查询， bitmaps， hyperloglogs 和 地理空间（geospatial） 索引半径查询。 Redis 内置了 复制（replication），LUA脚本（Lua scripting）， LRU驱动事件（LRU eviction），事务（transactions） 和不同级别的 磁盘持久化（persistence）， 并通过 Redis哨兵（Sentinel）和自动 分区（Cluster）提供高可用性（high availability）。</p>
+</blockquote>
+<h2 id="相关网站"><a href="#相关网站" class="headerlink" title="相关网站"></a>相关网站</h2><blockquote>
+<ul>
+<li>官网 👉 <a target="_blank" rel="noopener" href="https://redis.io/">https://redis.io/</a></li>
+<li>Windows版本下载 👇<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/MicrosoftArchive/redis/releases">https://github.com/MicrosoftArchive/redis/releases</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/tporadowski/redis/releases">https://github.com/tporadowski/redis/releases</a></li>
+</ul>
+</li>
+<li>Linux安装 <code>apt install redis-server</code> 或用 Docker 安装</li>
+<li>Redis命令大全 👉 <a target="_blank" rel="noopener" href="http://www.redis.cn/commands.html">http://www.redis.cn/commands.html</a></li>
+</ul>
+</blockquote>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><ul>
+<li><p><code>redis-cli</code>连接 <code>redis</code> </p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">redis-cli <span class="token parameter variable">-h</span> <span class="token number">127.0</span>.0.1 <span class="token parameter variable">-p</span> <span class="token number">6379</span>
+<span class="token comment"># -c 连接集群结点时使用，此选项可防止moved和ask异常</span>
+<span class="token comment"># -a 密码</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>切换数据库</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 默认有16个数据库（0-15）</span>
+<span class="token keyword">select</span> <span class="token number">1</span>
+
+<span class="token keyword">select</span> <span class="token number">16</span>
+<span class="token comment"># (error) ERR DB index is out of range</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>查看数据库数据量</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">dbsize<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></figure>
+</li>
+<li><p>查看数据库所有的key</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">keys *<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></figure>
+</li>
+<li><p>存值、取值</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">set</span> key1 v1
+<span class="token comment"># OK</span>
+get key1
+<span class="token comment"># "v1"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>清空数据操作</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 清除当前数据库</span>
+flushdb
+<span class="token comment"># 清除所有数据库（慎用）</span>
+flushall<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>判定键是否存在</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">exists key1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></figure>
+</li>
+<li><p>移动某个键到某个数据库</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">move key1 <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></figure>
+</li>
+<li><p>设置键的过期时间，查看键的剩余过期时间</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">expire key1 <span class="token number">10</span>
+<span class="token comment"># 10秒后过期</span>
+ttl key1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>查看数据类型</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">type</span> key1
+<span class="token comment"># string</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></figure></li>
+</ul>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><h3 id="string"><a href="#string" class="headerlink" title="string"></a>string</h3><ul>
+<li><p>末尾追加字符串</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">append key1 xxx
+<span class="token comment"># 键不存在时，等于set操作</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>自增、自减操作</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">set</span> view_num <span class="token number">0</span>
+<span class="token comment"># 自增</span>
+incr view_num
+<span class="token comment"># 自减</span>
+decr view_num
+<span class="token comment"># 以步长为10，自增</span>
+incrby view_num <span class="token number">10</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>截取、替换字符串</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">set</span> key1 abcdefg
+<span class="token comment"># 截取下标为1-3位的字符 [1,3]</span>
+getrange key1 <span class="token number">1</span> <span class="token number">3</span>
+<span class="token comment"># bcd</span>
+
+<span class="token comment"># 截取全部（等于查看全部）</span>
+getrange key1 <span class="token number">0</span> <span class="token parameter variable">-1</span>
+
+<span class="token comment"># 从下标第2个字符开始替换后面的字符为xx</span>
+setrange key1 <span class="token number">2</span> xx
+<span class="token comment"># "abxxefg"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>setex、setnx（分布式锁、乐观锁常用）</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 设置过期时间并赋予新值</span>
+setex set_with_expire <span class="token number">30</span> <span class="token string">'newData'</span>
+<span class="token comment"># 不存在键的时候赋值，存在无法赋值</span>
+setnx set_if_not_exist <span class="token string">'data'</span>
+setnx set_if_not_exist <span class="token string">'newData'</span>
+get set_if_not_exist
+<span class="token comment"># "data"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>存取多值</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mset k1 v1 k2 v2 k3 v3
+mget k1 k2 k3
+<span class="token comment"># msetnx 原子性操作,失败一个都失败</span>
+msetnx k1 v1 k4 v4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>getset</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 先获取在设置值</span>
+getset k6 v6
+<span class="token comment"># (nil)</span>
+getset k6 v6_new
+<span class="token comment"># "v6"</span>
+get k6
+<span class="token comment"># "v6_new"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure></li>
+</ul>
+<h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><ul>
+<li><p>lpush</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">lpush list_key firstValue
+lpush list_key secondValue thirdValue
+
+lrange list_key <span class="token number">0</span> <span class="token parameter variable">-1</span>
+<span class="token comment"># 1) "thirdValue"</span>
+<span class="token comment"># 2) "secondValue"</span>
+<span class="token comment"># 3) "firstValue"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>rpush</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rpush list_key right_side
+
+lrange list_key <span class="token number">0</span> <span class="token parameter variable">-1</span>
+<span class="token comment"># 1) "thirdValue"</span>
+<span class="token comment"># 2) "secondValue"</span>
+<span class="token comment"># 3) "firstValue"</span>
+<span class="token comment"># 4) "right_side"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>lpop、rpop</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">lpop list_key
+rpop list_key
+
+lrange list_key <span class="token number">0</span> <span class="token parameter variable">-1</span>
+<span class="token comment"># 1) "secondValue"</span>
+<span class="token comment"># 2) "firstValue"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>lindex</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">lindex list_key <span class="token number">1</span>
+<span class="token comment"># "firstValue"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>llen</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">llen list_key
+<span class="token comment"># (integer) 2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>lrem</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">lrem list_key <span class="token number">1</span> secondValue<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></figure>
+</li>
+<li><p>ltrim</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">lpush list_key2 a b c d e f g
+<span class="token comment"># 通过下标截取list</span>
+ltrim list_key2 <span class="token number">3</span> <span class="token number">5</span>
+lrange list_key2 <span class="token number">0</span> <span class="token parameter variable">-1</span>
+<span class="token comment"># 1) "d"</span>
+<span class="token comment"># 2) "c"</span>
+<span class="token comment"># 3) "b"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>rpoplpush</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">lpush list_key3 <span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span> <span class="token number">4</span> <span class="token number">5</span>
+<span class="token comment"># 移动一个list最右边的，加在另一个list的最左边</span>
+rpoplpush list_key3 list_key4
+
+lrange list_key3 <span class="token number">0</span> <span class="token parameter variable">-1</span>
+<span class="token comment"># 1) "5"</span>
+<span class="token comment"># 2) "4"</span>
+<span class="token comment"># 3) "3"</span>
+<span class="token comment"># 4) "2"</span>
+lrange list_key4 <span class="token number">0</span> <span class="token parameter variable">-1</span>
+<span class="token comment"># 1) "1"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>exists</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">exists list_key3 list_key4<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></figure>
+</li>
+<li><p>lset</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">lset list_key4 <span class="token number">0</span> one
+
+lrange list_key4 <span class="token number">0</span> <span class="token number">0</span>
+<span class="token comment"># 1) "one"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>linsert</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">linsert list_key4 before <span class="token string">"one"</span> <span class="token string">"before"</span>
+linsert list_key4 after <span class="token string">"one"</span> <span class="token string">"after"</span>
+
+lrange list_key4 <span class="token number">0</span> <span class="token parameter variable">-1</span>
+<span class="token comment"># 1) "before"</span>
+<span class="token comment"># 2) "one"</span>
+<span class="token comment"># 3) "after"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure></li>
+</ul>
+<h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><ul>
+<li><p>sadd</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sadd set_key firstValue secondValue thirdValue
+sadd set_key secondValue
+
+smembers set_key
+<span class="token comment"># 1) "secondValue"</span>
+<span class="token comment"># 2) "thirdValue"</span>
+<span class="token comment"># 3) "firstValue"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>sismember、scard</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 是否存在某个元素</span>
+sismember set_key thirdValue
+<span class="token comment"># (integer) 1</span>
+
+<span class="token comment"># set集合中的元素个数（set cardinality）</span>
+scard set_key
+<span class="token comment"># (integer) 3</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>srem</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 移除某个元素</span>
+srem set_key secondValue<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>srandmember</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sadd set_key2 a b c d e f g h i j k l m n o p q r s t u <span class="token function">v</span> w x y z
+<span class="token comment"># 随机取5个元素</span>
+srandmember set_key2 <span class="token number">5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>smove</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 移动一个元素到另外一个set中</span>
+smove set_key2 set_key3 a<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>sdiff、sinter、sunion</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sadd set_key4 <span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span> <span class="token number">4</span>
+sadd set_key5 <span class="token number">3</span> <span class="token number">4</span> <span class="token number">5</span> <span class="token number">6</span>
+
+<span class="token comment"># 第一个set的差集</span>
+<span class="token function">sdiff</span> set_key4 set_key5
+<span class="token comment"># 1) "1"</span>
+<span class="token comment"># 2) "2"</span>
+
+<span class="token comment"># 交集</span>
+sinter set_key4 set_key5
+<span class="token comment"># 1) "3"</span>
+<span class="token comment"># 2) "4"</span>
+
+<span class="token comment"># 并集</span>
+sunion set_key4 set_key5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure></li>
+</ul>
+<h3 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h3><ul>
+<li><p>hset</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">hset hash_key field1 v1 field2 v2
+
+hget hash_key field1 field2
+<span class="token comment"># "v1"</span>
+hmget hash_key field1 field2
+<span class="token comment"># 1) "v1"</span>
+<span class="token comment"># 2) "v2"</span>
+hgetall hash_key
+<span class="token comment"># 1) "field1"</span>
+<span class="token comment"># 2) "v1"</span>
+<span class="token comment"># 3) "field2"</span>
+<span class="token comment"># 4) "v2"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>hdel</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 删除某个字段</span>
+hdel hash_key field1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>hlen、hkeys、hvals</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">hset hash_key field1 v1 field2 v2 field3 v3 field4 v4 field5 v5
+
+<span class="token comment"># 获取map长度</span>
+hlen hash_key
+<span class="token comment"># (integer) 5</span>
+
+<span class="token comment"># 获取所有字段</span>
+hkeys hash_key
+<span class="token comment"># 1) "field2"</span>
+<span class="token comment"># 2) "field1"</span>
+<span class="token comment"># 3) "field3"</span>
+<span class="token comment"># 4) "field4"</span>
+<span class="token comment"># 5) "field5"</span>
+
+<span class="token comment"># 获取所有的值</span>
+hvals hash_key
+<span class="token comment"># 1) "v2"</span>
+<span class="token comment"># 2) "v1"</span>
+<span class="token comment"># 3) "v3"</span>
+<span class="token comment"># 4) "v4"</span>
+<span class="token comment"># 5) "v5"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>hexists</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 是否存在某个字段</span>
+hexists hash_key field3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>hincrby、hdecrby</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">hset hash_key num <span class="token number">0</span>
+
+<span class="token comment"># 自增、自减</span>
+hincrby hash_key num <span class="token number">5</span>
+hincrby hash_key num <span class="token parameter variable">-3</span>
+
+hget hash_key num
+<span class="token comment"># "2"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure></li>
+</ul>
+<h3 id="zset"><a href="#zset" class="headerlink" title="zset"></a>zset</h3><ul>
+<li><p>zadd</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 有序set</span>
+zadd zset_key <span class="token number">2</span> secondValue <span class="token number">3</span> thirdValue
+zadd zset_key <span class="token number">1</span> firstValue
+
+zrange zset_key <span class="token number">0</span> <span class="token parameter variable">-1</span> withscores<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>zcard</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 统计个数</span>
+zcard zset_key<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>zrevrange</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 倒序</span>
+zrevrange zset_key <span class="token number">0</span> <span class="token parameter variable">-1</span>
+
+zrevrange zset_key <span class="token number">2</span> <span class="token number">3</span>
+<span class="token comment"># 1) "firstValue"</span>
+
+zrevrange zset_key <span class="token parameter variable">-2</span> <span class="token parameter variable">-1</span> withscores
+<span class="token comment"># 1) "secondValue"</span>
+<span class="token comment"># 2) "2"</span>
+<span class="token comment"># 3) "firstValue"</span>
+<span class="token comment"># 4) "1"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>zrem</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 删除指定元素</span>
+zrem zset_key secondValue<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>zcount</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 指定区间计数</span>
+zcount zset_key <span class="token parameter variable">-inf</span> +inf
+<span class="token comment"># (integer) 2</span>
+
+zcount zset_key <span class="token number">0</span> <span class="token number">2</span>
+<span class="token comment"># (integer) 1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure></li>
+</ul>
+<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="http://www.redis.cn/commands/multi.html">MULTI</a> 、 <a target="_blank" rel="noopener" href="http://www.redis.cn/commands/exec.html">EXEC</a> 、 <a target="_blank" rel="noopener" href="http://www.redis.cn/commands/discard.html">DISCARD</a> 和 <a target="_blank" rel="noopener" href="http://www.redis.cn/commands/watch.html">WATCH</a> 是 Redis 事务相关的命令。事务可以一次执行多个命令， 并且带有以下两个重要的保证：</p>
+<ul>
+<li>事务是一个单独的隔离操作：事务中的所有命令都会序列化、按顺序地执行。事务在执行的过程中，不会被其他客户端发送来的命令请求所打断。</li>
+<li>事务是一个原子操作：事务中的命令要么全部被执行，要么全部都不执行。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://www.redis.cn/commands/exec.html">EXEC</a> 命令负责触发并执行事务中的所有命令：</p>
+<ul>
+<li>如果客户端在使用 <a target="_blank" rel="noopener" href="http://www.redis.cn/commands/multi.html">MULTI</a> 开启了一个事务之后，却因为断线而没有成功执行 <a target="_blank" rel="noopener" href="http://www.redis.cn/commands/exec.html">EXEC</a> ，那么事务中的所有命令都不会被执行。</li>
+<li>另一方面，如果客户端成功在开启事务之后执行 <a target="_blank" rel="noopener" href="http://www.redis.cn/commands/exec.html">EXEC</a> ，那么事务中的所有命令都会被执行。</li>
+</ul>
+<p>当使用 AOF 方式做持久化的时候， Redis 会使用单个 write(2) 命令将事务写入到磁盘中。</p>
+</blockquote>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 开启事务</span>
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">></span> multi
+OK
+<span class="token comment"># 开始输入命令</span>
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">></span> <span class="token builtin class-name">set</span> k1 v1
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">></span> get k1
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">></span> <span class="token builtin class-name">set</span> k2 v2
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">></span> <span class="token builtin class-name">set</span> k3 v3
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">></span> keys *
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">></span> setex k2 <span class="token number">5</span> xxx
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">></span> keys *
+QUEUED
+<span class="token comment"># 输入命令结束</span>
+<span class="token comment"># 触发并执行事务中的所有命令</span>
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">></span> <span class="token builtin class-name">exec</span>
+<span class="token comment"># 1) OK</span>
+<span class="token comment"># 2) "v1"</span>
+<span class="token comment"># 3) OK</span>
+<span class="token comment"># 4) OK</span>
+<span class="token comment"># 5) 1) "k2"</span>
+<span class="token comment">#    2) "k1"</span>
+<span class="token comment">#    3) "k3"</span>
+<span class="token comment"># 6) OK</span>
+<span class="token comment"># 7) 1) "k2"</span>
+<span class="token comment">#    2) "k1"</span>
+<span class="token comment">#    3) "k3"</span>
+
+<span class="token comment"># 再次验证k2是否过期</span>
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">></span> keys *
+<span class="token comment"># 1) "k1"</span>
+<span class="token comment"># 2) "k3"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+
+<blockquote>
+<ul>
+<li><p>discard 放弃事务</p>
+</li>
+<li><p>Redis 不支持回滚（roll back），回滚并不能解决编程错误带来的问题</p>
+<p>以下是这种做法的优点：</p>
+<ul>
+<li>Redis 命令只会因为错误的语法而失败（并且这些问题不能在入队时发现），或是命令用在了错误类型的键上面：这也就是说，从实用性的角度来说，失败的命令是由编程错误造成的，而这些错误应该在开发的过程中被发现，而不应该出现在生产环境中</li>
+<li>因为不需要对回滚进行支持，所以 Redis 的内部可以保持简单且快速</li>
+</ul>
+</li>
+<li><p>check-and-set 操作实现乐观锁</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.redis.cn/commands/watch.html">WATCH</a> 命令可以为 Redis 事务提供 check-and-set （CAS）行为</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="管理客户端"><a href="#管理客户端" class="headerlink" title="管理客户端"></a>管理客户端</h2><ol>
+<li><p>自带的 redis-cli</p>
+</li>
+<li><p>RedisDesktopManager （高版本收费，0.9.3 免费）</p>
+<p>下载地址 <a target="_blank" rel="noopener" href="https://github.com/uglide/RedisDesktopManager/releases/tag/0.9.3">https://github.com/uglide/RedisDesktopManager/releases/tag/0.9.3</a></p>
+</li>
+<li><p>RedisInsight</p>
+<p>下载地址 <a target="_blank" rel="noopener" href="https://docs.redis.com/latest/ri/installing/install-redis-desktop/">https://docs.redis.com/latest/ri/installing/install-redis-desktop/</a></p>
+</li>
+</ol>
+<h2 id="单机启动"><a href="#单机启动" class="headerlink" title="单机启动"></a>单机启动</h2><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># windows下 配置好 redis.windows.conf cmd中运行 redis-server redis.windows.conf</span>
+
+<span class="token comment"># Docker</span>
+<span class="token function">docker</span> run <span class="token parameter variable">-itd</span> <span class="token parameter variable">--name</span> redis-test-pw <span class="token parameter variable">-p</span> <span class="token number">6379</span>:6379 redis <span class="token parameter variable">--requirepass</span> <span class="token string">"password"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+
+<h2 id="集群启动（三台机器，三主三从，Docker版）"><a href="#集群启动（三台机器，三主三从，Docker版）" class="headerlink" title="集群启动（三台机器，三主三从，Docker版）"></a>集群启动（三台机器，三主三从，Docker版）</h2><ol>
+<li><p>虚拟机3台Liunx设备</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 这里用 Ubuntu 22.04 系统</span>
+<span class="token comment"># 3台设备的ip为 192.168.1.95 、 192.168.1.96 、 192.168.1.97</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>3台机器分别创建容器</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 192.168.1.95</span>
+<span class="token function">docker</span> create <span class="token parameter variable">--name</span> redis-node1 <span class="token parameter variable">--net</span> <span class="token function">host</span> <span class="token parameter variable">-v</span> /data/redis-data/node1:/data redis --cluster-enabled <span class="token function">yes</span> --cluster-config-file nodes-node-1.conf <span class="token parameter variable">--port</span> <span class="token number">6379</span> <span class="token parameter variable">--requirepass</span> <span class="token string">"password"</span> <span class="token parameter variable">--masterauth</span> <span class="token string">"password"</span>
+
+<span class="token function">docker</span> create <span class="token parameter variable">--name</span> redis-node2 <span class="token parameter variable">--net</span> <span class="token function">host</span> <span class="token parameter variable">-v</span> /data/redis-data/node2:/data redis --cluster-enabled <span class="token function">yes</span> --cluster-config-file nodes-node-2.conf <span class="token parameter variable">--port</span> <span class="token number">6380</span> <span class="token parameter variable">--requirepass</span> <span class="token string">"password"</span> <span class="token parameter variable">--masterauth</span> <span class="token string">"password"</span>
+
+<span class="token comment"># 192.168.1.96</span>
+<span class="token function">docker</span> create <span class="token parameter variable">--name</span> redis-node3 <span class="token parameter variable">--net</span> <span class="token function">host</span> <span class="token parameter variable">-v</span> /data/redis-data/node3:/data redis --cluster-enabled <span class="token function">yes</span> --cluster-config-file nodes-node-3.conf <span class="token parameter variable">--port</span> <span class="token number">6379</span> <span class="token parameter variable">--requirepass</span> <span class="token string">"password"</span> <span class="token parameter variable">--masterauth</span> <span class="token string">"password"</span>
+
+<span class="token function">docker</span> create <span class="token parameter variable">--name</span> redis-node4 <span class="token parameter variable">--net</span> <span class="token function">host</span> <span class="token parameter variable">-v</span> /data/redis-data/node4:/data redis --cluster-enabled <span class="token function">yes</span> --cluster-config-file nodes-node-4.conf <span class="token parameter variable">--port</span> <span class="token number">6380</span> <span class="token parameter variable">--requirepass</span> <span class="token string">"password"</span> <span class="token parameter variable">--masterauth</span> <span class="token string">"password"</span>
+
+<span class="token comment"># 192.168.1.97</span>
+<span class="token function">docker</span> create <span class="token parameter variable">--name</span> redis-node5 <span class="token parameter variable">--net</span> <span class="token function">host</span> <span class="token parameter variable">-v</span> /data/redis-data/node5:/data redis --cluster-enabled <span class="token function">yes</span> --cluster-config-file nodes-node-5.conf <span class="token parameter variable">--port</span> <span class="token number">6379</span> <span class="token parameter variable">--requirepass</span> <span class="token string">"password"</span> <span class="token parameter variable">--masterauth</span> <span class="token string">"password"</span>
+
+<span class="token function">docker</span> create <span class="token parameter variable">--name</span> redis-node6 <span class="token parameter variable">--net</span> <span class="token function">host</span> <span class="token parameter variable">-v</span> /data/redis-data/node6:/data redis --cluster-enabled <span class="token function">yes</span> --cluster-config-file nodes-node-6.conf <span class="token parameter variable">--port</span> <span class="token number">6380</span> <span class="token parameter variable">--requirepass</span> <span class="token string">"password"</span> <span class="token parameter variable">--masterauth</span> <span class="token string">"password"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>启动容器，并设置docker重启始终启动策略</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 192.168.1.95</span>
+<span class="token function">docker</span> start redis-node1 redis-node2
+<span class="token function">docker</span> update <span class="token parameter variable">--restart</span><span class="token operator">=</span>always redis-node1 redis-node2
+
+<span class="token comment"># 192.168.1.96</span>
+<span class="token function">docker</span> start redis-node3 redis-node4
+<span class="token function">docker</span> update <span class="token parameter variable">--restart</span><span class="token operator">=</span>always redis-node3 redis-node4
+
+<span class="token comment"># 192.168.1.97</span>
+<span class="token function">docker</span> start redis-node5 redis-node6
+<span class="token function">docker</span> update <span class="token parameter variable">--restart</span><span class="token operator">=</span>always redis-node5 redis-node6<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>随意进入一个容器</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> redis-node6 <span class="token function">bash</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></figure>
+</li>
+<li><p>设置集群关系</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">redis-cli <span class="token parameter variable">--cluster</span> create <span class="token number">192.168</span>.1.95:6379 <span class="token number">192.168</span>.1.95:6380 <span class="token number">192.168</span>.1.96:6379 <span class="token number">192.168</span>.1.96:6380 <span class="token number">192.168</span>.1.97:6379 <span class="token number">192.168</span>.1.97:6380  --cluster-replicas <span class="token number">1</span>
+
+<span class="token comment"># 中途输入 yes</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p>测试集群</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 进入集群节点</span>
+redis-cli <span class="token parameter variable">-c</span> <span class="token parameter variable">-h</span> <span class="token number">192.168</span>.1.95 <span class="token parameter variable">-p</span> <span class="token number">6379</span> <span class="token parameter variable">-a</span> password
+
+<span class="token comment"># 查看集群节点信息</span>
+cluster info
+<span class="token comment"># 查看配置信息</span>
+CONFIG GET *<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure></li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/PYP/" class="category-chain-item">爬亿爬</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/PYP/STORE/" class="category-chain-item">存储</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">#数据库</a>
+      
+        <a href="/tags/REDIS/">#Redis</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Redis</div>
+      <div>https://元气码农少女酱.我爱你/e9a6abc21627/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>元气码农少女酱</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月2日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/7ebbaebed260/" title="MongoDB">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MongoDB</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/f83e393e93b5/" title="SQL语句优化技巧">
+                        <span class="hidden-mobile">SQL语句优化技巧</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+  <script async src="js/snow.js" crossorigin="anonymous"></script>
+  <script async src="js/love.js" crossorigin="anonymous"></script>
+  <div class="text-center" style="font-size:12px">
+    © 2022  By  <a href="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl">⎛⎝迹路科栈⎠⎞</a> <a href="https://beian.miit.gov.cn/" target="_blank">津ICP备20003416号-1</a>
+  </div>
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300,"hOffset":-10,"vOffset":-10},"mobile":{"show":true},"log":false});</script></body>
+</html>

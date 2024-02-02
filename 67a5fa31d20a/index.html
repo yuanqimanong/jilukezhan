@@ -1,0 +1,1437 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="元气码农少女酱">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="正则表达式 （ Regular Expression ）是强大、便捷、高效的文本处理工具。 正则表达式本身，加上如同一门袖珍编程语言的通用模式表示法（general pattern notation），赋予使用者描述和分析文本的能力。 配合上特定工具提供的额外支持，正则表达式能够添加、删除、分离、叠加、插入和修整各种类型的文本和数据。 ——《精通正则表达式》  测试工具本地测试工具 （Regex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式 - 必知必会">
+<meta property="og:url" content="https://元气码农少女酱.我爱你/67a5fa31d20a/">
+<meta property="og:site_name" content="⎛⎝迹路科栈⎠⎞">
+<meta property="og:description" content="正则表达式 （ Regular Expression ）是强大、便捷、高效的文本处理工具。 正则表达式本身，加上如同一门袖珍编程语言的通用模式表示法（general pattern notation），赋予使用者描述和分析文本的能力。 配合上特定工具提供的额外支持，正则表达式能够添加、删除、分离、叠加、插入和修整各种类型的文本和数据。 ——《精通正则表达式》  测试工具本地测试工具 （Regex">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/67a5fa31d20a/regexbuddy.png">
+<meta property="article:published_time" content="2023-05-02T03:11:11.000Z">
+<meta property="article:modified_time" content="2024-01-30T13:20:33.345Z">
+<meta property="article:author" content="元气码农少女酱">
+<meta property="article:tag" content="正则表达式">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl/67a5fa31d20a/regexbuddy.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>正则表达式 - 必知必会 - ⎛⎝迹路科栈⎠⎞</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"c48bd071d08fdfa52afe48f0d2e0a43e","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?c48bd071d08fdfa52afe48f0d2e0a43e";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+    <link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css" media="print" onload="this.media='all'">
+    <style>
+      html, body, .markdown-body, p {
+        font-family: 'LXGW WenKai Screen';
+      }
+    </style>
+    
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>⎛⎝迹路科栈⎠⎞</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-bug"></i>
+                <span>爬亿爬</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/CAPTURE/">
+                    
+                    <span>📶抓包</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/EXTRACTOR/">
+                    
+                    <span>🧪抽取</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/STORE/">
+                    
+                    <span>💾存储</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/OPS/">
+                    
+                    <span>🔧运维</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/FRAMEWORK/">
+                    
+                    <span>⭐框架</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/WEB-RE/">
+                    
+                    <span>📑Web逆向</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/MOBILE-RE/">
+                    
+                    <span>📲安卓逆向</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>迹路文库</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/NOTE/">
+                    
+                    <span>📔速查笔记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/LEETCODE/">
+                    
+                    <span>Leetcode</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/VUE/">
+                    
+                    <span>Vue</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/PYTHON/">
+                    
+                    <span>Python</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/SPRINGBOOT/">
+                    
+                    <span>SpringBoot</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/LEARNING/">
+                    
+                    <span>迹路一下</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/ZHONGYI/">
+                    
+                    <span>🌿中医</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                
+                <span>Chobits</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/CHOBITS/OCR/">
+                    
+                    <span>OCR</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/CHOBITS/STABLE-DIFFUSION/">
+                    
+                    <span>Stable Diffusion</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>目录</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>联系我</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="正则表达式 - 必知必会"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-02 11:11" pubdate>
+          星期二, 五月 2日 2023, 11:11 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          7.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          64 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">正则表达式 - 必知必会</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p><strong>正则表达式</strong> （ Regular Expression ）是强大、便捷、高效的文本处理工具。</p>
+<p>正则表达式本身，加上如同一门袖珍编程语言的通用模式表示法（general pattern notation），赋予使用者描述和分析文本的能力。</p>
+<p>配合上特定工具提供的额外支持，正则表达式能够添加、删除、分离、叠加、插入和修整各种类型的文本和数据。</p>
+<p>——《精通正则表达式》</p>
+</blockquote>
+<h2 id="测试工具"><a href="#测试工具" class="headerlink" title="测试工具"></a>测试工具</h2><h3 id="本地测试工具-（RegexBuddy）"><a href="#本地测试工具-（RegexBuddy）" class="headerlink" title="本地测试工具 （RegexBuddy）"></a>本地测试工具 （RegexBuddy）</h3><p>下载地址 ： <a target="_blank" rel="noopener" href="https://www.regexbuddy.com/">https://www.regexbuddy.com/</a></p>
+<p>软件截图 ：</p>
+<p><img src="/67a5fa31d20a/regexbuddy.png" srcset="/img/loading.gif" lazyload alt="RegexBuddy"></p>
+<p>常用功能说明：</p>
+<ul>
+<li>左上角可以设置 实际应用正则的编程语言，这里代表着不同流派的正则</li>
+<li>往右挨着的功能是 匹配 和 替换 ，要配合着下面的 Test 去使用</li>
+<li><code>Case sensitive</code> 一般选择 不匹配大小写，会避免一些麻烦</li>
+<li>下方 <code>Test</code> 中要注意那一行最右侧的 下拉选项，里面包含 ”Whole file“ 、”Page by page“ 和 ”Line by line“ ，需要根据实际情况选择</li>
+<li><code>Debug</code> 可以用 也可以去 regex101网站调试 （翻墙访问会快一些）</li>
+<li>打开<code>Hightlight</code> 和 <code>List All</code> 下的 <code>Update Automatically</code> 会很方便</li>
+</ul>
+<h3 id="在线测试工具"><a href="#在线测试工具" class="headerlink" title="在线测试工具"></a>在线测试工具</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://regex101.com/">https://regex101.com/</a></li>
+<li><a target="_blank" rel="noopener" href="http://tool.rbtree.cn/regtool/">http://tool.rbtree.cn/regtool/</a></li>
+</ol>
+<h3 id="在线学习网站"><a href="#在线学习网站" class="headerlink" title="在线学习网站"></a>在线学习网站</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://regexlearn.com/zh-cn">https://regexlearn.com/zh-cn</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.runoob.com/regexp/regexp-tutorial.html">https://www.runoob.com/regexp/regexp-tutorial.html</a></li>
+</ol>
+<h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><blockquote>
+<p>完整的正则表达式由 <code>两种</code> 字符构成。</p>
+<blockquote>
+<p>特殊字符 称为 <strong>元字符</strong> （metacharacters）</p>
+<p>普通文本字符 称为 <strong>文字</strong> （literal）</p>
+</blockquote>
+</blockquote>
+<h3 id="术语汇总"><a href="#术语汇总" class="headerlink" title="术语汇总"></a>术语汇总</h3><blockquote>
+<ul>
+<li>正则（regex）：“正则表达式”的简称</li>
+<li>匹配（matching）：这个正则表达式能在字符串中找到匹配的文本。</li>
+<li>元字符（metacharacter）：一个字符是否为元字符，取决于应用的具体情况。流派不同，字符转义的规定也不相同。</li>
+<li>流派（flavor）：由Perl语言的正则表达式开创的流派，功能强大，其他语言汲取其中灵感发展成不同流派。</li>
+<li>子表达式（subexpression）：指整个正则中的一部分，通常是括号内的表达式，或由 <code>|</code>分隔的多选分支。例如：<code>H[1-6]\s*</code> 的子表达式为 <code>H</code> 、 <code>[1-6]</code> 和 <code>\s*</code></li>
+<li>字符（character）：一个字节所代表的单词取决于计算机如何解释。单个字节的值不会变化，但这个 <strong>值</strong> 所代表的 <strong>字符</strong> 却是由解释所用的编码来决定的。要确保 <strong>编码</strong> 的问题，自己的视角要和工具的视角相同。</li>
+</ul>
+</blockquote>
+<h3 id="字符组"><a href="#字符组" class="headerlink" title="字符组"></a>字符组</h3><blockquote>
+<p><strong>匹配若干字符之一。</strong><code>[……]</code>它容许使用者列出在某处期望匹配的字符，通常被称作 字符组 。</p>
+</blockquote>
+<h4 id="普通字符组"><a href="#普通字符组" class="headerlink" title="普通字符组"></a>普通字符组</h4><p> <code>&lt;H[123456]&gt;</code> 可以匹配 <code>&lt;H1&gt; &lt;H2&gt; &lt;H3&gt; &lt;H4&gt; &lt;H5&gt; &lt;H6&gt;</code> 。<code>[123456]</code> 表示的意思是匹配1到6任意一个数字，是 <strong>或</strong> 的含义。</p>
+<h4 id="字符组元字符"><a href="#字符组元字符" class="headerlink" title="字符组元字符"></a>字符组元字符</h4><p><code>&lt;H[123456]&gt;</code> 可以简写成 <code>&lt;H[1-6]&gt;</code> 。中括号中的 <code>-</code> 就是<strong>字符组元字符</strong>。 </p>
+<p>只有当 <code>-</code> 出自现在<code>[]</code>内开头时候，才表示普通的 <code>-</code> 字符，例如 <code>&lt;H[-1-6]&gt;</code>，匹配的是 <code>&lt;H1&gt; &lt;H2&gt; &lt;H3&gt; &lt;H4&gt; &lt;H5&gt; &lt;H6&gt; &lt;H-&gt;</code> 。</p>
+<p>注意：这种简写遵循<code>ASCII</code>码表的顺序。</p>
+<p>例如 十六进制可以用<code>[0-9a-fA-F]</code> 正则匹配。<code>[0-Z]</code> 则可以匹配 <code>2、C、=、?</code> 但是不可以匹配 <code>a、k、_、&#123;</code> 。</p>
+<h4 id="排除型元字符"><a href="#排除型元字符" class="headerlink" title="排除型元字符"></a>排除型元字符</h4><p><code>[^……]</code>  字符组开头的 <code>^</code> （脱字符）表示 <strong>排除</strong> (negate) 的意思。</p>
+<p>例如  <code>&lt;H[^1-6]&gt;</code> 不希望匹配  <code>&lt;H1&gt; &lt;H2&gt; &lt;H3&gt; &lt;H4&gt; &lt;H5&gt; &lt;H6&gt;</code> 这几个，但可以匹配 <code>&lt;H8&gt; &lt;HA&gt; &lt;H!&gt;</code> 等等。</p>
+<h4 id="元字符"><a href="#元字符" class="headerlink" title="元字符 ."></a>元字符 <code>.</code></h4><p>元字符 <code>.</code>（通常称为点号 dot 或者 小点point）是用来匹配任意字符的字符组的简便写法。它不匹配换行符，除非开启了”单行模式“。</p>
+<h4 id="字符组简记法"><a href="#字符组简记法" class="headerlink" title="字符组简记法"></a>字符组简记法</h4><table>
+<thead>
+<tr>
+<th>字符组</th>
+<th>简记</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\d</td>
+<td>数字。0 到 9，等价 <code>[0-9]</code></td>
+</tr>
+<tr>
+<td>\D</td>
+<td>非数字字符。等价 <code>[^0-9]</code></td>
+</tr>
+<tr>
+<td>\w</td>
+<td>单词中的字符。一般等价<code>[0-9A-Za-z_]</code> 但某些工具不匹配下划线</td>
+</tr>
+<tr>
+<td>\W</td>
+<td>非单词中的字符。等价<code>[^0-9A-Za-z_]</code></td>
+</tr>
+<tr>
+<td>\s</td>
+<td>空白字符。通常等价<code>[ \f\n\r\t\v]</code></td>
+</tr>
+<tr>
+<td>\S</td>
+<td>非空白字符。等价<code>[^\s]</code></td>
+</tr>
+</tbody></table>
+<h3 id="量词"><a href="#量词" class="headerlink" title="量词"></a>量词</h3><p>量词表示不确定的长度，其通用形式为 <code>&#123;m,n&#125;</code> ，其中 m 和 n 是两个非负整数，且 m ≤ n 。表达式中<strong>不能有空格</strong>。  </p>
+<p>量词的一般形式及说明</p>
+<table>
+<thead>
+<tr>
+<th>量词</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>{n}</td>
+<td>匹配的字符必须出现n次</td>
+</tr>
+<tr>
+<td>{m,n}</td>
+<td>匹配的字符最少出现m次，最多出现n次</td>
+</tr>
+<tr>
+<td>{m,}</td>
+<td>匹配的字符出现m次及以上</td>
+</tr>
+<tr>
+<td>{0,n}</td>
+<td>匹配的字符可以不出现，也可以出现，最多n次。（某些编程语言支持写成{,n}，但不推荐）</td>
+</tr>
+</tbody></table>
+<h4 id="常用量词"><a href="#常用量词" class="headerlink" title="常用量词"></a>常用量词</h4><p><code>?</code>、<code>+</code> 和 <code>*</code> ，可以理解为“量词的简记法”</p>
+<table>
+<thead>
+<tr>
+<th>量词</th>
+<th>等价</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>*</td>
+<td>{0,}</td>
+</tr>
+<tr>
+<td>+</td>
+<td>{1,}</td>
+</tr>
+<tr>
+<td>?</td>
+<td>{0,1}</td>
+</tr>
+</tbody></table>
+<h4 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h4><blockquote>
+<p>匹配 <code>&lt;h1 id=&#39;title&#39;&gt;我是标题&lt;/h1&gt; &lt;input type=&quot;submit&quot; value=&quot;提交&quot; /&gt;</code> 中的 html标签</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>标签</th>
+<th>正则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>开始标签</td>
+<td><code>&lt;[^/][^&gt;]+&gt;</code></td>
+</tr>
+<tr>
+<td>结束标签</td>
+<td><code>&lt;/[^&gt;]+&gt;</code></td>
+</tr>
+<tr>
+<td>自闭合标签</td>
+<td><code>&lt;[^/&gt;]+/&gt;</code></td>
+</tr>
+</tbody></table>
+<p>你会发现开始标签正则也可以匹配自闭合标签。需要改成<code>&lt;[^/][^&gt;]*[^/]&gt;</code> 。但这个正则出现2次<code>[^/]</code>是占用2个字符，无法匹配 <code>&lt;B&gt;</code>  这种标签。需要用到 <strong>环视</strong> 的写法，<em>暂不做讨论</em>。</p>
+<h4 id="匹配优先量词"><a href="#匹配优先量词" class="headerlink" title="匹配优先量词"></a>匹配优先量词</h4><p>回到刚才的举例，如果正则为 <code>&lt;.*&gt;</code> 得到的结果为 第一个<code>&lt;</code> 到最后一个 <code>&gt;</code> 中的全部内容。</p>
+<p><strong>匹配优先（贪婪）</strong> ：首先需要记住，标准匹配量词（<code>?</code>、<code>*</code>、<code>+</code> 以及 <code>&#123;min,max&#125;</code>）都是“匹配优先（greedy）”的，它们总是尝试<strong>匹配尽可能多</strong>的字符直到匹配上限为止。</p>
+<p>例如：用正则 <code>\d*\d+</code> 去匹配 <code>0123456789</code> 。<code>\d*</code> 能匹配到 <code>012345678</code> ，而<code>\d+</code>只能匹配到<code>9</code></p>
+<h4 id="忽略优先量词"><a href="#忽略优先量词" class="headerlink" title="忽略优先量词"></a>忽略优先量词</h4><p>还是那个举例，如果只想要匹配最开始的标签如何去写这个正则呢？</p>
+<p>需要用到 <strong>忽略优先量词（懒惰）</strong> ，如果不确定是否要匹配，忽略优先会选择“不匹配”的状态，在尝试表达式中之后的元素，如果尝试失败，再回溯，选择之前保存的“匹配”的状态</p>
+<p>只想要匹配最开始的标签的答案为 <code>&lt;.*?&gt;</code></p>
+<p>再来个例子：用正则 <code>\d*?\d+?</code> 去匹配 <code>0123456789</code> 。<code>\d*?</code> 能匹配到最少次数是0次，结果是空  ，而<code>\d+?</code>能匹配到最少的1次，但它们都会逐个去匹配0-9这一排数字10次。</p>
+<h3 id="括号"><a href="#括号" class="headerlink" title="括号"></a>括号</h3><h4 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h4><blockquote>
+<p>分组：将相关元素归拢到一起，构成一个整体。</p>
+<p>捕获型括号的编号是按照开始括号出现的次序，<strong>从左至右</strong>计算的。</p>
+</blockquote>
+<p>例如：</p>
+<ul>
+<li>匹配 <code>&lt;h1&gt;我是标题&lt;/h1&gt;</code> 的正则为 <code>&lt;h1&gt;(.*?)&lt;/h1&gt;</code> 。匹配的文本 和 替换中存储的<code>$1</code>为：<code>我是标题</code> 。</li>
+<li>匹配 IPv4 地址（127.0.0.1）的正则为 <code>(\d&#123;1,3&#125;\.)&#123;3&#125;\d&#123;1,3&#125;</code> 。匹配的文本 和 替换中存储的<code>$0</code>为：<code>127.0.0.1</code> ，$1 为 <code>0. </code>。要理解这个表达式，请按下列顺序分析它：\d{1,3}匹配1到3位的数字，(\d{1,3}.){3}匹配三位数字加上一个英文句号(这个整体也就是这个分组)重复3次，最后再加上一个一到三位的数字(\d{1,3})。</li>
+</ul>
+<h4 id="非捕获分组"><a href="#非捕获分组" class="headerlink" title="非捕获分组"></a>非捕获分组</h4><blockquote>
+<p>仅用于分组的括号 <code>(?:……)</code> ，不能用来提取文本，而只能用来规定多选结构或者量词的作用对象。</p>
+<p>它们不会按照 <code>$1 、$2</code> 去编号。如果没用用到引用分组，尽量使用非捕获型的括号，性能会好。</p>
+</blockquote>
+<p>例如：匹配 IPv4 地址（127.0.0.1）的正则为 <code>(?:\d&#123;1,3&#125;\.)&#123;3&#125;\d&#123;1,3&#125;</code> 。匹配的文本 和 替换中存储的<code>$0</code>为：<code>127.0.0.1</code> 。</p>
+<h4 id="引用分组"><a href="#引用分组" class="headerlink" title="引用分组"></a>引用分组</h4><blockquote>
+<p>引用分组：将子表达式匹配的文本存储起来，供之后引用。</p>
+<p>可以用“\1”，“\2”，“\3” 来反向引用</p>
+</blockquote>
+<p>例如：匹配下面文本的正则，可以写成 <code>&lt;(.*?)&gt;.*?&lt;/\1&gt;</code></p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span>h1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">></span></span>h2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span>h3<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<p>匹配叠字可以写成<code>([\u4e00-\u9fa5])\1</code></p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">圈圈圆圆圈圈
+天天年年天天
+的我深深看你的脸
+生气的温柔
+埋怨的温柔 的脸 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+
+<h4 id="多选结构"><a href="#多选结构" class="headerlink" title="多选结构"></a>多选结构</h4><blockquote>
+<p>多选结构的形式是<code>(……|……)</code> ，在括号内以竖线分隔开多个子表达式。</p>
+<p>在一个多选结构内，多选分支的数目没有限制。在匹配时，整个多选结构视为一个整体，只要其中某个子表达式能匹配就能成功。如果所有表达式都不能匹配，则匹配失败。</p>
+<p>多个子表达式都能匹配的时候，匹配的结果为最左边的匹配结果。（精确的放左边）</p>
+</blockquote>
+<p>刚才匹配Ipv4地址的例子不太规范，可以匹配到错误数据。优化的正则为</p>
+<p><code>(?:(?:2[0-4]\d|25[0-5]|[01]?\d\d?)\.)&#123;3&#125;(?:2[0-4]\d|25[0-5]|[01]?\d\d?)</code></p>
+<p>匹配名为xxx的各种文件名后缀的正则： <code>xxx\.(?:avi|mp\d|jpg|xls|ppt|txt)</code></p>
+<h4 id="命名分组"><a href="#命名分组" class="headerlink" title="命名分组"></a>命名分组</h4><blockquote>
+<p>并不是通行的功能，暂不讨论</p>
+</blockquote>
+<h3 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h3><h4 id="单词边界"><a href="#单词边界" class="headerlink" title="单词边界"></a>单词边界</h4><p><code>\b</code> 匹配一个单词边界，即字与空格间的位置。</p>
+<h4 id="行起始-x2F-结束位置"><a href="#行起始-x2F-结束位置" class="headerlink" title="行起始&#x2F;结束位置"></a>行起始&#x2F;结束位置</h4><blockquote>
+<p>单词边界匹配的是某个位置而不是文本，在正则中，这里匹配位置的元素叫 <strong>锚点</strong>（anchor）。</p>
+<p><code>^</code>、<code>$</code> 分别匹配字符串的 <strong>开始位置</strong> 和 <strong>结束位置</strong> 。</p>
+</blockquote>
+<p>在按下回车键就输入了一个<strong>行终止符</strong>（Line terminal）。不同平台下的终止符不相同。</p>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th>行终止符</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>UNIX&#x2F;Linux</td>
+<td>\n</td>
+</tr>
+<tr>
+<td>Windows</td>
+<td>\r\n</td>
+</tr>
+<tr>
+<td>Mac OS</td>
+<td>\n  (OS 9 之前的版本 为 \r)</td>
+</tr>
+</tbody></table>
+<h4 id="环视"><a href="#环视" class="headerlink" title="环视"></a>环视</h4><blockquote>
+<p>环视（look-around）用来“停在原地，四处张望”，类似单词边界，在它旁边的文本需要满足某种条件，而且本身不匹配任何字符。</p>
+</blockquote>
+<p><strong>回到量词开始标签的举例</strong>，再来改进下。增加一个要匹配的文本 <code>&lt;p title=&quot;&gt;&quot; class=&#39;p_style&#39; &gt;标签不规范&lt;/p&gt;</code> ，<code>&lt;[^/][^&gt;]*[^/]&gt;</code> 无法满足这样的匹配，返回 <code>&lt;p title=&quot;&gt;</code> 的结果。</p>
+<p>修改成 <code>&lt;(?!/)(?:&#39;[^&#39;]*&#39;|&quot;[^&quot;]*&quot;|[^&#39;&quot;&gt;])+(?&lt;!/)&gt;</code> 则可以满足，也可以满足 <code>&lt;B&gt;</code>  这种标签的匹配。</p>
+<p>这个表达式出现了两种环视 <code>(?!……)</code> 、<code>(?&lt;!……)</code> ，它们的名字是“否定顺序环视”，“否定逆序环视”。“否定”的意思是“ **如果正则表达式匹配成功，则当前位置匹配失败 **”，而“顺序”和“逆序”则表示正则需要匹配的文本所在的位置。</p>
+<h5 id="环视分类"><a href="#环视分类" class="headerlink" title="环视分类"></a>环视分类</h5><p>环视一共分为4种。肯定顺序环视（positive-lookahead）、否定顺序环视（negative-lookahead）、肯定逆序环视（positive-lookbehind） 和 否定逆序环视（negative-lookbehind）</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>记法</th>
+<th>判断方向</th>
+<th>结构内表达式匹配成功的返回值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>肯定顺序环视（零宽度正预测先行断言）</td>
+<td>(?&#x3D;……)</td>
+<td><strong>向右</strong></td>
+<td>True</td>
+</tr>
+<tr>
+<td>否定顺序环视（零宽度负预测先行断言）</td>
+<td>(?!……)</td>
+<td><strong>向右</strong></td>
+<td>False</td>
+</tr>
+<tr>
+<td>肯定逆序环视（零宽度正回顾后发断言）</td>
+<td>(?&lt;&#x3D;……)</td>
+<td><em>向左</em></td>
+<td>True</td>
+</tr>
+<tr>
+<td>否定逆序环视（零宽度负回顾后发断言）</td>
+<td>(?&lt;!……)</td>
+<td><em>向左</em></td>
+<td>False</td>
+</tr>
+</tbody></table>
+<p>当前位置是朝右判断，则是顺序环视，朝左判断是逆序环视；要求子表达式能匹配的字符串出现，则为肯定环视，不能出现则为否定环视。</p>
+<h5 id="举例-1"><a href="#举例-1" class="headerlink" title="举例"></a>举例</h5><blockquote>
+<ol>
+<li><p>去掉下面文本的空格，英文单词间的除外</p>
+<p>​        中    英文混    排， some English word， 有   多余   的空白字          符</p>
+</li>
+</ol>
+</blockquote>
+<p>分析：</p>
+<p>匹配空白符 \s，<code>some_English_word</code> （下划线的位置代替空白符）从左边看不能出现英文字母（[a-zA-Z]），从右边看也不能出现英文字母。</p>
+<p>所以左右要添加<strong>否定逆序环视</strong>和<strong>否定顺序环视</strong>，故而得到 <code>(?&lt;![a-zA-Z])\s+(?![a-zA-Z])</code> ，替换的文本（Replacement text）设置为空，在进行替换操作。</p>
+<p><strong>P.S.</strong> 能不能改写成肯定环视？左侧肯定不包含字母，右侧肯定不包含字母，<code>(?&lt;=[^a-zA-Z])\s+(?=[^a-zA-Z])</code> </p>
+<p>这个问题涉及到 <strong>肯定环视</strong> 和 <strong>否定环视</strong> 的一大根本不同是，<strong>肯定环视</strong> 要判断成功，字符串中必须有字符由换式结构中的表达式匹配；而 <strong>否定环视</strong> 要判断成功，却有两种情况：1.字符串中出现了字符，但这些字符不能由环视结构中的表达式匹配。 2.字符串中不再有任何字符。也就是这个位置的字符串的起始位置或者结束位置。区别如下。</p>
+<table>
+<thead>
+<tr>
+<th>正则</th>
+<th>结果说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>(?&lt;![a-zA-Z])\s+(?![a-zA-Z])</code></td>
+<td>否定环视，去掉了首尾空白</td>
+</tr>
+<tr>
+<td><code>(?&lt;=[^a-zA-Z])\s+(?=[^a-zA-Z])</code></td>
+<td>肯定环视，无法去掉字符串中的首尾空白，这是因为 <code>\s+</code> 虽然可以匹配空白符，<br/>但其左侧没有任何字符，所以 <code>(?&lt;=[^a-zA-Z])</code>  无法匹配成功，末尾也是一样的道理。</td>
+</tr>
+</tbody></table>
+<blockquote>
+<ol start="2">
+<li><p>电子邮件中，更准确的主机名验证。</p>
+<p>E-mail地址以@分隔两段，前面的是用户名（username）,之后的是主机名（hostname）。用户名一般允许英文大小写、数字、点号等比较简单。</p>
+<p>但根据规范，主机名以点号分割多个域名字段（label）, 每个域名字段可以包含英文大小写、数字、短横，但横线不能出现在最开头位置（e.g. mail.xxx.com）。</p>
+<p>每个域名字段长度最多为63个字符，整个主机名的长度最多255个字符。</p>
+<p>这个表达式 <code>([-a-zA-Z0-9]&#123;1,63&#125;\.)*[-a-z-A-Z0-9]&#123;1,63&#125;</code>  ，有两个问题：1.它允许第一个字符是横线 <code>-</code> ；2.它没有限定整个主机的长度最长为255个字符。</p>
+</li>
+</ol>
+</blockquote>
+<p>分析：</p>
+<ol>
+<li><p><em>它允许第一个字符是横线 <code>-</code> 。</em>可以改写成<code>[a-zA-Z0-9][-a-zA-Z0-9]&#123;0,62&#125;\.</code> 但这样的环视更好 <code>(?!-)[-a-zA-Z0-9]&#123;1,63&#125;\.</code></p>
+</li>
+<li><p><em>它没有限定整个主机的长度最长为255个字符。</em></p>
+<p>为了保证整个主机名字符串长度小于255个字符，主机名全部可能出现的字符都用 <code>[-a-zA-Z0-9.]</code> 表示，所以对应的肯定顺序环视就是 <code>(?=[-a-zA-Z0-9.]&#123;0，255&#125;)</code> 。如果单独给出一个字符串去判断，需要在这个环视末尾增加 <code>$</code> ;如果在一长段文本中提取，那么主机名后面还会有其它字符，只是这些字符不能是 <code>[-a-zA-Z0-9.]</code> （可能是空白符，可能是末尾），使用否定顺序环视 <code>(?![-a-zA-Z0-9.])</code> 可以兼顾这种情况。</p>
+<p>最终得到的正则为：<code>(?=[-a-zA-Z0-9.]&#123;0,255&#125;(?![-a-zA-Z0-9.]))(?:(?!-)[-a-zA-Z0-9]&#123;1,63&#125;\.)*(?:(?!-)[-a-zA-Z0-9])&#123;1,63&#125;</code></p>
+<p>完整在文本中匹配类似 <code>abc@mail.xxx.com</code> Email地址的 正则为：</p>
+<p><code>[\w\-.]+@(?=[-a-zA-Z0-9.]&#123;0,255&#125;(?![-a-zA-Z0-9.]))(?:(?!-)[-a-zA-Z0-9]&#123;1,63&#125;\.)*(?:(?!-)[-a-zA-Z0-9])&#123;1,63&#125;</code></p>
+<p>P.S.</p>
+<blockquote>
+<p>这是我测试的Email地址  <a href="mailto:&#x6d;&#x69;&#x6e;&#x65;&#64;&#109;&#x61;&#105;&#x6c;&#46;&#x78;&#x6e;&#45;&#45;&#122;&#52;&#x71;&#53;&#x68;&#51;&#x38;&#x73;&#x74;&#x77;&#x63;&#x73;&#x38;&#51;&#97;&#x6e;&#108;&#x71;&#x72;&#119;&#52;&#x62;&#x2e;&#120;&#x6e;&#45;&#x2d;&#x36;&#x71;&#x71;&#x39;&#x38;&#x36;&#x62;&#51;&#x78;&#108;">&#x6d;&#x69;&#x6e;&#x65;&#64;&#109;&#x61;&#105;&#x6c;&#46;&#x78;&#x6e;&#45;&#45;&#122;&#52;&#x71;&#53;&#x68;&#51;&#x38;&#x73;&#x74;&#x77;&#x63;&#x73;&#x38;&#51;&#97;&#x6e;&#108;&#x71;&#x72;&#119;&#52;&#x62;&#x2e;&#120;&#x6e;&#45;&#x2d;&#x36;&#x71;&#x71;&#x39;&#x38;&#x36;&#x62;&#51;&#x78;&#108;</a>  试着提取它</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="转义"><a href="#转义" class="headerlink" title="转义"></a>转义</h3><h4 id="字符组转义"><a href="#字符组转义" class="headerlink" title="字符组转义"></a>字符组转义</h4><p>字符组内 <code>]</code> 需要转义成 <code>\]</code> ;  <code>[-09]</code>等价  <code>[0\-9]</code> ; <code>[ab^]</code>等价 <code>[\^ab]</code></p>
+<h4 id="元字符转义"><a href="#元字符转义" class="headerlink" title="元字符转义"></a>元字符转义</h4><table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>转义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[</td>
+<td>\[</td>
+</tr>
+<tr>
+<td>{</td>
+<td>\{</td>
+</tr>
+<tr>
+<td>()</td>
+<td>\( ，\)</td>
+</tr>
+<tr>
+<td>* , + , ?</td>
+<td>\* , \+ , \?</td>
+</tr>
+<tr>
+<td>.</td>
+<td>\.</td>
+</tr>
+<tr>
+<td>|</td>
+<td>\</td>
+</tr>
+<tr>
+<td>^ , $</td>
+<td>\^ , \$</td>
+</tr>
+<tr>
+<td>$num</td>
+<td>\$ 或 $$ 在替换的 replacement 中转义</td>
+</tr>
+</tbody></table>
+<h3 id="常用语言正则特性"><a href="#常用语言正则特性" class="headerlink" title="常用语言正则特性"></a>常用语言正则特性</h3><blockquote>
+<p>这里只记录了 <code>Python</code> 、<code>Java</code> 和 <code>JavaScript</code> 的常用特性</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>JS</th>
+<th>Java</th>
+<th>Python</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>\d</code> <code>\w</code> <code>\s</code> 字符组简记</td>
+<td>ASCII匹配规则</td>
+<td>ASCII匹配规则</td>
+<td>ASCII匹配规则</td>
+</tr>
+<tr>
+<td><code>\1</code> <code>\9</code> 引用分组</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>替换中的引用分组</td>
+<td>$num</td>
+<td>$num</td>
+<td>\g&lt;num&gt;</td>
+</tr>
+<tr>
+<td>命名分组</td>
+<td>×</td>
+<td>×</td>
+<td>用<code>(?P&lt;name&gt;regex)</code>表示命名分组<br/>用<code>(P=name)</code>在表达式中引用分组<br/>用<code>\g&lt;name&gt;</code>在替换中引用</td>
+</tr>
+<tr>
+<td><code>^</code></td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td><code>$</code>无法匹配文本末尾结束符之前的位置</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td><code>(?=regex)</code><br/> <code>(?!regex)</code></td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td><code>(?&lt;=regex)</code> <br/><code>(?&lt;!regex)</code></td>
+<td>×</td>
+<td>逆序环视中的正则能匹配到的文本长度必须有上限</td>
+<td>逆序环视中的正则能匹配到的文本长度必须是固定的</td>
+</tr>
+<tr>
+<td>不区分大小写模式</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>单行模式</td>
+<td>×</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>多行模式</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>注释模式</td>
+<td>×</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>Unicode Property</td>
+<td>×</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr>
+<td>Unicode Block</td>
+<td>×</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr>
+<td>Unicode Script</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+</tbody></table>
+<h2 id="实战技巧"><a href="#实战技巧" class="headerlink" title="实战技巧"></a>实战技巧</h2><h3 id="设置常用的快捷输入"><a href="#设置常用的快捷输入" class="headerlink" title="设置常用的快捷输入"></a>设置常用的快捷输入</h3><blockquote>
+<p>找到系统的输入法中的，用户自定义短语功能。设置一个快捷键，输入如下正则，会方便很多</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>正则</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>([\D\d]*?)</code></td>
+<td>捕获全部字符，用于提取HTML<strong>标签外部</strong>的内容</td>
+</tr>
+<tr>
+<td><code>([^&gt;]*?)</code></td>
+<td>捕获href中的网址，用于提取HTML<strong>标签内部</strong>的内容</td>
+</tr>
+<tr>
+<td><code>(.*?)</code></td>
+<td>单行匹配</td>
+</tr>
+<tr>
+<td><code>[\D\d]*?</code></td>
+<td>对应上面，只是去掉了捕获</td>
+</tr>
+<tr>
+<td><code>[^&gt;]*?</code></td>
+<td>同上</td>
+</tr>
+<tr>
+<td><code>.*?</code></td>
+<td>同上</td>
+</tr>
+<tr>
+<td><code>(\d&#123;4&#125;-\d&#123;1,2&#125;-\d&#123;1,2&#125;\s+\d&#123;1,2&#125;:\d&#123;1,2&#125;:\d&#123;1,2&#125;)</code></td>
+<td>捕获时间的正则，具体情况在此基础上修改</td>
+</tr>
+</tbody></table>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/PYP/" class="category-chain-item">爬亿爬</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/PYP/EXTRACTOR/" class="category-chain-item">抽取</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">#正则表达式</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>正则表达式 - 必知必会</div>
+      <div>https://元气码农少女酱.我爱你/67a5fa31d20a/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>元气码农少女酱</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月2日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/cbf0d06a2c4f/" title="正则表达式 - 匹配原理及ReDoS攻击">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">正则表达式 - 匹配原理及ReDoS攻击</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/c0c979fb059e/" title="通用抽取库">
+                        <span class="hidden-mobile">通用抽取库</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+  <script async src="js/snow.js" crossorigin="anonymous"></script>
+  <script async src="js/love.js" crossorigin="anonymous"></script>
+  <div class="text-center" style="font-size:12px">
+    © 2022  By  <a href="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl">⎛⎝迹路科栈⎠⎞</a> <a href="https://beian.miit.gov.cn/" target="_blank">津ICP备20003416号-1</a>
+  </div>
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300,"hOffset":-10,"vOffset":-10},"mobile":{"show":true},"log":false});</script></body>
+</html>

@@ -1,0 +1,1218 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="元气码农少女酱">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="架构图 执行流程 ENGINE从SPIDERS中（start_urls或start_requests方法）获取种子链接 # scrapy&#x2F;crawler.py#CrawlerRunner  def crawl(self, crawler_or_spidercls, *args, **kwargs):      if isinstance(crawler_or_spidercls, Spider):">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ⅲ.Re：Scrapy架构概述">
+<meta property="og:url" content="https://元气码农少女酱.我爱你/c31a9553cda1/">
+<meta property="og:site_name" content="⎛⎝迹路科栈⎠⎞">
+<meta property="og:description" content="架构图 执行流程 ENGINE从SPIDERS中（start_urls或start_requests方法）获取种子链接 # scrapy&#x2F;crawler.py#CrawlerRunner  def crawl(self, crawler_or_spidercls, *args, **kwargs):      if isinstance(crawler_or_spidercls, Spider):">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://docs.scrapy.org/en/latest/_images/scrapy_architecture_02.png">
+<meta property="article:published_time" content="2023-05-02T03:11:23.000Z">
+<meta property="article:modified_time" content="2024-01-30T13:20:33.347Z">
+<meta property="article:author" content="元气码农少女酱">
+<meta property="article:tag" content="Scrapy">
+<meta property="article:tag" content="爬虫框架">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://docs.scrapy.org/en/latest/_images/scrapy_architecture_02.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Ⅲ.Re：Scrapy架构概述 - ⎛⎝迹路科栈⎠⎞</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"c48bd071d08fdfa52afe48f0d2e0a43e","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?c48bd071d08fdfa52afe48f0d2e0a43e";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+    <link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css" media="print" onload="this.media='all'">
+    <style>
+      html, body, .markdown-body, p {
+        font-family: 'LXGW WenKai Screen';
+      }
+    </style>
+    
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>⎛⎝迹路科栈⎠⎞</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-bug"></i>
+                <span>爬亿爬</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/CAPTURE/">
+                    
+                    <span>📶抓包</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/EXTRACTOR/">
+                    
+                    <span>🧪抽取</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/STORE/">
+                    
+                    <span>💾存储</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/OPS/">
+                    
+                    <span>🔧运维</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/FRAMEWORK/">
+                    
+                    <span>⭐框架</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/WEB-RE/">
+                    
+                    <span>📑Web逆向</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/MOBILE-RE/">
+                    
+                    <span>📲安卓逆向</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>迹路文库</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/NOTE/">
+                    
+                    <span>📔速查笔记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/LEETCODE/">
+                    
+                    <span>Leetcode</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/VUE/">
+                    
+                    <span>Vue</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/PYTHON/">
+                    
+                    <span>Python</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/SPRINGBOOT/">
+                    
+                    <span>SpringBoot</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/LEARNING/">
+                    
+                    <span>迹路一下</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/ZHONGYI/">
+                    
+                    <span>🌿中医</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                
+                <span>Chobits</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/CHOBITS/OCR/">
+                    
+                    <span>OCR</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/CHOBITS/STABLE-DIFFUSION/">
+                    
+                    <span>Stable Diffusion</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>目录</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>联系我</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Ⅲ.Re：Scrapy架构概述"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-02 11:11" pubdate>
+          星期二, 五月 2日 2023, 11:11 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          9.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          82 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Ⅲ.Re：Scrapy架构概述</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="架构图"><a href="#架构图" class="headerlink" title="架构图"></a>架构图</h1><p><img src="https://docs.scrapy.org/en/latest/_images/scrapy_architecture_02.png" srcset="/img/loading.gif" lazyload alt="Scrapy 架构图"></p>
+<h1 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h1><ol>
+<li><p><code>ENGINE</code>从<code>SPIDERS</code>中（<code>start_urls</code>或<code>start_requests</code>方法）获取种子链接</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># scrapy/crawler.py#CrawlerRunner</span>
+
+<span class="token keyword">def</span> <span class="token function">crawl</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> crawler_or_spidercls<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+    <span class="token keyword">if</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>crawler_or_spidercls<span class="token punctuation">,</span> Spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> ValueError<span class="token punctuation">(</span>
+            <span class="token string">'The crawler_or_spidercls argument cannot be a spider object, '</span>
+            <span class="token string">'it must be a spider class (or a Crawler object)'</span><span class="token punctuation">)</span>
+    <span class="token comment"># 启动创建crawler，从crawler_or_spidercls获取spider的name或类名</span>
+    crawler <span class="token operator">=</span> self<span class="token punctuation">.</span>create_crawler<span class="token punctuation">(</span>crawler_or_spidercls<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> self<span class="token punctuation">.</span>_crawl<span class="token punctuation">(</span>crawler<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">_crawl</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> crawler<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    self<span class="token punctuation">.</span>crawlers<span class="token punctuation">.</span>add<span class="token punctuation">(</span>crawler<span class="token punctuation">)</span>
+    <span class="token comment"># 加载抓取任务</span>
+    d <span class="token operator">=</span> crawler<span class="token punctuation">.</span>crawl<span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>_active<span class="token punctuation">.</span>add<span class="token punctuation">(</span>d<span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">_done</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>crawlers<span class="token punctuation">.</span>discard<span class="token punctuation">(</span>crawler<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>_active<span class="token punctuation">.</span>discard<span class="token punctuation">(</span>d<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>bootstrap_failed <span class="token operator">|</span><span class="token operator">=</span> <span class="token keyword">not</span> <span class="token builtin">getattr</span><span class="token punctuation">(</span>crawler<span class="token punctuation">,</span> <span class="token string">'spider'</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> result
+    <span class="token keyword">return</span> d<span class="token punctuation">.</span>addBoth<span class="token punctuation">(</span>_done<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<p><code>P.S.</code> 概念：<code>crawler</code>是抓取任务、<code>spider</code>是编写的爬虫逻辑模块</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># scrapy/crawler.py#Crawler</span>
+
+<span class="token decorator annotation punctuation">@defer<span class="token punctuation">.</span>inlineCallbacks</span>
+<span class="token keyword">def</span> <span class="token function">crawl</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> self<span class="token punctuation">.</span>crawling<span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> RuntimeError<span class="token punctuation">(</span><span class="token string">"Crawling already taking place"</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>crawling <span class="token operator">=</span> <span class="token boolean">True</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        <span class="token comment"># 创建spider、engine</span>
+        self<span class="token punctuation">.</span>spider <span class="token operator">=</span> self<span class="token punctuation">.</span>_create_spider<span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>engine <span class="token operator">=</span> self<span class="token punctuation">.</span>_create_engine<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment"># 迭代 spider 的 start_requests() 获取链接</span>
+        start_requests <span class="token operator">=</span> <span class="token builtin">iter</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>spider<span class="token punctuation">.</span>start_requests<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment"># engine 获取 start_requests 进行调度</span>
+        <span class="token keyword">yield</span> self<span class="token punctuation">.</span>engine<span class="token punctuation">.</span>open_spider<span class="token punctuation">(</span>self<span class="token punctuation">.</span>spider<span class="token punctuation">,</span> start_requests<span class="token punctuation">)</span>
+        <span class="token keyword">yield</span> defer<span class="token punctuation">.</span>maybeDeferred<span class="token punctuation">(</span>self<span class="token punctuation">.</span>engine<span class="token punctuation">.</span>start<span class="token punctuation">)</span>
+    <span class="token keyword">except</span> Exception<span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>crawling <span class="token operator">=</span> <span class="token boolean">False</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>engine <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+            <span class="token keyword">yield</span> self<span class="token punctuation">.</span>engine<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">raise</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+</li>
+<li><p><code>ENGINE</code>在 <code>SCHEDULER</code>中调度 Requests，并获取将要抓取的 Requests</p>
+</li>
+<li><p><code>SCHEDULER</code>把 Requests 返回给<code>ENGINE</code></p>
+</li>
+<li><p><code>ENGINE</code>把 Requests 经过<code>DOWNLOADER_MIDDLEWARES</code>（process_request）的层层处理，交递给<code>DOWNLOADER</code></p>
+</li>
+<li><p><code>DOWNLOADER</code>将 Requests 请求后，会得到的 Response ，再经由<code>DOWNLOADER_MIDDLEWARES</code>（process_response）的层层处理，返回到<code>ENGINE</code></p>
+</li>
+<li><p><code>ENGINE</code>将得到的 Response  经过<code>SPIDER_MIDDLEWARES</code>（process_spider_input），发送给<code>SPIDERS</code>处理</p>
+</li>
+<li><p><code>SPIDERS</code>根据编写的业务逻辑将 Items 或新的 Requests，通过<code>SPIDER_MIDDLEWARES</code>（process_spider_output）交由<code>ENGINE</code></p>
+</li>
+<li><p><code>ENGINE</code>会根据 Items 或 Requests 的不同，发往<code>ITEM PIPELNES</code>或<code>SCHEDULER</code></p>
+</li>
+<li><p>从步骤3之后，程序会循环执行，直到<code>ENGINE</code>里没有可供调度的 Requests 结束</p>
+</li>
+</ol>
+<h1 id="核心类"><a href="#核心类" class="headerlink" title="核心类"></a>核心类</h1><figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># scrapy/core/engine.py#ExecutionEngine</span>
+
+<span class="token decorator annotation punctuation">@inlineCallbacks</span>
+<span class="token keyword">def</span> <span class="token function">open_spider</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> spider<span class="token punctuation">:</span> Spider<span class="token punctuation">,</span> start_requests<span class="token punctuation">:</span> Iterable <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> close_if_idle<span class="token punctuation">:</span> <span class="token builtin">bool</span> <span class="token operator">=</span> <span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> self<span class="token punctuation">.</span>slot <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> RuntimeError<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"No free spider slot when opening </span><span class="token interpolation"><span class="token punctuation">&#123;</span>spider<span class="token punctuation">.</span>name<span class="token conversion-option punctuation">!r</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+    logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"Spider opened"</span><span class="token punctuation">,</span> extra<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">'spider'</span><span class="token punctuation">:</span> spider<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token comment"># 即将要进行调度的方法，这里是准备请求的request</span>
+    nextcall <span class="token operator">=</span> CallLaterOnce<span class="token punctuation">(</span>self<span class="token punctuation">.</span>_next_request<span class="token punctuation">)</span>
+    <span class="token comment"># 创建scheduler</span>
+    scheduler <span class="token operator">=</span> create_instance<span class="token punctuation">(</span>self<span class="token punctuation">.</span>scheduler_cls<span class="token punctuation">,</span> settings<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">,</span> crawler<span class="token operator">=</span>self<span class="token punctuation">.</span>crawler<span class="token punctuation">)</span>
+    <span class="token comment"># 流经spider中间件process_start_requests方法后的start_requests</span>
+    start_requests <span class="token operator">=</span> <span class="token keyword">yield</span> self<span class="token punctuation">.</span>scraper<span class="token punctuation">.</span>spidermw<span class="token punctuation">.</span>process_start_requests<span class="token punctuation">(</span>start_requests<span class="token punctuation">,</span> spider<span class="token punctuation">)</span>
+    <span class="token comment"># 根据scheduler为nextcall创建Slot，Slot可以看做是requests的生命周期，用来管理engine的运行状态和正在请求的request</span>
+    self<span class="token punctuation">.</span>slot <span class="token operator">=</span> Slot<span class="token punctuation">(</span>start_requests<span class="token punctuation">,</span> close_if_idle<span class="token punctuation">,</span> nextcall<span class="token punctuation">,</span> scheduler<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>spider <span class="token operator">=</span> spider
+    <span class="token keyword">if</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>scheduler<span class="token punctuation">,</span> <span class="token string">"open"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 开启scheduler</span>
+        <span class="token keyword">yield</span> scheduler<span class="token punctuation">.</span><span class="token builtin">open</span><span class="token punctuation">(</span>spider<span class="token punctuation">)</span>
+    <span class="token comment"># 开启scraper</span>
+    <span class="token keyword">yield</span> self<span class="token punctuation">.</span>scraper<span class="token punctuation">.</span>open_spider<span class="token punctuation">(</span>spider<span class="token punctuation">)</span>
+    <span class="token comment"># 开启stats（状态收集器）</span>
+    self<span class="token punctuation">.</span>crawler<span class="token punctuation">.</span>stats<span class="token punctuation">.</span>open_spider<span class="token punctuation">(</span>spider<span class="token punctuation">)</span>
+    <span class="token comment"># 记录spider_opened日志</span>
+    <span class="token keyword">yield</span> self<span class="token punctuation">.</span>signals<span class="token punctuation">.</span>send_catch_log_deferred<span class="token punctuation">(</span>signals<span class="token punctuation">.</span>spider_opened<span class="token punctuation">,</span> spider<span class="token operator">=</span>spider<span class="token punctuation">)</span>
+    <span class="token comment"># 调度nextcall</span>
+    self<span class="token punctuation">.</span>slot<span class="token punctuation">.</span>nextcall<span class="token punctuation">.</span>schedule<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment"># 调度间隔，now的默认值为True，会立即执行</span>
+    self<span class="token punctuation">.</span>slot<span class="token punctuation">.</span>heartbeat<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<h2 id="next-request"><a href="#next-request" class="headerlink" title="_next_request"></a>_next_request</h2><figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># scrapy/core/engine.py#ExecutionEngine  _next_request(self)</span>
+
+<span class="token keyword">def</span> <span class="token function">_next_request</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> self<span class="token punctuation">.</span>slot <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span>
+    <span class="token keyword">assert</span> self<span class="token punctuation">.</span>spider <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span>  <span class="token comment"># typing</span>
+    <span class="token keyword">if</span> self<span class="token punctuation">.</span>paused<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token boolean">None</span>
+    <span class="token comment"># _next_request_from_scheduler：从调度器中获取下个request交给引擎</span>
+    <span class="token keyword">while</span> <span class="token keyword">not</span> self<span class="token punctuation">.</span>_needs_backout<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">and</span> self<span class="token punctuation">.</span>_next_request_from_scheduler<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+    <span class="token keyword">if</span> self<span class="token punctuation">.</span>slot<span class="token punctuation">.</span>start_requests <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span> <span class="token keyword">and</span> <span class="token keyword">not</span> self<span class="token punctuation">.</span>_needs_backout<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            request <span class="token operator">=</span> <span class="token builtin">next</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>slot<span class="token punctuation">.</span>start_requests<span class="token punctuation">)</span>
+        <span class="token keyword">except</span> StopIteration<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>slot<span class="token punctuation">.</span>start_requests <span class="token operator">=</span> <span class="token boolean">None</span>
+        <span class="token keyword">except</span> Exception<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>slot<span class="token punctuation">.</span>start_requests <span class="token operator">=</span> <span class="token boolean">None</span>
+            logger<span class="token punctuation">.</span>error<span class="token punctuation">(</span><span class="token string">'Error while obtaining start requests'</span><span class="token punctuation">,</span> exc_info<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> extra<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">'spider'</span><span class="token punctuation">:</span> self<span class="token punctuation">.</span>spider<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>crawl<span class="token punctuation">(</span>request<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> self<span class="token punctuation">.</span>spider_is_idle<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">and</span> self<span class="token punctuation">.</span>slot<span class="token punctuation">.</span>close_if_idle<span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>_spider_idle<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># scrapy/core/engine.py#ExecutionEngine  _next_request_from_scheduler(self)</span>
+
+<span class="token keyword">def</span> <span class="token function">_next_request_from_scheduler</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> Optional<span class="token punctuation">[</span>Deferred<span class="token punctuation">]</span><span class="token punctuation">:</span>
+    <span class="token keyword">assert</span> self<span class="token punctuation">.</span>slot <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span>  <span class="token comment"># typing</span>
+    <span class="token keyword">assert</span> self<span class="token punctuation">.</span>spider <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span>  <span class="token comment"># typing</span>
+    request <span class="token operator">=</span> self<span class="token punctuation">.</span>slot<span class="token punctuation">.</span>scheduler<span class="token punctuation">.</span>next_request<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> request <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token boolean">None</span>
+    <span class="token comment"># _download：下载requeset</span>
+    d <span class="token operator">=</span> self<span class="token punctuation">.</span>_download<span class="token punctuation">(</span>request<span class="token punctuation">,</span> self<span class="token punctuation">.</span>spider<span class="token punctuation">)</span>
+    <span class="token comment"># _handle_downloader_output：下载器输出</span>
+    d<span class="token punctuation">.</span>addBoth<span class="token punctuation">(</span>self<span class="token punctuation">.</span>_handle_downloader_output<span class="token punctuation">,</span> request<span class="token punctuation">)</span>
+    d<span class="token punctuation">.</span>addErrback<span class="token punctuation">(</span><span class="token keyword">lambda</span> f<span class="token punctuation">:</span> logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">'Error while handling downloader output'</span><span class="token punctuation">,</span>
+                                       exc_info<span class="token operator">=</span>failure_to_exc_info<span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                                       extra<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">'spider'</span><span class="token punctuation">:</span> self<span class="token punctuation">.</span>spider<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    d<span class="token punctuation">.</span>addBoth<span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token keyword">_</span><span class="token punctuation">:</span> self<span class="token punctuation">.</span>slot<span class="token punctuation">.</span>remove_request<span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    d<span class="token punctuation">.</span>addErrback<span class="token punctuation">(</span><span class="token keyword">lambda</span> f<span class="token punctuation">:</span> logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">'Error while removing request from slot'</span><span class="token punctuation">,</span>
+                                       exc_info<span class="token operator">=</span>failure_to_exc_info<span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                                       extra<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">'spider'</span><span class="token punctuation">:</span> self<span class="token punctuation">.</span>spider<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    slot <span class="token operator">=</span> self<span class="token punctuation">.</span>slot
+    d<span class="token punctuation">.</span>addBoth<span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token keyword">_</span><span class="token punctuation">:</span> slot<span class="token punctuation">.</span>nextcall<span class="token punctuation">.</span>schedule<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    d<span class="token punctuation">.</span>addErrback<span class="token punctuation">(</span><span class="token keyword">lambda</span> f<span class="token punctuation">:</span> logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">'Error while scheduling new request'</span><span class="token punctuation">,</span>
+                                       exc_info<span class="token operator">=</span>failure_to_exc_info<span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                                       extra<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">'spider'</span><span class="token punctuation">:</span> self<span class="token punctuation">.</span>spider<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<h3 id="download"><a href="#download" class="headerlink" title="_download"></a>_download</h3><figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># scrapy/core/engine.py#ExecutionEngine  _download(self, request, spider)</span>
+
+<span class="token keyword">def</span> <span class="token function">_download</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> request<span class="token punctuation">:</span> Request<span class="token punctuation">,</span> spider<span class="token punctuation">:</span> Spider<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> Deferred<span class="token punctuation">:</span>
+    <span class="token keyword">assert</span> self<span class="token punctuation">.</span>slot <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span>  <span class="token comment"># typing</span>
+    self<span class="token punctuation">.</span>slot<span class="token punctuation">.</span>add_request<span class="token punctuation">(</span>request<span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">_on_success</span><span class="token punctuation">(</span>result<span class="token punctuation">:</span> Union<span class="token punctuation">[</span>Response<span class="token punctuation">,</span> Request<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> Union<span class="token punctuation">[</span>Response<span class="token punctuation">,</span> Request<span class="token punctuation">]</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> <span class="token punctuation">(</span>Response<span class="token punctuation">,</span> Request<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">raise</span> TypeError<span class="token punctuation">(</span>f"Incorrect <span class="token builtin">type</span><span class="token punctuation">:</span> expected Response <span class="token keyword">or</span> Request<span class="token punctuation">,</span> got <span class="token punctuation">&#123;</span><span class="token builtin">type</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>res
+        <span class="token keyword">if</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> Response<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> result<span class="token punctuation">.</span>request <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+                result<span class="token punctuation">.</span>request <span class="token operator">=</span> request
+            logkws <span class="token operator">=</span> self<span class="token punctuation">.</span>logformatter<span class="token punctuation">.</span>crawled<span class="token punctuation">(</span>result<span class="token punctuation">.</span>request<span class="token punctuation">,</span> result<span class="token punctuation">,</span> spider<span class="token punctuation">)</span>
+            <span class="token keyword">if</span> logkws <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+                logger<span class="token punctuation">.</span>log<span class="token punctuation">(</span><span class="token operator">*</span>logformatter_adapter<span class="token punctuation">(</span>logkws<span class="token punctuation">)</span><span class="token punctuation">,</span> extra<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">"spider"</span><span class="token punctuation">:</span> spider<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>signals<span class="token punctuation">.</span>send_catch_log<span class="token punctuation">(</span>
+                signal<span class="token operator">=</span>signals<span class="token punctuation">.</span>response_received<span class="token punctuation">,</span>
+                response<span class="token operator">=</span>result<span class="token punctuation">,</span>
+                request<span class="token operator">=</span>result<span class="token punctuation">.</span>request<span class="token punctuation">,</span>
+                spider<span class="token operator">=</span>spider<span class="token punctuation">,</span>
+            <span class="token punctuation">)</span>
+        <span class="token keyword">return</span> result
+    <span class="token keyword">def</span> <span class="token function">_on_complete</span><span class="token punctuation">(</span>_<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>slot<span class="token punctuation">.</span>nextcall<span class="token punctuation">.</span>schedule<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> _
+    <span class="token comment"># 调用 settings.py 里的下载器：DOWNLOADER = 'scrapy.core.downloader.Downloader'</span>
+    dwld <span class="token operator">=</span> self<span class="token punctuation">.</span>downloader<span class="token punctuation">.</span>fetch<span class="token punctuation">(</span>request<span class="token punctuation">,</span> spider<span class="token punctuation">)</span>
+    dwld<span class="token punctuation">.</span>addCallbacks<span class="token punctuation">(</span>_on_success<span class="token punctuation">)</span>
+    dwld<span class="token punctuation">.</span>addBoth<span class="token punctuation">(</span>_on_complete<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> dwld<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<h3 id="handle-downloader-output"><a href="#handle-downloader-output" class="headerlink" title="_handle_downloader_output"></a>_handle_downloader_output</h3><figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># scrapy/core/engine.py#ExecutionEngine  _handle_downloader_output(self, result, request)</span>
+
+<span class="token keyword">def</span> <span class="token function">_handle_downloader_output</span><span class="token punctuation">(</span>
+    self<span class="token punctuation">,</span> result<span class="token punctuation">:</span> Union<span class="token punctuation">[</span>Request<span class="token punctuation">,</span> Response<span class="token punctuation">,</span> Failure<span class="token punctuation">]</span><span class="token punctuation">,</span> request<span class="token punctuation">:</span> Request
+<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> Optional<span class="token punctuation">[</span>Deferred<span class="token punctuation">]</span><span class="token punctuation">:</span>
+    <span class="token keyword">assert</span> self<span class="token punctuation">.</span>spider <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span>  <span class="token comment"># typing</span>
+    <span class="token keyword">if</span> <span class="token keyword">not</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> <span class="token punctuation">(</span>Request<span class="token punctuation">,</span> Response<span class="token punctuation">,</span> Failure<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> TypeError<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Incorrect type: expected Request, Response or Failure, got </span><span class="token interpolation"><span class="token punctuation">&#123;</span><span class="token builtin">type</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>result<span class="token conversion-option punctuation">!r</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+    <span class="token comment"># downloader middleware can return requests (for example, redirects)</span>
+    <span class="token comment"># 是Request的情况，继续抓取</span>
+    <span class="token keyword">if</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> Request<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>crawl<span class="token punctuation">(</span>result<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token boolean">None</span>
+    <span class="token comment"># enqueue_scrape</span>
+    d <span class="token operator">=</span> self<span class="token punctuation">.</span>scraper<span class="token punctuation">.</span>enqueue_scrape<span class="token punctuation">(</span>result<span class="token punctuation">,</span> request<span class="token punctuation">,</span> self<span class="token punctuation">.</span>spider<span class="token punctuation">)</span>
+    d<span class="token punctuation">.</span>addErrback<span class="token punctuation">(</span>
+        <span class="token keyword">lambda</span> f<span class="token punctuation">:</span> logger<span class="token punctuation">.</span>error<span class="token punctuation">(</span>
+            <span class="token string">"Error while enqueuing downloader output"</span><span class="token punctuation">,</span>
+            exc_info<span class="token operator">=</span>failure_to_exc_info<span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">,</span>
+            extra<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">'spider'</span><span class="token punctuation">:</span> self<span class="token punctuation">.</span>spider<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">)</span>
+    <span class="token punctuation">)</span>
+    <span class="token keyword">return</span> d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># scrapy/core/scraper.py#Scraper  enqueue_scrape(self, result, request, spider)</span>
+
+<span class="token keyword">def</span> <span class="token function">enqueue_scrape</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> result<span class="token punctuation">:</span> Union<span class="token punctuation">[</span>Response<span class="token punctuation">,</span> Failure<span class="token punctuation">]</span><span class="token punctuation">,</span> request<span class="token punctuation">:</span> Request<span class="token punctuation">,</span> spider<span class="token punctuation">:</span> Spider<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> Deferred<span class="token punctuation">:</span>
+    <span class="token keyword">if</span> self<span class="token punctuation">.</span>slot <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> RuntimeError<span class="token punctuation">(</span><span class="token string">"Scraper slot not assigned"</span><span class="token punctuation">)</span>
+    dfd <span class="token operator">=</span> self<span class="token punctuation">.</span>slot<span class="token punctuation">.</span>add_response_request<span class="token punctuation">(</span>result<span class="token punctuation">,</span> request<span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">finish_scraping</span><span class="token punctuation">(</span>_<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>slot<span class="token punctuation">.</span>finish_response<span class="token punctuation">(</span>result<span class="token punctuation">,</span> request<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>_check_if_closing<span class="token punctuation">(</span>spider<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>_scrape_next<span class="token punctuation">(</span>spider<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> _
+    dfd<span class="token punctuation">.</span>addBoth<span class="token punctuation">(</span>finish_scraping<span class="token punctuation">)</span>
+    dfd<span class="token punctuation">.</span>addErrback<span class="token punctuation">(</span>
+        <span class="token keyword">lambda</span> f<span class="token punctuation">:</span> logger<span class="token punctuation">.</span>error<span class="token punctuation">(</span><span class="token string">'Scraper bug processing %(request)s'</span><span class="token punctuation">,</span>
+                               <span class="token punctuation">&#123;</span><span class="token string">'request'</span><span class="token punctuation">:</span> request<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+                               exc_info<span class="token operator">=</span>failure_to_exc_info<span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                               extra<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">'spider'</span><span class="token punctuation">:</span> spider<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token comment"># _scrape_next</span>
+    self<span class="token punctuation">.</span>_scrape_next<span class="token punctuation">(</span>spider<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> dfd<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># scrapy/core/scraper.py#Scraper  _scrape_next(self, result, request, spider)</span>
+
+<span class="token keyword">def</span> <span class="token function">_scrape_next</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> spider<span class="token punctuation">:</span> Spider<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+    <span class="token keyword">assert</span> self<span class="token punctuation">.</span>slot <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span>  <span class="token comment"># typing</span>
+    <span class="token keyword">while</span> self<span class="token punctuation">.</span>slot<span class="token punctuation">.</span>queue<span class="token punctuation">:</span>
+        response<span class="token punctuation">,</span> request<span class="token punctuation">,</span> deferred <span class="token operator">=</span> self<span class="token punctuation">.</span>slot<span class="token punctuation">.</span>next_response_request_deferred<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment"># _scrape</span>
+        self<span class="token punctuation">.</span>_scrape<span class="token punctuation">(</span>response<span class="token punctuation">,</span> request<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">.</span>chainDeferred<span class="token punctuation">(</span>deferred<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># scrapy/core/scraper.py#Scraper  _scrape(self, result, request, spider)</span>
+
+<span class="token keyword">def</span> <span class="token function">_scrape</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> result<span class="token punctuation">:</span> Union<span class="token punctuation">[</span>Response<span class="token punctuation">,</span> Failure<span class="token punctuation">]</span><span class="token punctuation">,</span> request<span class="token punctuation">:</span> Request<span class="token punctuation">,</span> spider<span class="token punctuation">:</span> Spider<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> Deferred<span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Handle the downloaded response or failure through the spider callback/errback
+    """</span>
+    <span class="token keyword">if</span> <span class="token keyword">not</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> <span class="token punctuation">(</span>Response<span class="token punctuation">,</span> Failure<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> TypeError<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Incorrect type: expected Response or Failure, got </span><span class="token interpolation"><span class="token punctuation">&#123;</span><span class="token builtin">type</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>result<span class="token conversion-option punctuation">!r</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+    <span class="token comment"># _scrape2</span>
+    dfd <span class="token operator">=</span> self<span class="token punctuation">.</span>_scrape2<span class="token punctuation">(</span>result<span class="token punctuation">,</span> request<span class="token punctuation">,</span> spider<span class="token punctuation">)</span>  <span class="token comment"># returns spider's processed output</span>
+    dfd<span class="token punctuation">.</span>addErrback<span class="token punctuation">(</span>self<span class="token punctuation">.</span>handle_spider_error<span class="token punctuation">,</span> request<span class="token punctuation">,</span> result<span class="token punctuation">,</span> spider<span class="token punctuation">)</span>
+    dfd<span class="token punctuation">.</span>addCallback<span class="token punctuation">(</span>self<span class="token punctuation">.</span>handle_spider_output<span class="token punctuation">,</span> request<span class="token punctuation">,</span> result<span class="token punctuation">,</span> spider<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> dfd<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># scrapy/core/scraper.py#Scraper  _scrape2(self, result, request, spider)</span>
+
+<span class="token keyword">def</span> <span class="token function">_scrape2</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> result<span class="token punctuation">:</span> Union<span class="token punctuation">[</span>Response<span class="token punctuation">,</span> Failure<span class="token punctuation">]</span><span class="token punctuation">,</span> request<span class="token punctuation">:</span> Request<span class="token punctuation">,</span> spider<span class="token punctuation">:</span> Spider<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> Deferred<span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Handle the different cases of request's result been a Response or a Failure
+    """</span>
+    <span class="token keyword">if</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> Response<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># scrape_response：spider中间件process_spider_input、process_spider_output的处理</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>spidermw<span class="token punctuation">.</span>scrape_response<span class="token punctuation">(</span>self<span class="token punctuation">.</span>call_spider<span class="token punctuation">,</span> result<span class="token punctuation">,</span> request<span class="token punctuation">,</span> spider<span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>  <span class="token comment"># result is a Failure</span>
+        <span class="token comment"># call_spider：失败回调</span>
+        dfd <span class="token operator">=</span> self<span class="token punctuation">.</span>call_spider<span class="token punctuation">(</span>result<span class="token punctuation">,</span> request<span class="token punctuation">,</span> spider<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> dfd<span class="token punctuation">.</span>addErrback<span class="token punctuation">(</span>self<span class="token punctuation">.</span>_log_download_errors<span class="token punctuation">,</span> result<span class="token punctuation">,</span> request<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<h4 id="scrape-response"><a href="#scrape-response" class="headerlink" title="scrape_response"></a>scrape_response</h4><figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># scrapy/core/spidermw.py#SpiderMiddlewareManager  scrape_response(self, scrape_func, response, request, spider)</span>
+
+<span class="token keyword">def</span> <span class="token function">scrape_response</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> scrape_func<span class="token punctuation">:</span> ScrapeFunc<span class="token punctuation">,</span> response<span class="token punctuation">:</span> Response<span class="token punctuation">,</span> request<span class="token punctuation">:</span> Request<span class="token punctuation">,</span>
+                    spider<span class="token punctuation">:</span> Spider<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> Deferred<span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">process_callback_output</span><span class="token punctuation">(</span>result<span class="token punctuation">:</span> Iterable<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> MutableChain<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>_process_callback_output<span class="token punctuation">(</span>response<span class="token punctuation">,</span> spider<span class="token punctuation">,</span> result<span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">process_spider_exception</span><span class="token punctuation">(</span>_failure<span class="token punctuation">:</span> Failure<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> Union<span class="token punctuation">[</span>Failure<span class="token punctuation">,</span> MutableChain<span class="token punctuation">]</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>_process_spider_exception<span class="token punctuation">(</span>response<span class="token punctuation">,</span> spider<span class="token punctuation">,</span> _failure<span class="token punctuation">)</span>
+    dfd <span class="token operator">=</span> mustbe_deferred<span class="token punctuation">(</span>self<span class="token punctuation">.</span>_process_spider_input<span class="token punctuation">,</span> scrape_func<span class="token punctuation">,</span> response<span class="token punctuation">,</span> request<span class="token punctuation">,</span> spider<span class="token punctuation">)</span>
+    dfd<span class="token punctuation">.</span>addCallbacks<span class="token punctuation">(</span>callback<span class="token operator">=</span>process_callback_output<span class="token punctuation">,</span> errback<span class="token operator">=</span>process_spider_exception<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> dfd<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<h4 id="call-spider"><a href="#call-spider" class="headerlink" title="call_spider"></a>call_spider</h4><figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># scrapy/core/scraper.py#Scraper  call_spider(self, result, request, spider)</span>
+
+<span class="token keyword">def</span> <span class="token function">call_spider</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> result<span class="token punctuation">:</span> Union<span class="token punctuation">[</span>Response<span class="token punctuation">,</span> Failure<span class="token punctuation">]</span><span class="token punctuation">,</span> request<span class="token punctuation">:</span> Request<span class="token punctuation">,</span> spider<span class="token punctuation">:</span> Spider<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> Deferred<span class="token punctuation">:</span>
+    <span class="token keyword">if</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> Response<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token builtin">getattr</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> <span class="token string">"request"</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">)</span> <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+            result<span class="token punctuation">.</span>request <span class="token operator">=</span> request
+        <span class="token comment"># 回调自定义的callback或默认的继承 Spider 的 parse(self, response, **kwargs)</span>
+        callback <span class="token operator">=</span> result<span class="token punctuation">.</span>request<span class="token punctuation">.</span>callback <span class="token keyword">or</span> spider<span class="token punctuation">.</span>_parse
+        warn_on_generator_with_return_value<span class="token punctuation">(</span>spider<span class="token punctuation">,</span> callback<span class="token punctuation">)</span>
+        dfd <span class="token operator">=</span> defer_succeed<span class="token punctuation">(</span>result<span class="token punctuation">)</span>
+        dfd<span class="token punctuation">.</span>addCallbacks<span class="token punctuation">(</span>callback<span class="token operator">=</span>callback<span class="token punctuation">,</span> callbackKeywords<span class="token operator">=</span>result<span class="token punctuation">.</span>request<span class="token punctuation">.</span>cb_kwargs<span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>  <span class="token comment"># result is a Failure</span>
+        result<span class="token punctuation">.</span>request <span class="token operator">=</span> request
+        <span class="token comment"># 失败情况的回调</span>
+        warn_on_generator_with_return_value<span class="token punctuation">(</span>spider<span class="token punctuation">,</span> request<span class="token punctuation">.</span>errback<span class="token punctuation">)</span>
+        dfd <span class="token operator">=</span> defer_fail<span class="token punctuation">(</span>result<span class="token punctuation">)</span>
+        dfd<span class="token punctuation">.</span>addErrback<span class="token punctuation">(</span>request<span class="token punctuation">.</span>errback<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/PYP/" class="category-chain-item">爬亿爬</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/PYP/FRAMEWORK/" class="category-chain-item">框架</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/SCRAPY/">#Scrapy</a>
+      
+        <a href="/tags/%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6/">#爬虫框架</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Ⅲ.Re：Scrapy架构概述</div>
+      <div>https://元气码农少女酱.我爱你/c31a9553cda1/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>元气码农少女酱</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月2日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/9a7df02c40f9/" title="Ⅳ.Re：Scrapy 之 Spider">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Ⅳ.Re：Scrapy 之 Spider</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/fd2edbb72b97/" title="Ⅱ.Re：Scrapy启动与调试">
+                        <span class="hidden-mobile">Ⅱ.Re：Scrapy启动与调试</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+  <script async src="js/snow.js" crossorigin="anonymous"></script>
+  <script async src="js/love.js" crossorigin="anonymous"></script>
+  <div class="text-center" style="font-size:12px">
+    © 2022  By  <a href="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl">⎛⎝迹路科栈⎠⎞</a> <a href="https://beian.miit.gov.cn/" target="_blank">津ICP备20003416号-1</a>
+  </div>
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300,"hOffset":-10,"vOffset":-10},"mobile":{"show":true},"log":false});</script></body>
+</html>

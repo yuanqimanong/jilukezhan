@@ -1,0 +1,1436 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="元气码农少女酱">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="基础认知 Linux 是一种自由和开放源码的类 UNIX 操作系统。 Linux 英文解释为 Linux is not Unix。 Linux内核最初是在 1991 由林纳斯·托瓦兹（Linus Torvalds）在赫尔辛基大学上学时创立的，主要受到 Minix 和 Unix 思想的启发。 目前市面上较知名的发行版有：Ubuntu、RedHat、CentOS、Debian、Fedora、SuSE、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux命令">
+<meta property="og:url" content="https://元气码农少女酱.我爱你/611fb94ae4b4/">
+<meta property="og:site_name" content="⎛⎝迹路科栈⎠⎞">
+<meta property="og:description" content="基础认知 Linux 是一种自由和开放源码的类 UNIX 操作系统。 Linux 英文解释为 Linux is not Unix。 Linux内核最初是在 1991 由林纳斯·托瓦兹（Linus Torvalds）在赫尔辛基大学上学时创立的，主要受到 Minix 和 Unix 思想的启发。 目前市面上较知名的发行版有：Ubuntu、RedHat、CentOS、Debian、Fedora、SuSE、">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-02T03:11:11.000Z">
+<meta property="article:modified_time" content="2024-01-30T13:20:33.312Z">
+<meta property="article:author" content="元气码农少女酱">
+<meta property="article:tag" content="速查笔记">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Linux命令 - ⎛⎝迹路科栈⎠⎞</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"c48bd071d08fdfa52afe48f0d2e0a43e","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?c48bd071d08fdfa52afe48f0d2e0a43e";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+    <link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css" media="print" onload="this.media='all'">
+    <style>
+      html, body, .markdown-body, p {
+        font-family: 'LXGW WenKai Screen';
+      }
+    </style>
+    
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>⎛⎝迹路科栈⎠⎞</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-bug"></i>
+                <span>爬亿爬</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/CAPTURE/">
+                    
+                    <span>📶抓包</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/EXTRACTOR/">
+                    
+                    <span>🧪抽取</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/STORE/">
+                    
+                    <span>💾存储</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/OPS/">
+                    
+                    <span>🔧运维</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/FRAMEWORK/">
+                    
+                    <span>⭐框架</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/WEB-RE/">
+                    
+                    <span>📑Web逆向</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/MOBILE-RE/">
+                    
+                    <span>📲安卓逆向</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>迹路文库</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/NOTE/">
+                    
+                    <span>📔速查笔记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/LEETCODE/">
+                    
+                    <span>Leetcode</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/VUE/">
+                    
+                    <span>Vue</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/PYTHON/">
+                    
+                    <span>Python</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/SPRINGBOOT/">
+                    
+                    <span>SpringBoot</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/LEARNING/">
+                    
+                    <span>迹路一下</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/ZHONGYI/">
+                    
+                    <span>🌿中医</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                
+                <span>Chobits</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/CHOBITS/OCR/">
+                    
+                    <span>OCR</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/CHOBITS/STABLE-DIFFUSION/">
+                    
+                    <span>Stable Diffusion</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>目录</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>联系我</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Linux命令"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-02 11:11" pubdate>
+          星期二, 五月 2日 2023, 11:11 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          5.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          49 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Linux命令</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="基础认知"><a href="#基础认知" class="headerlink" title="基础认知"></a>基础认知</h2><blockquote>
+<p>Linux 是一种自由和开放源码的类 UNIX 操作系统。</p>
+<p>Linux 英文解释为 <strong>Linux is not Unix</strong>。</p>
+<p>Linux内核最初是在 1991 由林纳斯·托瓦兹（Linus Torvalds）在赫尔辛基大学上学时创立的，主要受到 Minix 和 Unix 思想的启发。</p>
+<p>目前市面上较知名的发行版有：Ubuntu、RedHat、CentOS、Debian、Fedora、SuSE、OpenSUSE、Arch Linux、SolusOS 等。</p>
+</blockquote>
+<h2 id="系统内核"><a href="#系统内核" class="headerlink" title="系统内核"></a>系统内核</h2><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">uname</span> <span class="token parameter variable">-a</span>
+<span class="token comment"># 查看操作系统版本及处理器架构信息</span>
+<span class="token comment"># Linux centos8 4.18.0-305.17.1.el8_4.x86_64 #1 SMP Wed Sep 8 14:00:07 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux</span>
+
+<span class="token function">uname</span> <span class="token parameter variable">-r</span>
+<span class="token comment"># 查询内核版本 （主版本号.次版本号.末版本号）</span>
+<span class="token comment"># 4.18.0-305.17.1.el8_4.x86_64</span>
+
+<span class="token function">uname</span> <span class="token parameter variable">-m</span>
+arch
+<span class="token comment"># 查看处理器架构</span>
+
+<span class="token function">cat</span> /proc/version
+<span class="token comment"># 查看Linux内核版本</span>
+<span class="token comment"># Linux version 4.18.0-305.17.1.el8_4.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 8.4.1 20200928 (Red Hat 8.4.1-1) (GCC)) #1 SMP Wed Sep 8 14:00:07 UTC 2021</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+
+<h2 id="系统设置、性能负载情况"><a href="#系统设置、性能负载情况" class="headerlink" title="系统设置、性能负载情况"></a>系统设置、性能负载情况</h2><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">hostname</span>
+<span class="token comment"># 查看计算机名</span>
+
+<span class="token function">who</span>
+<span class="token comment"># 查看当前登录系统所有的用户</span>
+
+<span class="token function">who</span> am i
+<span class="token function">whoami</span>
+<span class="token comment"># 查看当前用户</span>
+
+<span class="token function">date</span>
+<span class="token comment"># 查看系统时间</span>
+
+<span class="token function">cal</span> <span class="token number">2022</span>
+<span class="token comment"># 查看2022年日历</span>
+
+<span class="token function">env</span>
+<span class="token comment"># 查看系统环境变量</span>
+
+lsmod
+<span class="token comment"># 查看已加载的系统模块</span>
+
+lsusb <span class="token parameter variable">-tv</span>
+<span class="token comment"># 查看USB设备信息</span>
+
+lspci <span class="token parameter variable">-tv</span>
+<span class="token comment"># 查看PCI设备信息</span>
+
+<span class="token function">cat</span> /proc/cpuinfo
+<span class="token comment"># 查看CPU设备信息</span>
+
+<span class="token function">cat</span> /proc/interrupts
+<span class="token comment"># 查看中断（逻辑中断号、中断在各CPU上发生的次数，中断所属父设备名称、硬件中断号、中断触发方式(电平或边沿)、中断名称）</span>
+
+<span class="token function">cat</span> /proc/loadavg
+<span class="token comment"># 查看系统平均负载</span>
+<span class="token comment"># 前三个是1、5、15分钟内的平均进程数；第四个的分子是正在运行的进程数，分母是进程总数；最后一个最近运行的进程ID号</span>
+<span class="token comment"># 0.03 0.04 0.08 1/505 185136</span>
+<span class="token comment"># 一般来说每个CPU的当前活动进程数不大于3那么系统的性能就是良好的。如果每个CPU的任务数大于5，那么就表明机器的性能有严重问题。对于上面的例子来说，假设系统有8个CPU，那么其每个CPU在1分钟内的进程数为：0.32/8=0.04。</span>
+
+<span class="token function">uptime</span>
+<span class="token comment"># 查看系统运行时间、用户数、平均负载</span>
+<span class="token comment"># 11:14:41 up  1:18,  2 users,  load average: 0.11, 0.16, 0.13</span>
+
+<span class="token function">grep</span> MemTotal /proc/meminfo
+<span class="token comment"># 查看内存总量</span>
+<span class="token comment"># MemTotal:        7927768 kB</span>
+
+<span class="token function">grep</span> MemFree /proc/meminfo
+<span class="token comment"># 查看空闲内存量</span>
+<span class="token comment"># MemFree:         6390732 kB</span>
+
+<span class="token function">free</span> <span class="token parameter variable">-m</span>
+<span class="token comment"># 查看内存使用量和交换区使用量</span>
+
+<span class="token function">vmstat</span> <span class="token number">1</span> <span class="token number">10</span>
+<span class="token comment"># 采集系统状态（1秒/次，共10次）</span>
+
+sar <span class="token parameter variable">-u</span> <span class="token number">1</span> <span class="token number">10</span>
+<span class="token comment"># 查看CPU性能（1秒/次，共10次）</span>
+
+sar <span class="token parameter variable">-d</span> <span class="token number">1</span> <span class="token number">10</span>
+<span class="token comment"># 查看磁盘性能（1秒/次，共10次）</span>
+
+iostat
+<span class="token comment"># 查看io读写和cpu使用情况</span>
+
+<span class="token function">top</span>
+<span class="token comment"># 实时查看cpu、内存、进程等情况</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+
+<h2 id="帮助命令"><a href="#帮助命令" class="headerlink" title="帮助命令"></a>帮助命令</h2><blockquote>
+<p>命令提示符：$ 普通用户 ；# root用户</p>
+<p>命令和路径补全：<code>Tab</code> 键</p>
+<p><code>type</code> 用于判断另外一个命令是否是内置命令（内置命令在系统启动时就调入内存，是常驻内存的，所以执行效率高。而外部命令是系统的软件功能，用户需要时才从硬盘中读入内存。）</p>
+<blockquote>
+<p><code>man xxx</code>  ：获取 xxx命令 的帮助（man自身帮助，<code>man 1 man</code>）</p>
+<p><code>help xxx</code> ：获取内置命令的帮助</p>
+<p><code>xxx --help</code> ：获取外部命令的帮助</p>
+<p><code>info xxx</code> ：获取更丰富的帮助信息</p>
+</blockquote>
+</blockquote>
+<h2 id="重启及关机"><a href="#重启及关机" class="headerlink" title="重启及关机"></a>重启及关机</h2><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sync</span>
+<span class="token comment"># Linux sync命令用于数据同步,sync命令是在关闭Linux系统时使用的。</span>
+<span class="token comment"># Linux 系统中欲写入硬盘的资料有的时候为了效率起见，会写到 filesystem buffer 中，这个 buffer 是一块记忆体空间，如果欲写入硬盘的资料存于此 buffer 中，而系统又突然断电的话，那么资料就会流失了，sync 指令会将存于 buffer 中的资料强制写入硬盘中。</span>
+
+<span class="token function">reboot</span>
+init <span class="token number">6</span>
+<span class="token function">shutdown</span> <span class="token parameter variable">-r</span> now
+<span class="token comment"># 重启</span>
+<span class="token function">shutdown</span> <span class="token parameter variable">-r</span> <span class="token number">10</span>
+<span class="token comment"># 10分钟后重启</span>
+<span class="token function">shutdown</span> <span class="token parameter variable">-r</span> 00:00
+<span class="token comment"># 0点重启</span>
+
+poweroff
+<span class="token function">halt</span>
+init <span class="token number">0</span>
+telinit <span class="token number">0</span>
+<span class="token comment"># 关机</span>
+
+<span class="token function">shutdown</span> <span class="token parameter variable">-h</span> <span class="token number">10</span>
+<span class="token comment"># 10分钟后关机</span>
+<span class="token function">shutdown</span> <span class="token parameter variable">-h</span> 00:00
+<span class="token comment"># 0点关机</span>
+
+<span class="token function">shutdown</span> <span class="token parameter variable">-c</span>
+<span class="token comment"># 取消关机</span>
+
+<span class="token builtin class-name">logout</span>
+<span class="token comment"># 退出shell</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+
+<h2 id="文件及目录"><a href="#文件及目录" class="headerlink" title="文件及目录"></a>文件及目录</h2><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">ls</span>
+<span class="token comment"># 查看当前文件目录列表</span>
+<span class="token function">ls</span> <span class="token parameter variable">-lhF</span>
+<span class="token comment"># l:列表 h:增强文件大小易读性 F:增强文件和目录区分</span>
+
+tree
+<span class="token comment"># 树形查看文件和目录</span>
+
+<span class="token builtin class-name">pwd</span>
+<span class="token comment"># 查看当前所在路径</span>
+
+<span class="token builtin class-name">cd</span>
+<span class="token comment"># 进入当前用户主目录</span>
+<span class="token builtin class-name">cd</span> xxx
+<span class="token comment"># 进入xxx目录</span>
+
+<span class="token function">mkdir</span> xxx yyy
+<span class="token comment"># 创建xxx、yyy两个目录</span>
+<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> zzz/xxx/yyy
+<span class="token comment"># 创建目录树</span>
+
+<span class="token function">touch</span> zzz/xxx/yyy/test.txt
+<span class="token comment"># 指定目录创建文件</span>
+<span class="token function">touch</span> zzz/xxx/test<span class="token punctuation">&#123;</span>0001<span class="token punctuation">..</span><span class="token number">2000</span><span class="token punctuation">&#125;</span>.txt
+<span class="token comment"># 创建2000个文件</span>
+
+<span class="token function">find</span> zzz/xxx <span class="token parameter variable">-name</span> test0666.txt
+<span class="token comment"># 搜索文件</span>
+<span class="token function">find</span> zzz/xxx <span class="token parameter variable">-name</span> *66.txt
+<span class="token comment"># 模糊搜索文件</span>
+
+<span class="token function">ln</span> <span class="token parameter variable">-s</span> zzz/xxx/yyy/test.txt testlink
+<span class="token comment"># 创建软连接</span>
+<span class="token function">ln</span> zzz/xxx/yyy/test.txt testlink2
+<span class="token comment"># 创建物理连接</span>
+
+<span class="token function">cp</span> zzz/xxx/yyy/test.txt zzz/xxx/yyy/text-copy.txt
+<span class="token comment"># 复制文件</span>
+<span class="token function">cp</span> zzz/xxx/* xxx/
+<span class="token comment"># 复制所有文件到指定目录</span>
+<span class="token function">cp</span> <span class="token parameter variable">-r</span> zzz/xxx/ yyy/
+<span class="token comment"># 复制所有文件和文件夹到指定目录</span>
+
+<span class="token function">mv</span> zzz/xxx/yyy/test.txt zzz/
+<span class="token comment"># 移动文件</span>
+
+<span class="token function">rm</span> <span class="token parameter variable">-rf</span> xxx yyy
+<span class="token comment"># 删除xxx和yyy两个目录及其子目录下的所有内容</span>
+
+<span class="token function">chmod</span> <span class="token number">777</span> <span class="token parameter variable">-R</span> zzz
+<span class="token comment"># 对目前目录下的所有文件与子目录进行相同的权限变更(即以递归的方式逐个变更)</span>
+
+<span class="token function">cat</span> /etc/sysconfig/network-scripts/ifcfg-ens32
+<span class="token comment"># 查看文件内容</span>
+<span class="token function">cat</span> <span class="token parameter variable">-n</span> /etc/sysconfig/network-scripts/ifcfg-ens32
+<span class="token comment"># 查看文件内容（带行号）</span>
+<span class="token function">tac</span> /etc/sysconfig/network-scripts/ifcfg-ens32
+<span class="token comment"># 查看文件内容（从最后一行反向查看内容）</span>
+
+<span class="token function">wc</span> /etc/sysconfig/network-scripts/ifcfg-ens32
+<span class="token comment"># 统计文件内容的行数、单词数、字节数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+
+<h3 id="文件权限八进制语法"><a href="#文件权限八进制语法" class="headerlink" title="文件权限八进制语法"></a>文件权限八进制语法</h3><table>
+<thead>
+<tr>
+<th align="left">#</th>
+<th align="left">权限</th>
+<th align="left">rwx</th>
+<th align="left">二进制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">7</td>
+<td align="left">读 + 写 + 执行</td>
+<td align="left">rwx</td>
+<td align="left">111</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">读 + 写</td>
+<td align="left">rw-</td>
+<td align="left">110</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">读 + 执行</td>
+<td align="left">r-x</td>
+<td align="left">101</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">只读</td>
+<td align="left">r–</td>
+<td align="left">100</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">写 + 执行</td>
+<td align="left">-wx</td>
+<td align="left">011</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">只写</td>
+<td align="left">-w-</td>
+<td align="left">010</td>
+</tr>
+<tr>
+<td align="left">1</td>
+<td align="left">只执行</td>
+<td align="left">–x</td>
+<td align="left">001</td>
+</tr>
+<tr>
+<td align="left">0</td>
+<td align="left">无</td>
+<td align="left">—</td>
+<td align="left">000</td>
+</tr>
+</tbody></table>
+<p>例如， 765 将这样解释：</p>
+<ul>
+<li>所有者的权限用数字表达：属主的那三个权限位的数字加起来的总和。如 rwx ，也就是 4+2+1 ，应该是 7。</li>
+<li>用户组的权限用数字表达：属组的那个权限位数字的相加的总和。如 rw- ，也就是 4+2+0 ，应该是 6。</li>
+<li>其它用户的权限数字表达：其它用户权限位的数字相加的总和。如 r-x ，也就是 4+0+1 ，应该是 5。</li>
+</ul>
+<h2 id="Vim文本编辑器"><a href="#Vim文本编辑器" class="headerlink" title="Vim文本编辑器"></a>Vim文本编辑器</h2><blockquote>
+<p>进入插入模式：<code>iloOaA</code></p>
+<ul>
+<li><code>i</code> 在当前光标位置，进入到插入模式</li>
+<li><code>I</code> 移动到当前光标所在行首，再进入到插入模式</li>
+<li><code>a</code> 在当前光标位置之后，进入到插入模式</li>
+<li><code>A</code> 移动到当前光标位置所在行尾，再进入到插入模式</li>
+<li><code>o</code> 在当前光标下一行，进入到插入模式</li>
+<li><code>O</code> 在当前光标上一行，进入到插入模式</li>
+</ul>
+<p>常用指令：</p>
+<ul>
+<li><code>v</code>、<code>V</code>、<code>ctrl+v</code> 进入可视模式（字符可视化、行可视化、块可视化）</li>
+<li><code>h j k l</code> 上下左右</li>
+<li><code>u</code>  撤销</li>
+<li><code>ctrl+r</code> 重做</li>
+<li><code>X</code> 删除单个字符</li>
+<li><code>G</code> 定位指定的行</li>
+<li><code>^ $</code> 定位到行开头结尾</li>
+<li><code>dd d$</code> 剪切</li>
+<li><code>yy y$</code> 复制</li>
+<li><code>p</code> 粘贴</li>
+<li><code>r</code> 替换单个字符</li>
+<li><code>:</code> 进入命令模式</li>
+<li><code>esc</code> 回到正常模式</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>命令模式：</p>
+<ul>
+<li><code>/</code> 查找</li>
+<li><code>s/old/new/</code> 替换</li>
+<li><code>w</code> 写入文件</li>
+<li><code>W</code> 另存文件</li>
+<li><code>q</code> 退出</li>
+<li><code>q!</code> 退出不保存</li>
+<li><code>!cmd</code> 执行命令</li>
+</ul>
+</blockquote>
+<h2 id="压缩及解压"><a href="#压缩及解压" class="headerlink" title="压缩及解压"></a>压缩及解压</h2><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">zip</span> xxx.zip <span class="token function">file</span>
+<span class="token comment"># 压缩单个文件</span>
+<span class="token function">zip</span> <span class="token parameter variable">-r</span> xxx.zip file1 file2 dir1
+<span class="token comment"># 压缩多个文件及目录</span>
+
+<span class="token function">unzip</span> xxx.zip
+<span class="token comment"># 解压</span>
+
+<span class="token function">tar</span> <span class="token parameter variable">--exclude</span><span class="token operator">=</span>dir1/file1 <span class="token parameter variable">-zcvf</span> xxx.tar dir1
+<span class="token comment"># 将dir1进行压缩时，排除其中的file1，压缩后的文件名为 xxx.tar</span>
+
+<span class="token function">tar</span> <span class="token parameter variable">-zxvf</span> xxx.tar
+<span class="token comment"># 解压</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+
+<h2 id="系统服务"><a href="#系统服务" class="headerlink" title="系统服务"></a>系统服务</h2><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">service</span> firewalld status
+<span class="token comment"># 查看服务状态</span>
+
+<span class="token function">service</span> firewalld start
+<span class="token comment"># 启动服务</span>
+
+<span class="token function">service</span> firewalld restart
+<span class="token comment"># 重启服务</span>
+
+<span class="token function">service</span> firewalld stop
+<span class="token comment"># 停止服务</span>
+
+systemctl <span class="token builtin class-name">enable</span> firewalld
+<span class="token comment"># 开机自启动</span>
+
+systemctl disable firewalld
+<span class="token comment"># 关闭开机自启动</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+
+<h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">ps</span> <span class="token parameter variable">-ef</span>
+<span class="token comment"># 显示所有进程</span>
+
+<span class="token function">ps</span> -ef<span class="token operator">|</span><span class="token function">grep</span> <span class="token function">java</span>
+<span class="token comment"># 根据关键词过滤进程</span>
+
+<span class="token function">kill</span> <span class="token parameter variable">-9</span> pid号
+<span class="token comment"># 杀死指定pid号的进程 参数：1 (HUP)：重新加载进程；9 (KILL)：杀死一个进程；15 (TERM)：正常停止一个进程</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+
+<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">ifconfig</span>
+<span class="token comment"># 查看所有网卡信息</span>
+
+<span class="token function">ifconfig</span> ens32
+<span class="token comment"># 查看指定网卡信息</span>
+
+route <span class="token parameter variable">-n</span>
+<span class="token comment"># 查看路由表</span>
+
+<span class="token function">netstat</span> <span class="token parameter variable">-lntp</span>
+<span class="token comment"># 查看所有监听端口</span>
+<span class="token function">netstat</span> <span class="token parameter variable">-antp</span>
+<span class="token comment"># 查看已建立的TCP连接</span>
+<span class="token function">netstat</span> <span class="token parameter variable">-lutp</span>
+<span class="token comment"># 查看TCP/UDP状态信息</span>
+
+<span class="token function">scp</span> root@10.10.10.10:/opt/soft/nginx-0.5.38.tar.gz /opt/soft/
+<span class="token comment"># 从远端复制文件到本地目录</span>
+<span class="token function">scp</span> <span class="token parameter variable">-r</span> root@10.10.10.10:/opt/soft/mongodb /opt/soft/
+<span class="token comment"># 从远端复制目录到本地目录</span>
+
+<span class="token function">scp</span> /opt/soft/java.tar.gz root@10.10.10.10:/opt/soft/scptest
+<span class="token comment"># 上传本地文件到远程机器指定目录</span>
+<span class="token function">scp</span> <span class="token parameter variable">-r</span> /opt/soft/java_home root@10.10.10.10:/opt/soft/scptest
+<span class="token comment"># 上传本地目录到远程机器指定目录</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+
+<h2 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h2><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">fdisk</span> <span class="token parameter variable">-l</span>
+<span class="token comment"># 查看所有磁盘分区信息</span>
+
+<span class="token function">swapon</span> <span class="token parameter variable">-s</span>
+<span class="token comment"># 查看所有交换区信息</span>
+
+<span class="token function">df</span> <span class="token parameter variable">-h</span>
+<span class="token comment"># 查看磁盘容量、已用、可用、已用百分比及挂载点</span>
+
+<span class="token function">du</span> <span class="token parameter variable">-sh</span> /home/
+<span class="token comment"># 递归查看指定目录总容量</span>
+
+<span class="token function">mount</span> /dev/hda2 /mnt/hda2
+<span class="token comment"># 挂载hda2</span>
+
+<span class="token function">mount</span> <span class="token parameter variable">-t</span> ntfs /dev/sdc1 /mnt/usbhd1
+<span class="token comment"># 挂载指定文件系统的类型</span>
+
+<span class="token function">mount</span> <span class="token parameter variable">-o</span> loop xxx.iso /mnt/cdrom
+<span class="token comment"># 挂载iso文件</span>
+
+<span class="token function">mount</span> /dev/sda1 /mnt/usbdisk
+<span class="token comment"># 挂载usb设备</span>
+
+<span class="token function">umount</span> <span class="token parameter variable">-v</span> /dev/sda1
+<span class="token comment"># 通过设备名卸载</span>
+
+<span class="token function">umount</span> <span class="token parameter variable">-v</span> /mnt/mymnt
+<span class="token comment"># 通过挂载点卸载</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+
+<h2 id="用户及用户组"><a href="#用户及用户组" class="headerlink" title="用户及用户组"></a>用户及用户组</h2><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cut</span> -d: <span class="token parameter variable">-f1</span> /etc/passwd
+<span class="token comment"># 查看系统中的所有用户</span>
+
+<span class="token function">cut</span> -d: <span class="token parameter variable">-f1</span> /etc/group
+<span class="token comment"># 查看系统中的所有用户组</span>
+
+<span class="token function">useradd</span> new_account
+<span class="token comment"># 创建用户</span>
+
+<span class="token function">groupadd</span> new_group
+<span class="token comment"># 创建用户组</span>
+
+<span class="token function">id</span> new_account
+<span class="token comment"># 查看指定账号信息</span>
+<span class="token comment">#uid=1001(new_account) gid=1001(new_account) 组=1001(new_account)</span>
+
+<span class="token function">groups</span> new_account
+<span class="token comment"># 查看指定账号所在组</span>
+
+<span class="token function">usermod</span> <span class="token parameter variable">-aG</span> new_group new_account
+<span class="token comment"># 添加用户到组</span>
+<span class="token comment"># uid=1001(new_account) gid=1001(new_account) 组=1001(new_account),1002(new_group)</span>
+
+<span class="token function">usermod</span> <span class="token parameter variable">-g</span> new_group new_account
+<span class="token comment"># 修改用户组</span>
+<span class="token comment"># uid=1001(new_account) gid=1002(new_group) 组=1002(new_group)</span>
+
+<span class="token function">groupmod</span> <span class="token parameter variable">-n</span> new_group_rename new_group
+<span class="token comment"># 重命名用户组</span>
+
+<span class="token function">groupdel</span> new_account
+<span class="token comment"># 删除用户组</span>
+
+<span class="token function">userdel</span> <span class="token parameter variable">-r</span> new_account
+<span class="token comment"># 删除用户</span>
+
+<span class="token function">su</span> - new_account
+<span class="token comment"># 切换用户</span>
+
+<span class="token function">passwd</span>
+<span class="token comment"># 修改登录密码</span>
+<span class="token function">passwd</span> new_account
+<span class="token comment"># 修改某个账号的登录密码</span>
+
+w
+<span class="token comment"># 查看活动用户</span>
+
+last
+<span class="token comment"># 查看用户登录日志</span>
+
+<span class="token function">crontab</span> <span class="token parameter variable">-l</span>
+<span class="token comment"># 当前用户计划任务</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+
+<h2 id="包管理"><a href="#包管理" class="headerlink" title="包管理"></a>包管理</h2><h3 id="DPKG"><a href="#DPKG" class="headerlink" title="DPKG"></a>DPKG</h3><blockquote>
+<p>Debian package manager</p>
+</blockquote>
+<h3 id="APT"><a href="#APT" class="headerlink" title="APT"></a>APT</h3><blockquote>
+<p>Advanced package tool 是一个在 Debian 和 Ubuntu 中的 Shell 前端软件包管理器。</p>
+</blockquote>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt-cache</span> search pkg_name
+<span class="token comment"># 查找程序包</span>
+
+<span class="token function">apt-cache</span> show pkg_name
+<span class="token comment"># 获取包概览信息</span>
+
+<span class="token function">apt-get</span> <span class="token function">install</span> pkg_name
+<span class="token comment"># 安装、升级软件包</span>
+
+<span class="token function">apt-get</span> purge pkg_name
+<span class="token comment"># 卸载软件（含配置）</span>
+<span class="token function">apt-get</span> remove pkg_name
+<span class="token comment"># 卸载软件（不含配置）</span>
+
+<span class="token function">apt-get</span> update
+<span class="token comment"># 更新包索引</span>
+
+<span class="token function">apt-get</span> upgrade
+<span class="token comment"># 更新已安装的软件包</span>
+
+<span class="token function">apt-get</span> clean
+<span class="token comment"># 清理缓存</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+
+<h3 id="RPM"><a href="#RPM" class="headerlink" title="RPM"></a>RPM</h3><blockquote>
+<p>redhat package manager 原本是 Red Hat Linux 发行版专门用来管理 Linux 各项套件的程序，由于它遵循 GPL 规则且功能强大方便，因而广受欢迎。逐渐受到其他发行版的采用。RPM 套件管理方式的出现，让 Linux 易于安装，升级，间接提升了 Linux 的适用度。</p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-rpm.html">https://www.runoob.com/linux/linux-comm-rpm.html</a></p>
+</blockquote>
+<h3 id="YUM"><a href="#YUM" class="headerlink" title="YUM"></a>YUM</h3><blockquote>
+<p>Yellow dog Updater, Modified 是一个在 Fedora 和 RedHat 以及 SUSE 中的 Shell 前端软件包管理器。</p>
+<p>基于 RPM 包管理，能够从指定的服务器自动下载 RPM 包并且安装，可以自动处理依赖性关系，并且一次安装所有依赖的软件包，无须繁琐地一次次下载、安装。</p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-yum.html">https://www.runoob.com/linux/linux-yum.html</a></p>
+</blockquote>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><a target="_blank" rel="noopener" href="https://www.w3cschool.cn/linux/linux-command-manual.html">Linux 命令大全 👉 https://www.w3cschool.cn/linux/linux-command-manual.html</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/LIBRARY/" class="category-chain-item">迹路文库</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/LIBRARY/NOTE/" class="category-chain-item">速查笔记</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/">#速查笔记</a>
+      
+        <a href="/tags/LINUX/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Linux命令</div>
+      <div>https://元气码农少女酱.我爱你/611fb94ae4b4/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>元气码农少女酱</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月2日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/19bb5016b53c/" title="CentOS">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CentOS</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/ea6466f250b7/" title="Ubuntu">
+                        <span class="hidden-mobile">Ubuntu</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+  <script async src="js/snow.js" crossorigin="anonymous"></script>
+  <script async src="js/love.js" crossorigin="anonymous"></script>
+  <div class="text-center" style="font-size:12px">
+    © 2022  By  <a href="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl">⎛⎝迹路科栈⎠⎞</a> <a href="https://beian.miit.gov.cn/" target="_blank">津ICP备20003416号-1</a>
+  </div>
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300,"hOffset":-10,"vOffset":-10},"mobile":{"show":true},"log":false});</script></body>
+</html>
