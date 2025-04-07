@@ -1,0 +1,1113 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="元气码农少女酱">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="开始 gradio   Build &amp; Share Delightful Machine Learning Apps https:&#x2F;&#x2F;www.gradio.app&#x2F; GitHub：https:&#x2F;&#x2F;github.com&#x2F;gradio-app&#x2F;gradio   Stable Diffusion web UI   A browser interface based on Gradio libra">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stable Diffusion">
+<meta property="og:url" content="https://元气码农少女酱.我爱你/4a3927bb8884/">
+<meta property="og:site_name" content="⎛⎝迹路科栈⎠⎞">
+<meta property="og:description" content="开始 gradio   Build &amp; Share Delightful Machine Learning Apps https:&#x2F;&#x2F;www.gradio.app&#x2F; GitHub：https:&#x2F;&#x2F;github.com&#x2F;gradio-app&#x2F;gradio   Stable Diffusion web UI   A browser interface based on Gradio libra">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-28T03:11:11.000Z">
+<meta property="article:modified_time" content="2025-03-27T12:44:39.694Z">
+<meta property="article:author" content="元气码农少女酱">
+<meta property="article:tag" content="Stable Diffusion">
+<meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Stable Diffusion - ⎛⎝迹路科栈⎠⎞</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"c48bd071d08fdfa52afe48f0d2e0a43e","google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?c48bd071d08fdfa52afe48f0d2e0a43e";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+    <link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css" media="print" onload="this.media='all'">
+    <style>
+      html, body, .markdown-body, p {
+        font-family: 'LXGW WenKai Screen';
+      }
+    </style>
+    
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>⎛⎝迹路科栈⎠⎞</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-bug"></i>
+                <span>爬亿爬</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/CAPTURE/" target="_self">
+                    
+                    <span>📶抓包</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/EXTRACTOR/" target="_self">
+                    
+                    <span>🧪抽取</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/STORE/" target="_self">
+                    
+                    <span>💾存储</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/OPS/" target="_self">
+                    
+                    <span>🔧运维</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/FRAMEWORK/" target="_self">
+                    
+                    <span>⭐框架</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/WEB-RE/" target="_self">
+                    
+                    <span>📑Web逆向</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/PYP/MOBILE-RE/" target="_self">
+                    
+                    <span>📲安卓逆向</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>迹路文库</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/NOTE/" target="_self">
+                    
+                    <span>📔速查笔记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/LEETCODE/" target="_self">
+                    
+                    <span>Leetcode</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/VUE/" target="_self">
+                    
+                    <span>Vue</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/PYTHON/" target="_self">
+                    
+                    <span>Python</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/SPRINGBOOT/" target="_self">
+                    
+                    <span>SpringBoot</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/LEARNING/" target="_self">
+                    
+                    <span>迹路一下</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/LIBRARY/ZHONGYI/" target="_self">
+                    
+                    <span>🌿中医</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                
+                <span>Chobits</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/CHOBITS/OCR/" target="_self">
+                    
+                    <span>OCR</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/CHOBITS/STABLE-DIFFUSION/" target="_self">
+                    
+                    <span>Stable Diffusion</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>目录</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>联系我</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Stable Diffusion"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-28 11:11" pubdate>
+          星期日, 一月 28日 2024, 11:11 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Stable Diffusion</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><ul>
+<li>gradio</li>
+</ul>
+<blockquote>
+<p>Build &amp; Share Delightful Machine Learning Apps</p>
+<p><a target="_blank" rel="noopener" href="https://www.gradio.app/">https://www.gradio.app/</a></p>
+<p>GitHub：<a target="_blank" rel="noopener" href="https://github.com/gradio-app/gradio">https://github.com/gradio-app/gradio</a></p>
+</blockquote>
+<ul>
+<li>Stable Diffusion web UI</li>
+</ul>
+<blockquote>
+<p>A browser interface based on Gradio library for Stable Diffusion.</p>
+<p>GitHub：<a target="_blank" rel="noopener" href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">https://github.com/AUTOMATIC1111/stable-diffusion-webui</a></p>
+</blockquote>
+<ul>
+<li><p>整合包</p>
+<ul>
+<li><p>秋葉aaaki</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://space.bilibili.com/12566101">https://space.bilibili.com/12566101</a></p>
+</blockquote>
+</li>
+<li><p>独立研究员-星空</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://space.bilibili.com/250989068">https://space.bilibili.com/250989068</a></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="安装注意"><a href="#安装注意" class="headerlink" title="安装注意"></a>安装注意</h2><ol>
+<li>路径不要中文</li>
+<li>显存大于8G，高速固态硬盘容量大于300G</li>
+</ol>
+<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><h2 id="查看图片输出路径"><a href="#查看图片输出路径" class="headerlink" title="查看图片输出路径"></a>查看图片输出路径</h2><blockquote>
+<ol>
+<li>UI中无边图像浏览</li>
+<li><code>.\outputs</code> 中分类保存</li>
+</ol>
+</blockquote>
+<h2 id="文生图"><a href="#文生图" class="headerlink" title="文生图"></a>文生图</h2><h3 id="迭代步数-Steps"><a href="#迭代步数-Steps" class="headerlink" title="迭代步数 (Steps)"></a>迭代步数 (Steps)</h3><blockquote>
+<p>默认20，再提升效果提升不大，性能好可30-40</p>
+</blockquote>
+<h3 id="采样方法-Sampler"><a href="#采样方法-Sampler" class="headerlink" title="采样方法 (Sampler)"></a>采样方法 (Sampler)</h3><blockquote>
+<p>如果模型本身推荐那个就用那个，或者带 <code>+</code> 号的算法</p>
+</blockquote>
+<h3 id="高分辨率修复-Hires-fix"><a href="#高分辨率修复-Hires-fix" class="headerlink" title="高分辨率修复 (Hires. fix)"></a>高分辨率修复 (Hires. fix)</h3><blockquote>
+<p>宽度、高度不要太高推荐512，需要靠高分辨率修复的“修改放大倍率”提升</p>
+</blockquote>
+<h3 id="提示词引导系数-CFG-Scale"><a href="#提示词引导系数-CFG-Scale" class="headerlink" title="提示词引导系数 (CFG Scale)"></a>提示词引导系数 (CFG Scale)</h3><blockquote>
+<p>推荐：7-12</p>
+</blockquote>
+<h3 id="随机数种子-Seed"><a href="#随机数种子-Seed" class="headerlink" title="随机数种子 (Seed)"></a>随机数种子 (Seed)</h3><blockquote>
+<p>与提示词引导系数都是ai控制画面内容的参数，填入ai图片生成的数值可以保持与其风格一致</p>
+</blockquote>
+<h3 id="总批次数、单批数量"><a href="#总批次数、单批数量" class="headerlink" title="总批次数、单批数量"></a>总批次数、单批数量</h3><blockquote>
+<p>总批批次可以增大，代表一次出多少张图。单批数量推荐：1</p>
+</blockquote>
+<h2 id="图生图"><a href="#图生图" class="headerlink" title="图生图"></a>图生图</h2><h3 id="重绘幅度"><a href="#重绘幅度" class="headerlink" title="重绘幅度"></a>重绘幅度</h3><blockquote>
+<p>跟据原图重绘改造的幅度值，推荐0.6 - 0.8</p>
+</blockquote>
+<h1 id="提示词（Prompt）"><a href="#提示词（Prompt）" class="headerlink" title="提示词（Prompt）"></a>提示词（Prompt）</h1><blockquote>
+<p>文生图：主要靠 <strong>正向提示词</strong> 和 <strong>反向提示词</strong> 控制图像的生成</p>
+<p>要求英文（词&#x2F;句），用 <code>,</code> 分隔（可换行，但结尾要添加 <code>,</code>）</p>
+</blockquote>
+<h2 id="画质提示词"><a href="#画质提示词" class="headerlink" title="画质提示词"></a>画质提示词</h2><h3 id="高画质"><a href="#高画质" class="headerlink" title="高画质"></a>高画质</h3><figure><div class="code-wrapper"><pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">best quality,ultra-detailed,masterpiece,hires,8k<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></figure>
+
+<h3 id="高分辨率"><a href="#高分辨率" class="headerlink" title="高分辨率"></a>高分辨率</h3><figure><div class="code-wrapper"><pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token title important"><span class="token punctuation">#</span> 超精细的8KUnity游戏CG，虚幻引擎渲染</span>
+extremely detailed CG unity 8k wallpaper,unreal engine rendered<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></figure>
+
+<h2 id="画风提示词"><a href="#画风提示词" class="headerlink" title="画风提示词"></a>画风提示词</h2><figure><div class="code-wrapper"><pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token title important"><span class="token punctuation">#</span> 插画风</span>
+illustration,painting,paintbrush
+<span class="token title important"><span class="token punctuation">#</span> 二次元</span>
+anime,comic,game CG
+<span class="token title important"><span class="token punctuation">#</span> 写实</span>
+photorealistic,realistic,photograph<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<h2 id="内容提示词"><a href="#内容提示词" class="headerlink" title="内容提示词"></a>内容提示词</h2><figure><div class="code-wrapper"><pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token title important"><span class="token punctuation">#</span> 人物及主体特征</span>
+服饰穿搭：white dress
+发型发色：blonde hair,long hair
+五官特点：small eyes,big mouth
+面部表情：smiling
+肢体动作：stretching arms
+
+<span class="token title important"><span class="token punctuation">#</span> 场景特征</span>
+室内、室外：indoor/outdoor
+大场景：forest,city,street
+小细节：tree,bush,white flower
+
+<span class="token title important"><span class="token punctuation">#</span> 环境光照</span>
+白天黑夜：day/night
+特定时段：morning,sunset
+光环境：sunlight,bright,dark
+天空：blue sky,starry sky
+
+<span class="token title important"><span class="token punctuation">#</span> 画幅视角</span>
+距离：close-up,distant
+人物此例：full body,upper body
+观察视角：from above,view of back
+镜头类型：wide angle,Sony A7 Ⅲ
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<h2 id="提示词权重"><a href="#提示词权重" class="headerlink" title="提示词权重"></a>提示词权重</h2><figure><div class="code-wrapper"><pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token title important"><span class="token punctuation">#</span> 括号内冒号数字</span>
+增强1.5倍：(xxx:1.5)
+减弱0.8倍：(xxx:0.8)
+
+<span class="token title important"><span class="token punctuation">#</span> 小括号 x1.1倍</span>
+(((xxx))) 增强1.1<span class="token italic"><span class="token punctuation">*</span><span class="token content">1.1</span><span class="token punctuation">*</span></span>1.1=1.331倍
+<span class="token title important"><span class="token punctuation">#</span> 中括号 x0.9倍</span>
+[[[xxx]]] 1.15倍
+<span class="token title important"><span class="token punctuation">#</span> 大括号 x1.05倍</span>
+&#123;&#123;&#123;xxx&#125;&#125;&#125; 0.729倍
+
+<span class="token title important"><span class="token punctuation">#</span> 混合：| </span>
+白色和黄色的花：white|yellow flower,
+
+<span class="token title important"><span class="token punctuation">#</span> 迁移：生成连续多个不同特征对象</span>
+先生成白花，再红花，最后蓝花：[white|red|blue] flower,
+
+<span class="token title important"><span class="token punctuation">#</span> 迭代</span>
+进程达到80%之前生成白花，之后生成灌木：(whitet flower:bush:0.8)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<h2 id="标准化提示词"><a href="#标准化提示词" class="headerlink" title="标准化提示词"></a>标准化提示词</h2><h3 id="正向"><a href="#正向" class="headerlink" title="正向"></a>正向</h3><figure><div class="code-wrapper"><pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">(masterpiece:1,2), best quality, masterpiece, highres, original, extremely detailed wallpaper, perfect lighting,(extremely detailed CG:1.2), drawing, paintbrush,<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></figure>
+
+<h3 id="负向"><a href="#负向" class="headerlink" title="负向"></a>负向</h3><figure><div class="code-wrapper"><pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">NSFW, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, age spot, (ugly:1.331), (duplicate:1.331), (morbid:1.21), (mutilated:1.21), (tranny:1.331), mutated hands, (poorly drawn hands:1.5), blurry, (bad anatomy:1.21), (bad proportions:1.331), extra limbs, (disfigured:1.331), (missing arms:1.331), (extra legs:1.331), (fused fingers:1.61051), (too many fingers:1.61051), (unclear eyes:1.331), lowers, bad hands, missing fingers, extra digit,bad hands, missing fingers, (((extra arms and legs))),<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></figure>
+
+<h2 id="提示词工具-插件"><a href="#提示词工具-插件" class="headerlink" title="提示词工具&amp;插件"></a>提示词工具&amp;插件</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="http://www.atoolbox.net/Tool.php?Id=1101">AI绘画提示词生成器 : http://www.atoolbox.net/Tool.php?Id=1101 </a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Physton/sd-webui-prompt-all-in-one/blob/main/README_CN.MD">sd-webui-prompt-all-in-one : https://github.com/Physton/sd-webui-prompt-all-in-one.git</a></p>
+</blockquote>
+<h1 id="模型（Model）"><a href="#模型（Model）" class="headerlink" title="模型（Model）"></a>模型（Model）</h1><h2 id="大模型存储路径"><a href="#大模型存储路径" class="headerlink" title="大模型存储路径"></a>大模型存储路径</h2><blockquote>
+<p><code>.\models\Stable-diffusion</code></p>
+</blockquote>
+<h2 id="VAE模型（变分自解码器）"><a href="#VAE模型（变分自解码器）" class="headerlink" title="VAE模型（变分自解码器）"></a>VAE模型（变分自解码器）</h2><h3 id="存储路径"><a href="#存储路径" class="headerlink" title="存储路径"></a>存储路径</h3><blockquote>
+<p><code>.\models\VAE</code></p>
+</blockquote>
+<h3 id="自动选项含义"><a href="#自动选项含义" class="headerlink" title="自动选项含义"></a>自动选项含义</h3><blockquote>
+<p>选择自动后，需要将VAE模型放在 <code>models\stable-diffusion</code> 下并修改为特定模型名字，并在后追加 <code>.vae.pt</code></p>
+<p>如 <code>XXX.safetensors</code> 对应 <code>XXX.vae.pt</code></p>
+</blockquote>
+<h2 id="模型下载推荐"><a href="#模型下载推荐" class="headerlink" title="模型下载推荐"></a>模型下载推荐</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://huggingface.co/">https://huggingface.co/</a>      <code>Models </code> → <code> Text-to-Image</code></p>
+<p><a target="_blank" rel="noopener" href="https://civitai.com/">https://civitai.com/</a></p>
+</blockquote>
+<p>相关网站</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.liandange.com/">https://www.liandange.com/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.desai.art/#/">https://www.desai.art/#/</a></p>
+<p><a target="_blank" rel="noopener" href="https://tusiart.com/">https://tusiart.com/</a></p>
+</blockquote>
+<h1 id="放大"><a href="#放大" class="headerlink" title="放大"></a>放大</h1><h2 id="文生图-1"><a href="#文生图-1" class="headerlink" title="文生图"></a>文生图</h2><h3 id="高分辨率修复（Hires-fix）"><a href="#高分辨率修复（Hires-fix）" class="headerlink" title="高分辨率修复（Hires. fix）"></a>高分辨率修复（Hires. fix）</h3><h4 id="放大倍数"><a href="#放大倍数" class="headerlink" title="放大倍数"></a>放大倍数</h4><blockquote>
+<p>从原始的分辨率要扩大多少倍</p>
+</blockquote>
+<h4 id="重绘幅度-1"><a href="#重绘幅度-1" class="headerlink" title="重绘幅度"></a>重绘幅度</h4><blockquote>
+<p>推荐 <code>0.3-0.7</code> ，数值越大AI参与度越高。仅想放大图片 需设置 <code>0.2</code> 以下</p>
+</blockquote>
+<h4 id="放大算法"><a href="#放大算法" class="headerlink" title="放大算法"></a>放大算法</h4><blockquote>
+<p>优先选择模型作者推荐的放大算法</p>
+<p>其次，尝试 <code>R-ESRGAN 4x+</code> 和 <code>R-ESRGAN 4x+ Anime6B</code>（二次元优先）</p>
+</blockquote>
+<h2 id="图生图-1"><a href="#图生图-1" class="headerlink" title="图生图"></a>图生图</h2><blockquote>
+<ul>
+<li>重绘尺寸倍数</li>
+<li>脚本：SD upscale（使用 SD 放大）</li>
+</ul>
+</blockquote>
+<h2 id="附加功能"><a href="#附加功能" class="headerlink" title="附加功能"></a>附加功能</h2><blockquote>
+<p>等比缩放</p>
+</blockquote>
+<h1 id="进阶模型"><a href="#进阶模型" class="headerlink" title="进阶模型"></a>进阶模型</h1><blockquote>
+<ul>
+<li>嵌入式 (T.I. Embedding)：较为通用，如负面词优化</li>
+<li>超网络 (Hypernetworks)：描绘整体画风</li>
+<li>Lora：描绘特定对象、整体画风</li>
+</ul>
+</blockquote>
+<h1 id="局部重绘"><a href="#局部重绘" class="headerlink" title="局部重绘"></a>局部重绘</h1><blockquote>
+<ul>
+<li>蒙版边缘模糊：10 以下较为稳妥，这也要看画面大小</li>
+<li>蒙版模式：重绘蒙版内容；重绘非蒙版内容</li>
+<li>蒙版区域内容处理：填充（高度模糊后填充）、原版（保留原图不做预处理）</li>
+<li>重绘区域：整张图片；仅蒙版区域（未读取整图信息，有可能会出现拼接错误）、仅蒙版区域下边缘预留像素（缓冲带，需要结合图片大小设置）</li>
+</ul>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CHOBITS/" class="category-chain-item">Chobits</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CHOBITS/STABLE-DIFFUSION/" class="category-chain-item">Stable Diffusion</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/STABLE-DIFFUSION/" class="print-no-link">#Stable Diffusion</a>
+      
+        <a href="/tags/AI/" class="print-no-link">#AI</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Stable Diffusion</div>
+      <div>https://元气码农少女酱.我爱你/4a3927bb8884/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>元气码农少女酱</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/39d12850675a/" title="Github-SSH连接超时连接失败解决方案">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Github-SSH连接超时连接失败解决方案</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/ab13a7b7e806/" title="卡巴斯基转换为免费版的方法">
+                        <span class="hidden-mobile">卡巴斯基转换为免费版的方法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+  <script async src="js/snow.js" crossorigin="anonymous"></script>
+  <script async src="js/love.js" crossorigin="anonymous"></script>
+  <div class="text-center" style="font-size:12px">
+    © 2022  By  <a href="https://xn--z4q5h38stwcs83anlqrw4b.xn--6qq986b3xl">⎛⎝迹路科栈⎠⎞</a> <a href="https://beian.miit.gov.cn/" target="_blank">津ICP备20003416号-1</a>
+  </div>
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300,"hOffset":-10,"vOffset":-10},"mobile":{"show":true},"log":false});</script></body>
+</html>
